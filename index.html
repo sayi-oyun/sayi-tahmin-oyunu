@@ -9,10 +9,16 @@
 <title>Sayı Tahmin | Mehmet Buğrahan Şaşmaz</title>
 <meta name="description" content="Gizli sayıyı bul! 3-6 basamaklı sayı tahmin oyunu.">
 <meta name="author" content="Mehmet Buğrahan Şaşmaz">
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth;} 
+html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth;}
 
 :root,[data-theme="light"]{
   --bg:#EEF2FF;--surface:#FFF;--s2:#F4F6FF;--s3:#E8ECFD;
@@ -1238,4 +1244,4 @@ updateHomeStats();
 renderLb(3);
 </script>
 </body>
-</html>
+  </html>
