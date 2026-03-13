@@ -1,28 +1,19 @@
-const CACHE = 'sayi-tahmin-v1';
-const FILES = [
-  '/sayi-tahmin-oyunu/',
-  '/sayi-tahmin-oyunu/index.html',
-  '/sayi-tahmin-oyunu/manifest.json'
+const CACHE_NAME = 'sayi-tahmin-v1';
+const urlsToCache = [
+  '/sayi-oyunu/',
+  '/sayi-oyunu/index.html'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(FILES))
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
