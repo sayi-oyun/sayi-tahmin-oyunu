@@ -145,13 +145,12 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
 
 .sec-lbl{font-size:clamp(10px,2.5vw,11.5px);font-weight:800;text-transform:uppercase;letter-spacing:1.3px;color:var(--ink3);padding:0 2px;margin-top:2px;}
 
-/* MODE CARDS — div→button fix for iOS */
+/* MODE CARDS */
 .modes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,2vw,12px);}
 .mode-card{
   border-radius:var(--r-lg);padding:clamp(13px,3.5vw,19px) clamp(12px,3vw,17px);
   cursor:pointer;transition:transform .2s,box-shadow .22s;
   position:relative;overflow:hidden;
-  /* iOS fix: use button reset */
   background:none;border:2px solid;
   text-align:left;font-family:var(--fn);
   -webkit-tap-highlight-color:transparent;
@@ -176,7 +175,6 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
 .mode-footer{display:flex;align-items:center;gap:5px;margin-top:clamp(8px,2vw,12px);padding-top:clamp(8px,2vw,12px);border-top:1.5px solid rgba(255,255,255,.65);}
 .mode-stat{font-size:clamp(10px,2.5vw,12px);font-weight:800;color:var(--mc);}
 .mode-stat-lbl{font-size:clamp(9px,2vw,10.5px);font-weight:600;color:var(--ink3);}
-
 
 .best-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;transition:background .35s,border-color .35s;}
 .best-head{padding:clamp(9px,2vw,12px) clamp(12px,3vw,17px);border-bottom:1.5px solid var(--border);font-size:clamp(10px,2.5vw,11.5px);font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);}
@@ -270,23 +268,19 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
 
 .digit-row{display:flex;gap:clamp(5px,1.5vw,9px);margin-bottom:clamp(9px,2.5vw,12px);}
 
-/* dbox — readonly on mobile, numpad handles input */
 .dbox{
   flex:1;background:var(--s2);border:2px solid var(--border);
   border-radius:var(--r-sm);font-family:var(--ft);
   font-size:clamp(19px,5.5vw,26px);text-align:center;
   color:var(--ink);padding:clamp(7px,2vw,10px) 2px clamp(6px,1.8vw,9px);
   outline:none;transition:border-color .17s,background .17s,color .17s,box-shadow .17s;
-  /* key fix: readable on iOS */
   -webkit-appearance:none;appearance:none;
   caret-color:transparent;
-  /* prevent zoom on focus */
   font-size:max(16px,clamp(19px,5.5vw,26px));
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
   user-select:none;
-  /* make it a div-like display box */
   display:flex;align-items:center;justify-content:center;
   min-height:clamp(48px,12vw,60px);
 }
@@ -458,6 +452,193 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
   100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
 }
 
+/* ═══════════════════════════════════════════
+   TUTORIAL / ONBOARDING STYLES
+═══════════════════════════════════════════ */
+
+/* Tutorial trigger button on home */
+.tut-trigger-btn {
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:clamp(10px,2.5vw,13px);
+  background:var(--surface);color:var(--ink2);
+  font-family:var(--fn);font-size:clamp(12px,3vw,13.5px);font-weight:700;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;
+  transition:all .18s;box-shadow:var(--sh);letter-spacing:.2px;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.tut-trigger-btn:hover{background:var(--violet-lt);border-color:var(--violet-bd);color:var(--violet);}
+.tut-trigger-btn .tut-icon{font-size:16px;}
+
+/* Tutorial overlay backdrop */
+.tut-overlay {
+  display:none;position:fixed;inset:0;z-index:700;
+  background:rgba(10,12,40,.82);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  align-items:flex-end;justify-content:center;
+  padding-bottom:max(0px,env(safe-area-inset-bottom));
+}
+.tut-overlay.show { display:flex; }
+
+/* Tutorial panel */
+.tut-panel {
+  width:100%;max-width:520px;
+  background:var(--surface);
+  border-radius:var(--r-2xl) var(--r-2xl) 0 0;
+  border:1.5px solid var(--border2);
+  box-shadow:0 -16px 60px rgba(0,0,0,.32);
+  padding:0 0 max(24px,env(safe-area-inset-bottom));
+  animation:tutSlideUp .38s cubic-bezier(.34,1.1,.64,1);
+  max-height:88dvh;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+@keyframes tutSlideUp{from{transform:translateY(100%);opacity:.4;}to{transform:translateY(0);opacity:1;}}
+
+/* Steps container (slides) */
+.tut-steps-wrap {
+  overflow:hidden;flex:1;min-height:0;
+}
+.tut-steps {
+  display:flex;
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  height:100%;
+}
+.tut-step {
+  min-width:100%;padding:28px 24px 16px;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;overflow-y:auto;
+  gap:0;
+}
+
+/* Step header */
+.tut-step-emoji {
+  font-size:clamp(44px,12vw,60px);
+  margin-bottom:14px;
+  display:block;
+  animation:tutPop .5s cubic-bezier(.34,1.6,.64,1) both;
+}
+@keyframes tutPop{from{transform:scale(.3) rotate(-15deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.tut-step-title {
+  font-family:var(--ft);font-size:clamp(21px,6vw,28px);
+  color:var(--ink);margin-bottom:8px;line-height:1.15;
+}
+.tut-step-desc {
+  font-size:clamp(12.5px,3.2vw,14.5px);font-weight:600;
+  color:var(--ink2);line-height:1.65;margin-bottom:20px;
+  max-width:380px;
+}
+
+/* Demo boxes within tutorial */
+.tut-demo {
+  width:100%;max-width:340px;
+  background:var(--s2);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);padding:16px 18px;margin-bottom:8px;
+  text-align:left;
+}
+.tut-demo-row {
+  display:flex;align-items:center;gap:11px;padding:8px 0;
+  border-bottom:1.5px solid var(--border);
+}
+.tut-demo-row:last-child{border-bottom:none;}
+.tut-demo-num {
+  font-family:var(--ft);font-size:18px;letter-spacing:4px;
+  color:var(--ink);flex:1;
+}
+.tut-demo-badges{display:flex;gap:5px;flex-shrink:0;}
+.tut-badge {
+  font-family:var(--ft);font-size:14px;padding:3px 10px;
+  border-radius:8px;border:2px solid;
+}
+.tut-badge.plus{color:var(--mint);background:var(--mint-lt);border-color:var(--mint-bd);}
+.tut-badge.minus{color:var(--coral);background:var(--coral-lt);border-color:var(--coral-bd);}
+.tut-badge.zero{color:var(--ink3);background:var(--s3);border-color:var(--border2);}
+
+/* Rule pills */
+.tut-rules {
+  display:flex;flex-direction:column;gap:9px;
+  width:100%;max-width:340px;margin-bottom:8px;
+}
+.tut-rule-item {
+  display:flex;align-items:flex-start;gap:11px;
+  background:var(--s2);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:11px 14px;text-align:left;
+}
+.tut-rule-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.tut-rule-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:2px;}
+.tut-rule-desc{font-size:11.5px;font-weight:600;color:var(--ink2);line-height:1.45;}
+
+/* Digit demo animation */
+.tut-digit-row {
+  display:flex;gap:8px;margin-bottom:16px;
+}
+.tut-dbox {
+  width:46px;height:52px;border-radius:10px;
+  background:var(--s2);border:2px solid var(--border);
+  font-family:var(--ft);font-size:24px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink3);transition:all .3s;
+}
+.tut-dbox.filled{background:var(--sky-lt);border-color:var(--sky-bd);color:var(--sky);}
+.tut-dbox.correct{background:var(--mint-lt);border-color:var(--mint-bd);color:var(--mint);}
+.tut-dbox.wrong-pos{background:var(--coral-lt);border-color:var(--coral-bd);color:var(--coral);}
+
+/* Progress dots */
+.tut-dots {
+  display:flex;gap:7px;justify-content:center;
+  padding:14px 0 10px;flex-shrink:0;
+}
+.tut-dot {
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border2);transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.tut-dot.active{background:var(--violet);width:22px;border-radius:4px;}
+.tut-dot.done{background:var(--mint);}
+
+/* Navigation bar */
+.tut-nav {
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:10px;
+  padding:0 20px 8px;flex-shrink:0;
+}
+.tut-skip-btn {
+  font-size:12px;font-weight:700;color:var(--ink3);
+  background:none;border:none;cursor:pointer;
+  font-family:var(--fn);text-align:left;padding:8px 0;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.tut-skip-btn:hover{color:var(--ink2);}
+.tut-next-btn {
+  padding:11px 24px;
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
+  font-family:var(--fn);font-size:14px;font-weight:800;
+  border:none;border-radius:var(--r-sm);cursor:pointer;
+  transition:transform .18s,box-shadow .18s;
+  box-shadow:0 4px 18px rgba(99,102,241,.38);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  white-space:nowrap;
+}
+.tut-next-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,.5);}
+.tut-next-btn:active{transform:scale(.96);}
+.tut-next-btn.finish{background:linear-gradient(135deg,var(--mint),#059669);}
+
+.tut-step-counter {
+  font-size:11px;font-weight:800;color:var(--ink3);
+  text-align:center;letter-spacing:.5px;
+}
+
+/* Highlight badge for "NEW" */
+.tut-new-badge {
+  display:inline-block;font-size:9px;font-weight:800;
+  background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;
+  padding:2px 7px;border-radius:99px;vertical-align:middle;
+  margin-left:6px;letter-spacing:.4px;
+  animation:newPulse 1.6s ease infinite;
+}
+@keyframes newPulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+
+/* Responsive */
+@media(max-width:359px){.tut-step{padding:20px 16px 12px;}.tut-demo-num{font-size:15px;letter-spacing:2px;}.tut-step-emoji{font-size:36px;}}
+@media(min-width:768px){.tut-overlay{align-items:center;padding:24px;}.tut-panel{border-radius:var(--r-2xl);max-height:80dvh;}.tut-step{padding:32px 32px 20px;}}
+
 /* RESPONSIVE */
 @media(max-width:359px){.modes{grid-template-columns:1fr 1fr;gap:7px;}.mode-card{padding:11px 9px;}.hrow-g{letter-spacing:1px;}.modal-secret{font-size:32px;letter-spacing:4px;}}
 @media(min-width:540px){.app{max-width:560px;}.modes{grid-template-columns:repeat(4,1fr);gap:10px;}.mode-card{padding:15px 12px;}.mode-name{font-size:13px;}.mode-desc{font-size:10.5px;}}
@@ -486,6 +667,13 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
       <div class="home-title">Sayı Tahmin</div>
       <div class="home-sub">Gizli sayıyı bul &nbsp;·&nbsp; 0 kullanılmaz &nbsp;·&nbsp; tekrar yok</div>
     </div>
+
+    <!-- Tutorial trigger -->
+    <button class="tut-trigger-btn" id="openTutorialBtn">
+      <span class="tut-icon">🎓</span>
+      Nasıl Oynanır? — Rehberi Gör
+      <span class="tut-new-badge" id="tutNewBadge">YENİ</span>
+    </button>
 
     <div class="rules-strip">
       <div class="rs-item">
@@ -572,7 +760,6 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
       <div class="mode-pill" id="modePill"></div>
     </div>
 
-    <!-- 3 stat boxes: deneme, en iyi, kazanma -->
     <div class="stats">
       <div class="stat"><div class="stat-n cs" id="sDeneme">0</div><div class="stat-l">Deneme</div></div>
       <div class="stat"><div class="stat-n cm" id="sBest">—</div><div class="stat-l">En İyi</div></div>
@@ -604,7 +791,6 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
         <span class="input-lbl">Tahminini Gir</span>
         <span class="err-msg" id="errMsg"></span>
       </div>
-      <!-- dbox divs controlled by numpad / keyboard -->
       <div class="digit-row" id="digitRow"></div>
       <button class="btn-primary" id="guessBtn">
         <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -680,6 +866,229 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     TUTORIAL OVERLAY
+═══════════════════════════════════════════ -->
+<div class="tut-overlay" id="tutOverlay">
+  <div class="tut-panel" id="tutPanel">
+
+    <!-- Steps wrapper -->
+    <div class="tut-steps-wrap">
+      <div class="tut-steps" id="tutSteps">
+
+        <!-- Step 1: Welcome -->
+        <div class="tut-step" id="tutStep0">
+          <span class="tut-step-emoji">🎯</span>
+          <div class="tut-step-title">Sayı Tahmin'e Hoş Geldin!</div>
+          <div class="tut-step-desc">
+            Gizli bir sayıyı bulmaya çalışıyorsun. Rakamlar <strong>sıfır içermez</strong> ve <strong>hepsi birbirinden farklı</strong>tır. Her tahminden sonra ipucu alırsın!
+          </div>
+          <div class="tut-rules">
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">🔢</span>
+              <div>
+                <div class="tut-rule-title">3 ile 8 basamak</div>
+                <div class="tut-rule-desc">Kolaydan imkansıza 6 farklı zorluk seviyesi var. Başlamak için birini seç!</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">🚫</span>
+              <div>
+                <div class="tut-rule-title">0 kullanılmaz, tekrar yok</div>
+                <div class="tut-rule-desc">Gizli sayıda 0 yoktur ve hiçbir rakam tekrar etmez. Örnek: 4 basamak → 3 7 1 9</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">⏱️</span>
+              <div>
+                <div class="tut-rule-title">Sınırlı hakkın var</div>
+                <div class="tut-rule-desc">Her modun belirlenmiş bir tahmin hakkı var. Dikkatli oyna!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Feedback system -->
+        <div class="tut-step" id="tutStep1">
+          <span class="tut-step-emoji">📊</span>
+          <div class="tut-step-title">Sonuçlar Ne Anlama Gelir?</div>
+          <div class="tut-step-desc">
+            Her tahminden sonra <strong>+N</strong> ve <strong>−N</strong> geri bildirimi alırsın. Bunları çözmeyi öğren!
+          </div>
+          <div class="tut-demo">
+            <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);margin-bottom:8px;">Örnek: Gizli sayı 5 3 7 1</div>
+            <div class="tut-demo-row">
+              <div class="tut-demo-num">5 2 7 8</div>
+              <div class="tut-demo-badges">
+                <span class="tut-badge plus">+2</span>
+                <span class="tut-badge zero">−0</span>
+              </div>
+            </div>
+            <div class="tut-demo-row">
+              <div class="tut-demo-num">3 5 9 1</div>
+              <div class="tut-demo-badges">
+                <span class="tut-badge zero">+1</span>
+                <span class="tut-badge minus">−2</span>
+              </div>
+            </div>
+            <div class="tut-demo-row">
+              <div class="tut-demo-num">4 6 2 8</div>
+              <div class="tut-demo-badges">
+                <span class="tut-badge zero">±0</span>
+              </div>
+            </div>
+          </div>
+          <div class="tut-rules" style="margin-top:4px;">
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon" style="color:var(--mint)">✅</span>
+              <div>
+                <div class="tut-rule-title" style="color:var(--mint)">+N → Doğru Yerde</div>
+                <div class="tut-rule-desc">N tane rakam, hem <em>değer</em> hem <em>konum</em> olarak doğru.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon" style="color:var(--coral)">🔄</span>
+              <div>
+                <div class="tut-rule-title" style="color:var(--coral)">−N → Yanlış Yerde</div>
+                <div class="tut-rule-desc">N tane rakam gizli sayıda <em>var</em>, ama yanlış konumda.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: How to input -->
+        <div class="tut-step" id="tutStep2">
+          <span class="tut-step-emoji">⌨️</span>
+          <div class="tut-step-title">Tahmin Nasıl Girilir?</div>
+          <div class="tut-step-desc">
+            Kutulara tıklayarak rakamları gir. Mobilde otomatik numpad açılır, masaüstünde klavyeni kullanabilirsin.
+          </div>
+          <div class="tut-digit-row" id="tutDigitAnim">
+            <div class="tut-dbox" id="td0">·</div>
+            <div class="tut-dbox" id="td1">·</div>
+            <div class="tut-dbox" id="td2">·</div>
+            <div class="tut-dbox" id="td3">·</div>
+          </div>
+          <div class="tut-rules">
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">📱</span>
+              <div>
+                <div class="tut-rule-title">Mobil — Numpad</div>
+                <div class="tut-rule-desc">Bir kutuya dokununca numpad açılır. Rakamları sırayla gir, sonra "Tahmin →" butonuna bas.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">💻</span>
+              <div>
+                <div class="tut-rule-title">Masaüstü — Klavye</div>
+                <div class="tut-rule-desc">1–9 tuşlarıyla yaz, ← → ile kutu değiştir, Backspace ile sil, Enter ile tahmin gönder.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">💡</span>
+              <div>
+                <div class="tut-rule-title">İpucu Hakkı</div>
+                <div class="tut-rule-desc">Her oyunda 2 kez ipucu alabilirsin. Zor kaldığında kullan!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Strategy -->
+        <div class="tut-step" id="tutStep3">
+          <span class="tut-step-emoji">🧠</span>
+          <div class="tut-step-title">Strateji İpuçları</div>
+          <div class="tut-step-desc">
+            Sistematik oynamak seni üst sıralara taşır. İşte bazı ipuçları:
+          </div>
+          <div class="tut-rules">
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">📝</span>
+              <div>
+                <div class="tut-rule-title">Geçmişi takip et</div>
+                <div class="tut-rule-desc">Her tahmin geçmişte görünür. Hangi rakamların olmadığını eliminate et.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">🎯</span>
+              <div>
+                <div class="tut-rule-title">Geniş başla</div>
+                <div class="tut-rule-desc">İlk tahminlerde farklı rakamlar dene, sayının içeriğini öğren.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">🔄</span>
+              <div>
+                <div class="tut-rule-title">Konumu değiştir</div>
+                <div class="tut-rule-desc">−N aldığında o rakamı biliyorsun! Sadece yerini bulmak kalıyor.</div>
+              </div>
+            </div>
+            <div class="tut-rule-item">
+              <span class="tut-rule-icon">🏆</span>
+              <div>
+                <div class="tut-rule-title">Sıralama tablosu</div>
+                <div class="tut-rule-desc">Kazandığında adını kaydet, en iyi skorlar tabloya girer. Rekabet eğlenceli!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Ready! -->
+        <div class="tut-step" id="tutStep4">
+          <span class="tut-step-emoji">🚀</span>
+          <div class="tut-step-title">Hazırsın!</div>
+          <div class="tut-step-desc">
+            Artık oyunu oynamaya hazırsın. Başlangıç için <strong>3 Basamak (Kolay)</strong> modunu dene, sonra zorluğu artır!
+          </div>
+          <div class="tut-rules">
+            <div class="tut-rule-item" style="background:linear-gradient(145deg,#EDFDF5,#C8F7E0);border-color:#9EF0C8;">
+              <span class="tut-rule-icon">🟢</span>
+              <div>
+                <div class="tut-rule-title" style="color:var(--mint)">Kolay — 3 Basamak, 10 hak</div>
+                <div class="tut-rule-desc">İlk oyun için mükemmel. Kuralları pekiştir!</div>
+              </div>
+            </div>
+            <div class="tut-rule-item" style="background:linear-gradient(145deg,#EBF4FF,#CCDFFE);border-color:#A5CBFD;">
+              <span class="tut-rule-icon">🔵</span>
+              <div>
+                <div class="tut-rule-title" style="color:var(--sky)">Normal — 4 Basamak, 10 hak</div>
+                <div class="tut-rule-desc">Klasik deneyim. Arkadaşlarınla rekabet et!</div>
+              </div>
+            </div>
+            <div class="tut-rule-item" style="background:linear-gradient(145deg,#FFF0F3,#FDDBE1);border-color:#FCAFC0;">
+              <span class="tut-rule-icon">🔴</span>
+              <div>
+                <div class="tut-rule-title" style="color:var(--coral)">Uzman+ — 6, 7, 8 Basamak</div>
+                <div class="tut-rule-desc">Gerçek ustalar için. Başarabilir misin?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tut-steps -->
+    </div><!-- /tut-steps-wrap -->
+
+    <!-- Progress dots -->
+    <div class="tut-dots" id="tutDots">
+      <div class="tut-dot active" data-i="0"></div>
+      <div class="tut-dot" data-i="1"></div>
+      <div class="tut-dot" data-i="2"></div>
+      <div class="tut-dot" data-i="3"></div>
+      <div class="tut-dot" data-i="4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="tut-nav">
+      <button class="tut-skip-btn" id="tutSkipBtn">Atla</button>
+      <span class="tut-step-counter" id="tutStepCounter">1 / 5</span>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="tut-next-btn" id="tutNextBtn">İleri →</button>
+      </div>
+    </div>
+
+  </div><!-- /tut-panel -->
+</div><!-- /tut-overlay -->
+
 <script>
 /* ── HELPERS ── */
 const $ = id => document.getElementById(id);
@@ -711,7 +1120,156 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
   try { if (!localStorage.getItem('st-theme')) applyTheme(e.matches ? 'dark' : 'light'); } catch (e2) {}
 });
 
-/* ── LEADERBOARD (localStorage) ── */
+/* ═══════════════════════════════════════════
+   TUTORIAL SYSTEM
+═══════════════════════════════════════════ */
+const TOTAL_STEPS = 5;
+let tutCurrentStep = 0;
+let digitAnimTimer = null;
+
+function openTutorial() {
+  tutCurrentStep = 0;
+  $('tutOverlay').classList.add('show');
+  goToTutStep(0);
+  // Hide "NEW" badge after seen
+  try { localStorage.setItem('st-tut-seen', '1'); } catch(e) {}
+  const badge = $('tutNewBadge');
+  if (badge) badge.style.display = 'none';
+}
+
+function closeTutorial() {
+  $('tutOverlay').classList.remove('show');
+  clearDigitAnim();
+}
+
+function goToTutStep(idx) {
+  if (idx < 0 || idx >= TOTAL_STEPS) return;
+  tutCurrentStep = idx;
+
+  // Slide
+  $('tutSteps').style.transform = `translateX(-${idx * 100}%)`;
+
+  // Dots
+  document.querySelectorAll('.tut-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+    d.classList.toggle('done', i < idx);
+  });
+
+  // Counter
+  tx('tutStepCounter', `${idx + 1} / ${TOTAL_STEPS}`);
+
+  // Next button label
+  const nextBtn = $('tutNextBtn');
+  if (idx === TOTAL_STEPS - 1) {
+    nextBtn.textContent = 'Oynamaya Başla! 🎮';
+    nextBtn.classList.add('finish');
+  } else {
+    nextBtn.textContent = 'İleri →';
+    nextBtn.classList.remove('finish');
+  }
+
+  // Skip button
+  tx('tutSkipBtn', idx === TOTAL_STEPS - 1 ? 'Kapat' : 'Atla');
+
+  // Re-trigger step emoji animation
+  const stepEl = $('tutStep' + idx);
+  const emoji = stepEl && stepEl.querySelector('.tut-step-emoji');
+  if (emoji) {
+    emoji.style.animation = 'none';
+    void emoji.offsetWidth;
+    emoji.style.animation = '';
+  }
+
+  // Step 3: digit animation
+  clearDigitAnim();
+  if (idx === 2) startDigitAnim();
+}
+
+/* Digit animation for step 3 */
+const animSeq = [
+  { boxes: ['3','·','·','·'], classes: ['filled','','',''] },
+  { boxes: ['3','7','·','·'], classes: ['filled','filled','',''] },
+  { boxes: ['3','7','1','·'], classes: ['filled','filled','filled',''] },
+  { boxes: ['3','7','1','9'], classes: ['filled','filled','filled','filled'] },
+  { boxes: ['3','7','1','9'], classes: ['correct','wrong-pos','filled','correct'] },
+];
+let animIdx = 0;
+
+function startDigitAnim() {
+  animIdx = 0;
+  runDigitFrame();
+  digitAnimTimer = setInterval(() => {
+    animIdx = (animIdx + 1) % animSeq.length;
+    runDigitFrame();
+  }, 800);
+}
+
+function runDigitFrame() {
+  const frame = animSeq[animIdx];
+  for (let i = 0; i < 4; i++) {
+    const el = $('td' + i);
+    if (!el) continue;
+    el.textContent = frame.boxes[i];
+    el.className = 'tut-dbox' + (frame.classes[i] ? ' ' + frame.classes[i] : '');
+  }
+}
+
+function clearDigitAnim() {
+  if (digitAnimTimer) { clearInterval(digitAnimTimer); digitAnimTimer = null; }
+}
+
+// Wire tutorial buttons
+$('openTutorialBtn').addEventListener('click', openTutorial);
+
+$('tutNextBtn').addEventListener('click', () => {
+  if (tutCurrentStep === TOTAL_STEPS - 1) {
+    closeTutorial();
+  } else {
+    goToTutStep(tutCurrentStep + 1);
+  }
+});
+
+$('tutSkipBtn').addEventListener('click', closeTutorial);
+
+// Close on backdrop click
+$('tutOverlay').addEventListener('click', e => {
+  if (e.target === $('tutOverlay')) closeTutorial();
+});
+
+// Dot navigation
+document.querySelectorAll('.tut-dot').forEach(d => {
+  d.addEventListener('click', () => goToTutStep(+d.dataset.i));
+});
+
+// Swipe support on touch
+let tutTouchX = null;
+$('tutPanel').addEventListener('touchstart', e => {
+  tutTouchX = e.touches[0].clientX;
+}, { passive: true });
+$('tutPanel').addEventListener('touchend', e => {
+  if (tutTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - tutTouchX;
+  if (Math.abs(dx) > 50) {
+    if (dx < 0 && tutCurrentStep < TOTAL_STEPS - 1) goToTutStep(tutCurrentStep + 1);
+    else if (dx > 0 && tutCurrentStep > 0) goToTutStep(tutCurrentStep - 1);
+  }
+  tutTouchX = null;
+});
+
+// Auto-show tutorial on first visit
+try {
+  if (!localStorage.getItem('st-tut-seen')) {
+    setTimeout(openTutorial, 600);
+  } else {
+    // Hide NEW badge if already seen
+    const badge = $('tutNewBadge');
+    if (badge) badge.style.display = 'none';
+  }
+} catch(e) {}
+
+/* ═══════════════════════════════════════════
+   LEADERBOARD (localStorage)
+═══════════════════════════════════════════ */
 const MAX_LB = 10;
 let currentLbTab = 3;
 let lastWinData = null;
@@ -764,7 +1322,6 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* LB TABS */
 $('lbTabs').addEventListener('click', e => {
   const btn = e.target.closest('.lb-tab');
   if (!btn) return;
@@ -774,7 +1331,7 @@ $('lbTabs').addEventListener('click', e => {
   renderLb(currentLbTab);
 });
 
-/* ── NAME MODAL ── */
+/* NAME MODAL */
 function openNameModal(digits, tries) {
   lastWinData = { digits, tries };
   $('nameModalSub').textContent = `${digits} basamaklı sayıyı ${tries} denemede buldun!`;
@@ -823,7 +1380,6 @@ const stats = {
   8: { best: null, wins: 0 },
 };
 
-/* ── DIGIT VALUES (replaces real inputs) ── */
 let digitValues = [];
 let activeDigitIndex = 0;
 
@@ -861,13 +1417,12 @@ function buildNumpad() {
     btn.addEventListener('click', () => numpadInput(String(n)));
     grid.appendChild(btn);
   }
-  // Bottom row: DEL, empty slot, SUBMIT
   const del = document.createElement('button');
   del.className = 'numpad-btn numpad-del';
   del.innerHTML = '⌫';
   del.addEventListener('click', numpadDelete);
 
-  const empty = document.createElement('div'); // placeholder
+  const empty = document.createElement('div');
   empty.style.cssText = 'visibility:hidden';
 
   const sub = document.createElement('button');
@@ -882,21 +1437,17 @@ function buildNumpad() {
 }
 
 function numpadInput(val) {
-  // skip already-used values
   if (digitValues.includes(val)) {
-    // flash error
     tx('errMsg', '⚠ Bu rakam zaten var');
     setTimeout(() => tx('errMsg', ''), 1200);
     return;
   }
   digitValues[activeDigitIndex] = val;
-  // advance to next empty slot
   let next = -1;
   for (let i = activeDigitIndex + 1; i < D; i++) {
     if (digitValues[i] === '') { next = i; break; }
   }
   if (next === -1) {
-    // find any empty
     for (let i = 0; i < D; i++) {
       if (digitValues[i] === '') { next = i; break; }
     }
@@ -904,7 +1455,6 @@ function numpadInput(val) {
   if (next !== -1) activeDigitIndex = next;
   updateDigitBoxes();
   buildNumpadPreview();
-  // enable submit if all filled
   const allFilled = digitValues.every(v => v !== '');
   const submitBtn = $('numpadSubmit');
   if (submitBtn) submitBtn.disabled = !allFilled;
@@ -982,7 +1532,6 @@ function buildInputs(n) {
     div.setAttribute('tabindex', '0');
     div.textContent = '·';
     div.setAttribute('data-index', i);
-    // Click → open numpad or focus
     div.addEventListener('click', () => {
       if (isMobile()) {
         activeDigitIndex = i;
@@ -994,7 +1543,6 @@ function buildInputs(n) {
     });
     row.appendChild(div);
   }
-  // Keyboard fallback for desktop
   document.addEventListener('keydown', handleKeyboard);
 }
 
@@ -1084,7 +1632,6 @@ function shakeAll() {
 function makeGuess() {
   if (gameOver) return;
   tx('errMsg', '');
-  // Validate
   if (digitValues.some(v => v === '')) {
     tx('errMsg', '⚠ Tüm haneleri doldur');
     shakeAll();
@@ -1108,7 +1655,6 @@ function makeGuess() {
     else if (secret.includes(guess[i])) minus++;
   }
 
-  // Flip animation on correct digits
   document.querySelectorAll('.dbox').forEach((el, i) => {
     if (guess[i] === secret[i]) {
       el.classList.add('flip');
@@ -1215,33 +1761,27 @@ function launchConfetti() {
   setTimeout(() => { container.innerHTML = ''; }, 5000);
 }
 
-/* ── WIRE ALL BUTTONS (iOS safe: addEventListener only) ── */
-
-// Mode cards
+/* ── WIRE ALL BUTTONS ── */
 $('modesGrid').addEventListener('click', e => {
   const card = e.target.closest('.mode-card');
   if (!card) return;
   startGame(+card.dataset.digits);
 });
 
-// Game buttons
 $('backBtn').addEventListener('click', goHome);
 $('guessBtn').addEventListener('click', makeGuess);
 $('hintBtn').addEventListener('click', showHint);
 $('resetBtn').addEventListener('click', restartGame);
 
-// Win modal
 $('winHomeBtn').addEventListener('click', goHome);
 $('winRestartBtn').addEventListener('click', restartGame);
 $('winModal').addEventListener('click', e => { if (e.target === $('winModal')) goHome(); });
 
-// Numpad controls
 $('numpadBackdrop').addEventListener('click', closeNumpad);
 $('numpadCloseBtn').addEventListener('click', closeNumpad);
 
-// Init
 updateHomeStats();
 renderLb(3);
 </script>
 </body>
-  </html>
+</html>
