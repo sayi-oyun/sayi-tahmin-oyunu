@@ -1,4 +1,4 @@
-const CACHE = 'sayi-tahmin-v2';
+const CACHE = 'sayi-tahmin-v3';
 const FILES = [
   '/sayi-tahmin-oyunu/',
   '/sayi-tahmin-oyunu/index.html',
