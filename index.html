@@ -1345,7 +1345,6 @@ async function renderLb(digits, lastId) {
   try {
     const snap = await db.collection(`lb_${digits}`)
       .orderBy('tries', 'asc')
-      .orderBy('ts', 'asc')
       .limit(MAX_LB)
       .get();
     if (snap.empty) {
@@ -1838,4 +1837,4 @@ updateHomeStats();
 renderLb(3);
 </script>
 </body>
-</html>
+  </html>
