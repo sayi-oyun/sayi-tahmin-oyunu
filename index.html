@@ -13,11 +13,6 @@
 <meta name="description" content="Gizli sayıyı bul! 3-6 basamaklı sayı tahmin oyunu.">
 <meta name="author" content="Mehmet Buğrahan Şaşmaz">
 <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -1171,7 +1166,6 @@ function encodeChallenge(digits, number) {
 
 function decodeChallenge(encoded) {
   try {
-    // Strip whitespace that might appear after copy-paste
     encoded = encoded.trim();
     const b64 = encoded.replace(/-/g,'+').replace(/_/g,'/');
     const xored = atob(b64);
@@ -1194,28 +1188,22 @@ function decodeChallenge(encoded) {
   } catch(e) { return null; }
 }
 
-/* Extract code from a pasted value — handles raw code OR full URL */
 function extractCode(raw) {
   raw = raw.trim();
-  // If it looks like a URL with ?c= param
   try {
     const urlObj = new URL(raw);
     const c = urlObj.searchParams.get('c');
     if (c) return c;
   } catch(e) {}
-  // Try hash fragment #c=...
   if (raw.includes('#c=')) {
     return raw.split('#c=')[1].split('&')[0].trim();
   }
-  // Try ?c= without full URL
   if (raw.includes('?c=')) {
     return raw.split('?c=')[1].split('&')[0].trim();
   }
-  // Assume it's the raw code itself
   return raw;
 }
 
-/* Challenge creator state */
 let chalDigits = 3;
 let chalValues = [];
 let chalActiveIdx = 0;
@@ -1283,7 +1271,6 @@ function chalKeyDelete() {
   updateChalNumpadPreview();
 }
 
-// Desktop keyboard for challenge input
 document.addEventListener('keydown', (e) => {
   if ($('chalCreateBox').classList.contains('open') && !isMobile()) {
     const key = e.key;
@@ -1295,7 +1282,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Mode buttons
 $('chalModeSelect').addEventListener('click', e => {
   const btn = e.target.closest('.chal-mode-btn');
   if (!btn) return;
@@ -1306,7 +1292,6 @@ $('chalModeSelect').addEventListener('click', e => {
   buildChalNumpad();
 });
 
-// Toggle open/close
 $('chalToggleBtn').addEventListener('click', () => {
   const box = $('chalCreateBox');
   const isOpen = box.classList.contains('open');
@@ -1321,7 +1306,6 @@ $('chalToggleBtn').addEventListener('click', () => {
   }
 });
 
-// Random button
 $('chalRandomBtn').addEventListener('click', () => {
   const digits = ['1','2','3','4','5','6','7','8','9']
     .sort(() => Math.random()-.5).slice(0, chalDigits);
@@ -1332,7 +1316,6 @@ $('chalRandomBtn').addEventListener('click', () => {
   $('chalErr').textContent = '';
 });
 
-// Generate code & link
 $('chalGenBtn').addEventListener('click', () => {
   if (chalValues.some(v => v === '')) {
     $('chalErr').textContent = '⚠ Tüm haneleri doldur';
@@ -1348,16 +1331,13 @@ $('chalGenBtn').addEventListener('click', () => {
   const number = chalValues.join('');
   const encoded = encodeChallenge(chalDigits, number);
 
-  // Show short code (works everywhere)
   $('chalShortcodeBox').textContent = encoded;
 
-  // Show full URL (only works when hosted)
   const url = `${location.href.split('?')[0]}?c=${encoded}`;
   $('chalLinkBox').textContent = url;
 
   $('chalLinkResult').classList.add('show');
 
-  // Share message uses the short code prominently
   const modeNames = {3:'Kolay',4:'Normal',5:'Zor',6:'Uzman',7:'Efsane',8:'İmkansız'};
   const msg = `🎯 Sayı Tahmin Meydan Okuma!\n${chalDigits} basamaklı (${modeNames[chalDigits]}) gizli sayımı kaçta bulabilirsin?\n\n📋 Kod: ${encoded}\n\nOyunu aç → "Kodla Katıl" kutusuna kodu yapıştır!`;
 
@@ -1382,7 +1362,6 @@ $('chalGenBtn').addEventListener('click', () => {
   setTimeout(() => $('chalLinkResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 });
 
-// Copy short code
 $('chalCopyCodeBtn').addEventListener('click', () => {
   const code = $('chalShortcodeBox').textContent;
   const btn = $('chalCopyCodeBtn');
@@ -1398,7 +1377,6 @@ $('chalCopyCodeBtn').addEventListener('click', () => {
   }
 });
 
-// Copy full link
 $('chalCopyBtn').addEventListener('click', () => {
   const url = $('chalLinkBox').textContent;
   const btn = $('chalCopyBtn');
@@ -1424,7 +1402,6 @@ function fallbackCopy(text, cb) {
   document.body.removeChild(ta);
 }
 
-/* ── JOIN BY CODE (NEW) ── */
 $('chalJoinBtn').addEventListener('click', handleJoin);
 $('chalCodeInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleJoin(); });
 
@@ -1447,7 +1424,6 @@ function handleJoin() {
   startChallengeGame(data.digits, data.number);
 }
 
-/* Challenge numpad */
 function buildChalNumpad() {
   const grid = $('chalNumpadGrid');
   grid.innerHTML = '';
@@ -1492,7 +1468,6 @@ function updateChalNumpadPreview() {
 $('chalNumpadBackdrop').addEventListener('click', closeChalNumpad);
 $('chalNumpadCloseBtn').addEventListener('click', closeChalNumpad);
 
-/* Check URL for incoming challenge */
 function checkIncomingChallenge() {
   try {
     const params = new URLSearchParams(location.search);
@@ -1501,7 +1476,6 @@ function checkIncomingChallenge() {
     const data = decodeChallenge(c);
     if (!data) return;
     showIncomingBanner(data);
-    // Clean URL
     try { history.replaceState({}, '', location.pathname); } catch(e) {}
   } catch(e) {}
 }
@@ -1515,7 +1489,6 @@ function showIncomingBanner(data) {
   `;
   $('chalBanner').classList.add('show');
 
-  // Remove any old listeners by replacing button
   const oldBtn = $('chalAcceptBtn');
   const newBtn = oldBtn.cloneNode(true);
   oldBtn.parentNode.replaceChild(newBtn, oldBtn);
@@ -1629,7 +1602,6 @@ let activeDigitIndex = 0;
 
 const isMobile = () => window.innerWidth < 768 || ('ontouchstart' in window);
 
-/* ── NUMPAD ── */
 function openNumpad() {
   if (!isMobile()) return;
   buildNumpadPreview();
@@ -1679,7 +1651,6 @@ function updateDigitBoxes() {
   }
 }
 
-/* ── SCREENS ── */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $(id).classList.add('active');
@@ -1700,7 +1671,6 @@ function updateHomeStats() {
   });
 }
 
-/* ── GAME FUNCTIONS ── */
 function startGame(digits, forcedSecret) {
   D = digits;
   digitValues = Array(digits).fill('');
@@ -1900,7 +1870,6 @@ function launchConfetti() {
   setTimeout(()=>{container.innerHTML='';},5000);
 }
 
-/* ── WIRE BUTTONS ── */
 $('modesGrid').addEventListener('click', e => {
   const card=e.target.closest('.mode-card');
   if(!card)return;
@@ -1917,7 +1886,6 @@ $('winModal').addEventListener('click', e=>{if(e.target===$('winModal'))goHome()
 $('numpadBackdrop').addEventListener('click', closeNumpad);
 $('numpadCloseBtn').addEventListener('click', closeNumpad);
 
-/* ── INIT ── */
 updateHomeStats();
 checkIncomingChallenge();
 </script>
