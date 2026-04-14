@@ -13,6 +13,7 @@
 <meta name="description" content="Gizli sayıyı bul! 3-6 basamaklı sayı tahmin oyunu.">
 <meta name="author" content="Mehmet Buğrahan Şaşmaz">
 <link rel="manifest" href="manifest.json">
+
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -794,10 +795,10 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
         <div class="mode-name">7 Basamak</div><div class="mode-desc">Efsanevi mod, 16 hak</div>
         <div class="mode-footer"><span class="mode-stat" id="best7">—</span><span class="mode-stat-lbl">en iyi</span></div>
       </button>
-      <button class="mode-card mc-leg8" data-digits="8">
-        <div class="mc-top"><div class="mode-digit-badge">8</div><div class="mode-diff-badge">İmkansız</div></div>
-        <div class="mode-name">8 Basamak</div><div class="mode-desc">Neredeyse imkansız, 18 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best8">—</span><span class="mode-stat-lbl">en iyi</span></div>
+      <button class="mode-card mc-leg8" data-digits="4" data-free="true">
+        <div class="mc-top"><div class="mode-digit-badge" style="font-size:clamp(13px,3.5vw,17px)">4±0</div><div class="mode-diff-badge">Serbest</div></div>
+        <div class="mode-name">4 Hane Serbest</div><div class="mode-desc">0 dahil, tekrar serbest!</div>
+        <div class="mode-footer"><span class="mode-stat" id="best4f">—</span><span class="mode-stat-lbl">en iyi</span></div>
       </button>
     </div>
 
@@ -918,7 +919,7 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
         <div class="best-item"><div class="best-n" id="gs5">—</div><div class="best-l">5 Hane</div></div>
         <div class="best-item"><div class="best-n" id="gs6">—</div><div class="best-l">6 Hane</div></div>
         <div class="best-item"><div class="best-n" id="gs7">—</div><div class="best-l">7 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs8">—</div><div class="best-l">8 Hane</div></div>
+        <div class="best-item"><div class="best-n" id="gs4f">—</div><div class="best-l">4 Serbest</div></div>
       </div>
     </div>
   </div>
@@ -997,7 +998,7 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
   <div class="numpad-backdrop" id="numpadBackdrop"></div>
   <div class="numpad-wrap">
     <div class="numpad-top">
-      <span class="numpad-title">Rakam Gir (0 kullanılamaz)</span>
+      <span class="numpad-title" id="numpadTitle">Rakam Gir (0 kullanılamaz)</span>
       <button class="numpad-close" id="numpadCloseBtn">✕</button>
     </div>
     <div class="numpad-preview" id="numpadPreview"></div>
@@ -1015,6 +1016,43 @@ body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b
     </div>
     <div class="numpad-preview" id="chalNumpadPreview"></div>
     <div class="numpad-grid" id="chalNumpadGrid"></div>
+  </div>
+</div>
+
+<!-- FREE MODE TUTORIAL MODAL -->
+<div class="modal-back" id="freeTutModal">
+  <div class="modal" style="max-width:min(380px,94vw);">
+    <span class="modal-emoji" style="animation:none;font-size:44px;">🔓</span>
+    <div class="modal-title" style="font-size:clamp(20px,5.5vw,26px);">Serbest Mod!</div>
+    <div class="modal-sub" style="margin-bottom:14px;">Bu mod normal moddan farklı çalışıyor:</div>
+
+    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;text-align:left;">
+      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 13px;">
+        <span style="font-size:20px;flex-shrink:0;">0️⃣</span>
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:2px;">0 kullanılabilir!</div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink2);line-height:1.5;">Normal moddan farklı olarak gizli sayıda ve tahmininde 0 bulunabilir.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 13px;">
+        <span style="font-size:20px;flex-shrink:0;">🔁</span>
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:2px;">Tekrar eden rakam serbest!</div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink2);line-height:1.5;">Hem gizli sayıda hem de tahmininde aynı rakam birden fazla kez çıkabilir. Örn: 1 1 2 3</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--amber-lt);border:1.5px solid var(--amber-bd);border-radius:var(--r);padding:12px 13px;">
+        <span style="font-size:20px;flex-shrink:0;">⚠️</span>
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:#92400E;margin-bottom:2px;">+/− mantığı aynı!</div>
+          <div style="font-size:12px;font-weight:600;color:#92400E;line-height:1.5;"><strong>+N</strong> → doğru yerde, <strong>−N</strong> → var ama yanlış yerde. Ama tekrar eden rakamlar sayımı zorlaştırır!</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-modal" id="freeTutStartBtn" style="width:100%;padding:13px;">
+      🎮 Anladım, Oynayalım!
+    </button>
   </div>
 </div>
 
@@ -1166,6 +1204,7 @@ function encodeChallenge(digits, number) {
 
 function decodeChallenge(encoded) {
   try {
+    // Strip whitespace that might appear after copy-paste
     encoded = encoded.trim();
     const b64 = encoded.replace(/-/g,'+').replace(/_/g,'/');
     const xored = atob(b64);
@@ -1188,22 +1227,28 @@ function decodeChallenge(encoded) {
   } catch(e) { return null; }
 }
 
+/* Extract code from a pasted value — handles raw code OR full URL */
 function extractCode(raw) {
   raw = raw.trim();
+  // If it looks like a URL with ?c= param
   try {
     const urlObj = new URL(raw);
     const c = urlObj.searchParams.get('c');
     if (c) return c;
   } catch(e) {}
+  // Try hash fragment #c=...
   if (raw.includes('#c=')) {
     return raw.split('#c=')[1].split('&')[0].trim();
   }
+  // Try ?c= without full URL
   if (raw.includes('?c=')) {
     return raw.split('?c=')[1].split('&')[0].trim();
   }
+  // Assume it's the raw code itself
   return raw;
 }
 
+/* Challenge creator state */
 let chalDigits = 3;
 let chalValues = [];
 let chalActiveIdx = 0;
@@ -1271,6 +1316,7 @@ function chalKeyDelete() {
   updateChalNumpadPreview();
 }
 
+// Desktop keyboard for challenge input
 document.addEventListener('keydown', (e) => {
   if ($('chalCreateBox').classList.contains('open') && !isMobile()) {
     const key = e.key;
@@ -1282,6 +1328,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Mode buttons
 $('chalModeSelect').addEventListener('click', e => {
   const btn = e.target.closest('.chal-mode-btn');
   if (!btn) return;
@@ -1292,6 +1339,7 @@ $('chalModeSelect').addEventListener('click', e => {
   buildChalNumpad();
 });
 
+// Toggle open/close
 $('chalToggleBtn').addEventListener('click', () => {
   const box = $('chalCreateBox');
   const isOpen = box.classList.contains('open');
@@ -1306,6 +1354,7 @@ $('chalToggleBtn').addEventListener('click', () => {
   }
 });
 
+// Random button
 $('chalRandomBtn').addEventListener('click', () => {
   const digits = ['1','2','3','4','5','6','7','8','9']
     .sort(() => Math.random()-.5).slice(0, chalDigits);
@@ -1316,6 +1365,7 @@ $('chalRandomBtn').addEventListener('click', () => {
   $('chalErr').textContent = '';
 });
 
+// Generate code & link
 $('chalGenBtn').addEventListener('click', () => {
   if (chalValues.some(v => v === '')) {
     $('chalErr').textContent = '⚠ Tüm haneleri doldur';
@@ -1331,13 +1381,16 @@ $('chalGenBtn').addEventListener('click', () => {
   const number = chalValues.join('');
   const encoded = encodeChallenge(chalDigits, number);
 
+  // Show short code (works everywhere)
   $('chalShortcodeBox').textContent = encoded;
 
+  // Show full URL (only works when hosted)
   const url = `${location.href.split('?')[0]}?c=${encoded}`;
   $('chalLinkBox').textContent = url;
 
   $('chalLinkResult').classList.add('show');
 
+  // Share message uses the short code prominently
   const modeNames = {3:'Kolay',4:'Normal',5:'Zor',6:'Uzman',7:'Efsane',8:'İmkansız'};
   const msg = `🎯 Sayı Tahmin Meydan Okuma!\n${chalDigits} basamaklı (${modeNames[chalDigits]}) gizli sayımı kaçta bulabilirsin?\n\n📋 Kod: ${encoded}\n\nOyunu aç → "Kodla Katıl" kutusuna kodu yapıştır!`;
 
@@ -1362,6 +1415,7 @@ $('chalGenBtn').addEventListener('click', () => {
   setTimeout(() => $('chalLinkResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 });
 
+// Copy short code
 $('chalCopyCodeBtn').addEventListener('click', () => {
   const code = $('chalShortcodeBox').textContent;
   const btn = $('chalCopyCodeBtn');
@@ -1377,6 +1431,7 @@ $('chalCopyCodeBtn').addEventListener('click', () => {
   }
 });
 
+// Copy full link
 $('chalCopyBtn').addEventListener('click', () => {
   const url = $('chalLinkBox').textContent;
   const btn = $('chalCopyBtn');
@@ -1402,6 +1457,7 @@ function fallbackCopy(text, cb) {
   document.body.removeChild(ta);
 }
 
+/* ── JOIN BY CODE (NEW) ── */
 $('chalJoinBtn').addEventListener('click', handleJoin);
 $('chalCodeInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleJoin(); });
 
@@ -1424,6 +1480,7 @@ function handleJoin() {
   startChallengeGame(data.digits, data.number);
 }
 
+/* Challenge numpad */
 function buildChalNumpad() {
   const grid = $('chalNumpadGrid');
   grid.innerHTML = '';
@@ -1468,6 +1525,7 @@ function updateChalNumpadPreview() {
 $('chalNumpadBackdrop').addEventListener('click', closeChalNumpad);
 $('chalNumpadCloseBtn').addEventListener('click', closeChalNumpad);
 
+/* Check URL for incoming challenge */
 function checkIncomingChallenge() {
   try {
     const params = new URLSearchParams(location.search);
@@ -1476,6 +1534,7 @@ function checkIncomingChallenge() {
     const data = decodeChallenge(c);
     if (!data) return;
     showIncomingBanner(data);
+    // Clean URL
     try { history.replaceState({}, '', location.pathname); } catch(e) {}
   } catch(e) {}
 }
@@ -1489,6 +1548,7 @@ function showIncomingBanner(data) {
   `;
   $('chalBanner').classList.add('show');
 
+  // Remove any old listeners by replacing button
   const oldBtn = $('chalAcceptBtn');
   const newBtn = oldBtn.cloneNode(true);
   oldBtn.parentNode.replaceChild(newBtn, oldBtn);
@@ -1586,22 +1646,24 @@ try {
 
 /* ── GAME STATE ── */
 const MODES = {
-  3: { label: '3 Basamak', diff: 'Kolay',     max: 10, color: '#10B981', bg: '#D1FAE5', bd: '#6EE7B7' },
-  4: { label: '4 Basamak', diff: 'Normal',    max: 10, color: '#3B82F6', bg: '#DBEAFE', bd: '#93C5FD' },
-  5: { label: '5 Basamak', diff: 'Zor',       max: 12, color: '#8B5CF6', bg: '#EDE9FE', bd: '#C4B5FD' },
-  6: { label: '6 Basamak', diff: 'Uzman',     max: 14, color: '#F43F5E', bg: '#FFE4E6', bd: '#FDA4AF' },
-  7: { label: '7 Basamak', diff: 'Efsane',    max: 16, color: '#F97316', bg: '#FFF7ED', bd: '#FDBA74' },
-  8: { label: '8 Basamak', diff: 'İmkansız',  max: 18, color: '#0D9488', bg: '#F0FDFA', bd: '#5EEAD4' },
+  3:   { label: '3 Basamak',       diff: 'Kolay',    max: 10, color: '#10B981', bg: '#D1FAE5', bd: '#6EE7B7' },
+  4:   { label: '4 Basamak',       diff: 'Normal',   max: 10, color: '#3B82F6', bg: '#DBEAFE', bd: '#93C5FD' },
+  5:   { label: '5 Basamak',       diff: 'Zor',      max: 12, color: '#8B5CF6', bg: '#EDE9FE', bd: '#C4B5FD' },
+  6:   { label: '6 Basamak',       diff: 'Uzman',    max: 14, color: '#F43F5E', bg: '#FFE4E6', bd: '#FDA4AF' },
+  7:   { label: '7 Basamak',       diff: 'Efsane',   max: 16, color: '#F97316', bg: '#FFF7ED', bd: '#FDBA74' },
+  '4f':{ label: '4 Hane Serbest',  diff: 'Serbest',  max: 10, color: '#0D9488', bg: '#F0FDFA', bd: '#5EEAD4' },
 };
 
 let D = 4, secret = '', attempts = 0, gameOver = false, hintsUsed = 0;
 let isChallengeMode = false;
-const stats = { 3:{best:null,wins:0}, 4:{best:null,wins:0}, 5:{best:null,wins:0}, 6:{best:null,wins:0}, 7:{best:null,wins:0}, 8:{best:null,wins:0} };
+let freeMode = false; // 0 allowed, repeats allowed
+const stats = { 3:{best:null,wins:0}, 4:{best:null,wins:0}, 5:{best:null,wins:0}, 6:{best:null,wins:0}, 7:{best:null,wins:0}, '4f':{best:null,wins:0} };
 let digitValues = [];
 let activeDigitIndex = 0;
 
 const isMobile = () => window.innerWidth < 768 || ('ontouchstart' in window);
 
+/* ── NUMPAD ── */
 function openNumpad() {
   if (!isMobile()) return;
   buildNumpadPreview();
@@ -1614,20 +1676,35 @@ function buildNumpadPreview() {
 }
 function buildNumpad() {
   const grid = $('numpadGrid'); grid.innerHTML = '';
-  for (let n = 1; n <= 9; n++) {
-    const btn = document.createElement('button'); btn.className = 'numpad-btn'; btn.textContent = n;
-    btn.setAttribute('data-val', n);
-    btn.addEventListener('click', () => numpadInput(String(n)));
-    grid.appendChild(btn);
+  if (freeMode) {
+    // Layout: 1-9 then ⌫ 0 →
+    for (let n = 1; n <= 9; n++) {
+      const btn = document.createElement('button'); btn.className = 'numpad-btn'; btn.textContent = n;
+      btn.addEventListener('click', () => numpadInput(String(n)));
+      grid.appendChild(btn);
+    }
+    const del = document.createElement('button'); del.className = 'numpad-btn numpad-del'; del.innerHTML = '⌫'; del.addEventListener('click', numpadDelete);
+    const zero = document.createElement('button'); zero.className = 'numpad-btn'; zero.textContent = '0';
+    zero.addEventListener('click', () => numpadInput('0'));
+    const sub = document.createElement('button'); sub.className = 'numpad-btn numpad-submit'; sub.id = 'numpadSubmit'; sub.textContent = 'Tahmin →';
+    sub.addEventListener('click', () => { closeNumpad(); makeGuess(); });
+    grid.appendChild(del); grid.appendChild(zero); grid.appendChild(sub);
+  } else {
+    for (let n = 1; n <= 9; n++) {
+      const btn = document.createElement('button'); btn.className = 'numpad-btn'; btn.textContent = n;
+      btn.setAttribute('data-val', n);
+      btn.addEventListener('click', () => numpadInput(String(n)));
+      grid.appendChild(btn);
+    }
+    const del = document.createElement('button'); del.className = 'numpad-btn numpad-del'; del.innerHTML = '⌫'; del.addEventListener('click', numpadDelete);
+    const empty = document.createElement('div'); empty.style.cssText = 'visibility:hidden';
+    const sub = document.createElement('button'); sub.className = 'numpad-btn numpad-submit'; sub.id = 'numpadSubmit'; sub.textContent = 'Tahmin →';
+    sub.addEventListener('click', () => { closeNumpad(); makeGuess(); });
+    grid.appendChild(del); grid.appendChild(empty); grid.appendChild(sub);
   }
-  const del = document.createElement('button'); del.className = 'numpad-btn numpad-del'; del.innerHTML = '⌫'; del.addEventListener('click', numpadDelete);
-  const empty = document.createElement('div'); empty.style.cssText = 'visibility:hidden';
-  const sub = document.createElement('button'); sub.className = 'numpad-btn numpad-submit'; sub.id = 'numpadSubmit'; sub.textContent = 'Tahmin →';
-  sub.addEventListener('click', () => { closeNumpad(); makeGuess(); });
-  grid.appendChild(del); grid.appendChild(empty); grid.appendChild(sub);
 }
 function numpadInput(val) {
-  if (digitValues.includes(val)) { tx('errMsg','⚠ Bu rakam zaten var'); setTimeout(()=>tx('errMsg',''),1200); return; }
+  if (!freeMode && digitValues.includes(val)) { tx('errMsg','⚠ Bu rakam zaten var'); setTimeout(()=>tx('errMsg',''),1200); return; }
   digitValues[activeDigitIndex] = val;
   let next = -1;
   for (let i = activeDigitIndex+1; i < D; i++) { if (digitValues[i]==='') { next=i; break; } }
@@ -1651,6 +1728,7 @@ function updateDigitBoxes() {
   }
 }
 
+/* ── SCREENS ── */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $(id).classList.add('active');
@@ -1664,26 +1742,39 @@ function goHome() {
   showScreen('homeScreen');
 }
 function updateHomeStats() {
-  [3,4,5,6,7,8].forEach(d => {
+  [3,4,5,6,7].forEach(d => {
     const b = stats[d].best;
     tx(`best${d}`, b ? b+' deneme' : '—');
     tx(`gs${d}`, b||'—');
   });
+  const bf = stats['4f'].best;
+  tx('best4f', bf ? bf+' deneme' : '—');
+  tx('gs4f', bf||'—');
 }
 
-function startGame(digits, forcedSecret) {
+/* ── GAME FUNCTIONS ── */
+function startGame(digits, forcedSecret, isFree) {
+  freeMode = !!isFree;
   D = digits;
   digitValues = Array(digits).fill('');
   activeDigitIndex = 0;
   buildInputs(digits);
   buildNumpad();
+  // Update numpad title
+  const nt = $('numpadTitle');
+  if (nt) nt.textContent = freeMode ? 'Rakam Gir (0 ve tekrar serbest)' : 'Rakam Gir (0 kullanılamaz)';
   restartGame(forcedSecret);
   showScreen('gameScreen');
-  const m = MODES[digits], pill = $('modePill');
+  const modeKey = freeMode ? '4f' : digits;
+  const m = MODES[modeKey], pill = $('modePill');
   let pillText = m.diff + ' · ' + m.label;
   if (isChallengeMode) pillText = '⚔️ Meydan Okuma · ' + m.label;
   pill.textContent = pillText;
   pill.style.cssText = `color:${m.color};background:${m.bg};border-color:${m.bd};font-size:clamp(9px,2.5vw,11px);font-weight:800;text-transform:uppercase;letter-spacing:0.6px;padding:6px 12px;border-radius:99px;border:2px solid;`;
+  // Show free mode tutorial
+  if (freeMode && !isChallengeMode) {
+    setTimeout(() => $('freeTutModal').classList.add('show'), 300);
+  }
 }
 
 function buildInputs(n) {
@@ -1706,16 +1797,16 @@ function handleKeyboard(e) {
   const active = document.querySelector('.screen.active');
   if (!active || active.id !== 'gameScreen') return;
   const key = e.key;
-  if (key>='1' && key<='9') {
+  const validKeys = freeMode ? (key>='0'&&key<='9') : (key>='1'&&key<='9');
+  if (validKeys) {
     e.preventDefault();
-    if (digitValues[activeDigitIndex]===key) return;
-    if (!digitValues.includes(key)) {
-      digitValues[activeDigitIndex]=key;
-      let next=-1;
-      for(let i=activeDigitIndex+1;i<D;i++){if(digitValues[i]===''){next=i;break;}}
-      if(next!==-1) activeDigitIndex=next;
-      updateDigitBoxes();
-    }
+    if (!freeMode && digitValues.includes(key)) return;
+    if (!freeMode && key==='0') { tx('errMsg','⚠ 0 kullanılamaz'); setTimeout(()=>tx('errMsg',''),1200); shakeAll(); return; }
+    digitValues[activeDigitIndex]=key;
+    let next=-1;
+    for(let i=activeDigitIndex+1;i<D;i++){if(digitValues[i]===''){next=i;break;}}
+    if(next!==-1) activeDigitIndex=next;
+    updateDigitBoxes();
   } else if (key==='Backspace') {
     e.preventDefault();
     if(digitValues[activeDigitIndex]!==''){digitValues[activeDigitIndex]='';}
@@ -1724,12 +1815,13 @@ function handleKeyboard(e) {
   } else if (key==='ArrowLeft'&&activeDigitIndex>0){activeDigitIndex--;updateDigitBoxes();}
   else if (key==='ArrowRight'&&activeDigitIndex<D-1){activeDigitIndex++;updateDigitBoxes();}
   else if (key==='Enter'){makeGuess();}
-  else if (key==='0'){tx('errMsg','⚠ 0 kullanılamaz');setTimeout(()=>tx('errMsg',''),1200);shakeAll();}
+  else if (!freeMode&&key==='0'){tx('errMsg','⚠ 0 kullanılamaz');setTimeout(()=>tx('errMsg',''),1200);shakeAll();}
 }
 document.addEventListener('keydown', handleKeyboard);
 
 function restartGame(forcedSecret) {
-  const m = MODES[D];
+  const modeKey = freeMode ? '4f' : D;
+  const m = MODES[modeKey];
   secret = forcedSecret || gen(D);
   attempts=0; gameOver=false; hintsUsed=0;
   digitValues=Array(D).fill('');
@@ -1743,20 +1835,27 @@ function restartGame(forcedSecret) {
   $('hintBtn').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> İpucu Al`;
   $('fbWrap').className='fb';
   $('hintBox').classList.remove('show');
-  const s=stats[D];
+  const s=stats[modeKey];
   tx('sBest',s.best||'—');
   tx('sWins',s.wins);
-  updateProg(D,m);
+  updateProg();
   updateDigitBoxes();
   if(!isMobile()) setTimeout(()=>{activeDigitIndex=0;updateDigitBoxes();},55);
 }
 
 function gen(n) {
+  if (freeMode) {
+    // 0-9, repeats allowed
+    let r='';
+    for(let i=0;i<n;i++) r+=String(Math.floor(Math.random()*10));
+    return r;
+  }
   return ['1','2','3','4','5','6','7','8','9'].sort(()=>Math.random()-.5).slice(0,n).join('');
 }
 
 function updateProg(digits,mode) {
-  const n=digits||D, m=mode||MODES[n];
+  const modeKey = freeMode ? '4f' : (digits||D);
+  const m = mode || MODES[modeKey];
   $('progFill').style.width=Math.min((attempts/m.max)*100,100)+'%';
   tx('progVal',`${attempts} / ${m.max}`);
 }
@@ -1769,8 +1868,9 @@ function makeGuess() {
   if (gameOver) return;
   tx('errMsg','');
   if (digitValues.some(v=>v==='')) { tx('errMsg','⚠ Tüm haneleri doldur'); shakeAll(); if(isMobile())openNumpad(); return; }
-  if (new Set(digitValues).size!==D) { tx('errMsg','⚠ Her rakam farklı olmalı'); shakeAll(); return; }
+  if (!freeMode && new Set(digitValues).size!==D) { tx('errMsg','⚠ Her rakam farklı olmalı'); shakeAll(); return; }
   const guess=digitValues.join('');
+  const modeKey = freeMode ? '4f' : D;
   attempts++; tx('sDeneme',attempts); updateProg();
   let plus=0, minus=0;
   for(let i=0;i<D;i++){if(guess[i]===secret[i])plus++;else if(secret.includes(guess[i]))minus++;}
@@ -1781,7 +1881,7 @@ function makeGuess() {
   showFb(plus,minus);
   if(plus===D){
     gameOver=true;
-    const s=stats[D]; s.wins++;
+    const s=stats[modeKey]; s.wins++;
     if(s.best===null||attempts<s.best)s.best=attempts;
     tx('sBest',s.best); tx('sWins',s.wins);
     $('guessBtn').disabled=true; $('hintBtn').disabled=true;
@@ -1793,11 +1893,11 @@ function makeGuess() {
       if(isChallengeMode){
         $('modalSub').textContent = `⚔️ Meydan okumayı ${attempts} denemede tamamladın! 🎯`;
       } else {
-        $('modalSub').textContent=`${D} basamaklı sayıyı ${attempts} denemede buldun! 🎯`;
+        $('modalSub').textContent=`${freeMode?'Serbest mod':D+' basamaklı'} sayıyı ${attempts} denemede buldun! 🎯`;
       }
       $('winModal').classList.add('show');
     },700);
-  } else if(attempts>=MODES[D].max){
+  } else if(attempts>=MODES[modeKey].max){
     gameOver=true;
     $('guessBtn').disabled=true; $('hintBtn').disabled=true;
   }
@@ -1870,22 +1970,28 @@ function launchConfetti() {
   setTimeout(()=>{container.innerHTML='';},5000);
 }
 
+/* ── WIRE BUTTONS ── */
 $('modesGrid').addEventListener('click', e => {
   const card=e.target.closest('.mode-card');
   if(!card)return;
   isChallengeMode=false;
-  startGame(+card.dataset.digits);
+  const isFree = card.dataset.free === 'true';
+  startGame(+card.dataset.digits, undefined, isFree);
 });
 $('backBtn').addEventListener('click', goHome);
 $('guessBtn').addEventListener('click', makeGuess);
 $('hintBtn').addEventListener('click', showHint);
-$('resetBtn').addEventListener('click', () => { isChallengeMode=false; restartGame(); });
+$('resetBtn').addEventListener('click', () => { isChallengeMode=false; freeMode=false; restartGame(); });
 $('winHomeBtn').addEventListener('click', goHome);
 $('winRestartBtn').addEventListener('click', () => { $('winModal').classList.remove('show'); restartGame(); });
 $('winModal').addEventListener('click', e=>{if(e.target===$('winModal'))goHome();});
 $('numpadBackdrop').addEventListener('click', closeNumpad);
 $('numpadCloseBtn').addEventListener('click', closeNumpad);
 
+$('freeTutStartBtn').addEventListener('click', () => $('freeTutModal').classList.remove('show'));
+$('freeTutModal').addEventListener('click', e => { if(e.target===$('freeTutModal')) $('freeTutModal').classList.remove('show'); });
+
+/* ── INIT ── */
 updateHomeStats();
 checkIncomingChallenge();
 </script>
