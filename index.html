@@ -1,1999 +1,1839 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light">
+<html lang="tr" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" id="themeColorMeta" content="#F0F4FF">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>Sayı Tahmin | Mehmet Buğrahan Şaşmaz</title>
-<meta name="description" content="Gizli sayıyı bul! 3-6 basamaklı sayı tahmin oyunu.">
-<meta name="author" content="Mehmet Buğrahan Şaşmaz">
-<link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f" id="themeColorMeta">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Sayı Tahmin | Profesyonel</title>
+    <meta name="description" content="Zekanı test et! Gizli sayıyı bul, arkadaşlarına meydan oku.">
+    <meta name="author" content="Mehmet Buğrahan Şaşmaz">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           MODERN PROFESSIONAL DESIGN SYSTEM
+           ============================================ */
+        :root {
+            --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth;}
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-elevated: #ffffff;
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            
+            --overlay: rgba(15, 23, 42, 0.4);
+            
+            --accent-primary: #6366f1;
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
+            --accent-warning: #f59e0b;
+            --accent-info: #3b82f6;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            
+            color-scheme: light;
+        }
 
-:root,[data-theme="light"]{
-  --bg:#EEF2FF;--surface:#FFF;--s2:#F4F6FF;--s3:#E8ECFD;
-  --border:#DDE3FF;--border2:#BECCFD;
-  --ink:#1E2462;--ink2:#515A99;--ink3:#8E97C4;
-  --blob-a:rgba(168,180,255,.55);--blob-b:rgba(110,231,183,.5);
-  --sh:0 2px 10px rgba(80,100,220,.1);--sh-hover:0 8px 28px rgba(80,100,220,.2);
-  --overlay:rgba(30,36,98,.42);
-  color-scheme:light;
-}
-[data-theme="dark"]{
-  --bg:#0C0E1F;--surface:#13162E;--s2:#191D3A;--s3:#1F2447;
-  --border:#272D58;--border2:#373F78;
-  --ink:#DCE0FF;--ink2:#8A93C8;--ink3:#4A5282;
-  --blob-a:rgba(99,102,241,.22);--blob-b:rgba(16,185,129,.16);
-  --sh:0 2px 14px rgba(0,0,0,.4);--sh-hover:0 8px 32px rgba(0,0,0,.58);
-  --overlay:rgba(0,0,0,.7);
-  color-scheme:dark;
-}
-[data-theme="dark"] .mc-easy{background:linear-gradient(145deg,#081f16,#0b2a1e)!important;border-color:#103d2b!important;}
-[data-theme="dark"] .mc-norm{background:linear-gradient(145deg,#0a1528,#0d1e38)!important;border-color:#12284e!important;}
-[data-theme="dark"] .mc-hard{background:linear-gradient(145deg,#100a32,#170e42)!important;border-color:#261860!important;}
-[data-theme="dark"] .mc-exp{background:linear-gradient(145deg,#200810,#2d0b18)!important;border-color:#4d1226!important;}
-[data-theme="dark"] .mc-leg7{background:linear-gradient(145deg,#1f1200,#2d1c00)!important;border-color:#5c3a00!important;}
-[data-theme="dark"] .mc-leg8{background:linear-gradient(145deg,#001f1c,#002e2a)!important;border-color:#005c54!important;}
-[data-theme="dark"] .mode-digit-badge,[data-theme="dark"] .mode-diff-badge{background:rgba(255,255,255,.06)!important;}
-[data-theme="dark"] .mode-footer{border-top-color:rgba(255,255,255,.07)!important;}
-[data-theme="dark"] .fb-plus{background:#061c12!important;border-color:#0f4228!important;}
-[data-theme="dark"] .fb-minus{background:#220610!important;border-color:#4a0e22!important;}
-[data-theme="dark"] .fb-zero{background:var(--s2)!important;border-color:var(--border2)!important;}
-[data-theme="dark"] .fb-win{background:#1f1500!important;border-color:#4a3100!important;}
-[data-theme="dark"] .fbs.fp,[data-theme="dark"] .hb.hbp{background:#061c12;}
-[data-theme="dark"] .fbs.fm,[data-theme="dark"] .hb.hbm{background:#220610;}
-[data-theme="dark"] .fbs.fz,[data-theme="dark"] .hb.hbz{background:var(--s2);}
-[data-theme="dark"] .fbs.fw{background:#1f1500;}
-[data-theme="dark"] .pip-plus{background:#061c12!important;}
-[data-theme="dark"] .pip-minus{background:#220610!important;}
-[data-theme="dark"] .hint-box{background:#221600!important;border-color:#4a3100!important;}
-[data-theme="dark"] .hint-text{color:#FDE68A!important;}
-[data-theme="dark"] .dbox{background:var(--s2);color:var(--ink);}
-[data-theme="dark"] .dbox:focus,[data-theme="dark"] .dbox.filled{background:#182044;color:#93C5FD;border-color:#3B82F6;}
-[data-theme="dark"] .name-input{background:var(--s2);color:var(--ink);border-color:var(--border2);}
-[data-theme="dark"] .numpad-btn{background:var(--s3);border-color:var(--border2);color:var(--ink);}
-[data-theme="dark"] .numpad-del{background:#220610;border-color:#4a0e22;color:#FDA4AF;}
-[data-theme="dark"] .numpad-submit{background:linear-gradient(135deg,#4338CA,#6D28D9);}
-[data-theme="dark"] .numpad-wrap{background:var(--surface);border-color:var(--border2);}
-[data-theme="dark"] .chal-card{background:linear-gradient(145deg,#0d1a3a,#15204d)!important;border-color:#2a3a7a!important;}
-[data-theme="dark"] .chal-create-box{background:var(--s2)!important;border-color:var(--border2)!important;}
-[data-theme="dark"] .chal-digit-box{background:var(--s3)!important;border-color:var(--border2)!important;color:var(--ink)!important;}
-[data-theme="dark"] .chal-digit-box.filled{background:#182044!important;color:#93C5FD!important;border-color:#3B82F6!important;}
-[data-theme="dark"] .chal-link-box{background:var(--s3)!important;border-color:var(--border2)!important;color:var(--ink2)!important;}
-[data-theme="dark"] .chal-banner{background:linear-gradient(135deg,#1a0a3d,#0a1f3d)!important;border-color:#3a1a7a!important;}
-[data-theme="dark"] .chal-join-section{background:var(--s2)!important;border-color:var(--border)!important;}
-[data-theme="dark"] .chal-code-input{background:var(--s3)!important;color:var(--ink)!important;border-color:var(--border2)!important;}
-[data-theme="dark"] .chal-shortcode-box{background:var(--s3)!important;border-color:var(--border2)!important;color:#C4B5FD!important;}
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #131320;
+            --bg-tertiary: #1a1a2e;
+            --bg-elevated: #16213e;
+            
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+            
+            --border-color: #1e293b;
+            --border-hover: #334155;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+            
+            --overlay: rgba(0, 0, 0, 0.6);
+            
+            --accent-primary: #818cf8;
+            --accent-success: #34d399;
+            --accent-danger: #f87171;
+            --accent-warning: #fbbf24;
+            --accent-info: #60a5fa;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            
+            color-scheme: dark;
+        }
 
-:root{
-  --mint:#10B981;--mint-lt:#D1FAE5;--mint-bd:#6EE7B7;
-  --coral:#F43F5E;--coral-lt:#FFE4E6;--coral-bd:#FDA4AF;
-  --sky:#3B82F6;--sky-lt:#DBEAFE;--sky-bd:#93C5FD;
-  --violet:#8B5CF6;--violet-lt:#EDE9FE;--violet-bd:#C4B5FD;
-  --amber:#F59E0B;--amber-lt:#FEF3C7;--amber-bd:#FCD34D;
-  --fn:'Nunito',sans-serif;--ft:'Fredoka One',cursive;
-  --r-xs:6px;--r-sm:10px;--r:14px;--r-lg:18px;--r-xl:24px;--r-2xl:30px;
-}
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body{
-  font-family:var(--fn);background:var(--bg);color:var(--ink);
-  min-height:100vh;min-height:100dvh;
-  display:flex;justify-content:center;
-  padding:0 max(12px,env(safe-area-inset-right)) max(80px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
-  -webkit-font-smoothing:antialiased;transition:background .35s,color .35s;overflow-x:hidden;
-}
-body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(72px);}
-body::before{width:min(38vw,340px);height:min(38vw,340px);background:var(--blob-a);top:-80px;right:-60px;}
-body::after{width:min(32vw,280px);height:min(32vw,280px);background:var(--blob-b);bottom:60px;left:-50px;}
+        html {
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
 
-.app{width:100%;max-width:520px;position:relative;z-index:1;}
-.screen{display:none;flex-direction:column;gap:11px;padding-top:16px;}
-.screen.active{display:flex;}
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background var(--transition-smooth), color var(--transition-smooth);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* ── THEME ── */
-.theme-btn{
-  position:fixed;top:max(14px,env(safe-area-inset-top,14px));right:max(14px,env(safe-area-inset-right,14px));
-  z-index:300;width:42px;height:42px;
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:19px;box-shadow:var(--sh);transition:background .3s,border-color .3s,transform .18s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;
-}
-.theme-btn:hover{transform:scale(1.1);}
-.theme-btn:active{transform:scale(.93);}
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
 
-.signature{
-  position:fixed;bottom:max(10px,env(safe-area-inset-bottom,10px));right:max(12px,env(safe-area-inset-right,12px));
-  z-index:200;font-size:9.5px;font-weight:700;color:var(--ink3);
-  background:var(--surface);border:1px solid var(--border);
-  padding:4px 9px;border-radius:99px;
-  box-shadow:var(--sh);letter-spacing:.3px;opacity:.75;
-  transition:opacity .2s,background .35s,border-color .35s;
-  pointer-events:none;white-space:nowrap;
-}
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
 
-/* ══ HOME ══ */
-.home-hdr{text-align:center;padding:clamp(18px,5vw,32px) 0 10px;}
-.home-logo{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:clamp(62px,15vw,84px);height:clamp(62px,15vw,84px);
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);
-  border-radius:clamp(18px,5vw,28px);margin-bottom:clamp(12px,3vw,20px);
-  box-shadow:0 8px 30px rgba(99,102,241,.42);
-  font-family:var(--ft);font-size:clamp(20px,5.5vw,30px);color:#fff;
-  transition:transform .2s;
-}
-.home-logo:hover{transform:scale(1.04) rotate(-2deg);}
-.home-title{font-family:var(--ft);font-size:clamp(24px,7vw,36px);color:var(--ink);margin-bottom:6px;}
-.home-sub{font-size:clamp(12px,3vw,14px);font-weight:600;color:var(--ink3);line-height:1.6;}
+        .bg-blob:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-primary);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
 
-.rules-strip{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r-lg);box-shadow:var(--sh);
-  display:grid;grid-template-columns:1fr 1fr;overflow:hidden;
-  transition:background .35s,border-color .35s;
-}
-.rs-item{display:flex;align-items:center;gap:clamp(8px,2.5vw,13px);padding:clamp(11px,3vw,15px) clamp(11px,3vw,17px);}
-.rs-item+.rs-item{border-left:1.5px solid var(--border);}
-.rs-pip{font-family:var(--ft);font-size:clamp(13px,3.5vw,17px);width:clamp(34px,9vw,44px);height:clamp(34px,9vw,44px);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid;}
-.pip-plus{color:var(--mint);background:var(--mint-lt);border-color:var(--mint-bd);}
-.pip-minus{color:var(--coral);background:var(--coral-lt);border-color:var(--coral-bd);}
-.rs-t{font-size:clamp(11.5px,3vw,13.5px);font-weight:800;color:var(--ink);}
-.rs-d{font-size:clamp(10px,2.5vw,11.5px);font-weight:600;color:var(--ink3);margin-top:1px;}
+        .bg-blob:nth-child(2) {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-success);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -7s;
+        }
 
-.sec-lbl{font-size:clamp(10px,2.5vw,11.5px);font-weight:800;text-transform:uppercase;letter-spacing:1.3px;color:var(--ink3);padding:0 2px;margin-top:2px;}
+        .bg-blob:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: var(--accent-warning);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
 
-/* MODE CARDS */
-.modes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,2vw,12px);}
-.mode-card{
-  border-radius:var(--r-lg);padding:clamp(13px,3.5vw,19px) clamp(12px,3vw,17px);
-  cursor:pointer;transition:transform .2s,box-shadow .22s;
-  position:relative;overflow:hidden;
-  background:none;border:2px solid;
-  text-align:left;font-family:var(--fn);
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-  user-select:none;
-  width:100%;
-}
-.mc-easy{background:linear-gradient(148deg,#EDFDF5,#C8F7E0)!important;border-color:#9EF0C8;--mc:var(--mint);}
-.mc-norm{background:linear-gradient(148deg,#EBF4FF,#CCDFFE)!important;border-color:#A5CBFD;--mc:var(--sky);}
-.mc-hard{background:linear-gradient(148deg,#F1EDFF,#E0D9FE)!important;border-color:#C8BAFE;--mc:var(--violet);}
-.mc-exp{background:linear-gradient(148deg,#FFF0F3,#FDDBE1)!important;border-color:#FCAFC0;--mc:var(--coral);}
-.mc-leg7{background:linear-gradient(148deg,#FFF7ED,#FDE8C8)!important;border-color:#FDBA74;--mc:#F97316;}
-.mc-leg8{background:linear-gradient(148deg,#F0FDFA,#CCFBF1)!important;border-color:#5EEAD4;--mc:#0D9488;}
-.mode-card::after{content:'';position:absolute;top:-22px;right:-22px;width:72px;height:72px;border-radius:50%;opacity:.14;background:var(--mc);pointer-events:none;}
-.mode-card:hover{transform:translateY(-3px);box-shadow:var(--sh-hover);}
-.mode-card:active{transform:scale(.97);}
-.mc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(8px,2vw,12px);}
-.mode-digit-badge{font-family:var(--ft);font-size:clamp(20px,5.5vw,27px);color:var(--mc);width:clamp(40px,10vw,52px);height:clamp(40px,10vw,52px);border-radius:14px;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.07);}
-.mode-diff-badge{font-size:clamp(9px,2vw,10.5px);font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--mc);background:rgba(255,255,255,.72);padding:3px 9px;border-radius:99px;}
-.mode-name{font-size:clamp(13px,3.5vw,15.5px);font-weight:900;color:var(--ink);margin-bottom:2px;}
-.mode-desc{font-size:clamp(10px,2.5vw,11.5px);font-weight:600;color:var(--ink2);line-height:1.4;}
-.mode-footer{display:flex;align-items:center;gap:5px;margin-top:clamp(8px,2vw,12px);padding-top:clamp(8px,2vw,12px);border-top:1.5px solid rgba(255,255,255,.65);}
-.mode-stat{font-size:clamp(10px,2.5vw,12px);font-weight:800;color:var(--mc);}
-.mode-stat-lbl{font-size:clamp(9px,2vw,10.5px);font-weight:600;color:var(--ink3);}
+        @keyframes blobFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(-40px, -20px) scale(1.05);
+            }
+        }
 
-.best-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;transition:background .35s,border-color .35s;}
-.best-head{padding:clamp(9px,2vw,12px) clamp(12px,3vw,17px);border-bottom:1.5px solid var(--border);font-size:clamp(10px,2.5vw,11.5px);font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);}
-.best-grid{display:grid;grid-template-columns:repeat(6,1fr);}
-.best-item{padding:clamp(9px,2vw,12px) 6px;text-align:center;border-right:1.5px solid var(--border);}
-.best-item:last-child{border-right:none;}
-.best-n{font-family:var(--ft);font-size:clamp(15px,4vw,19px);color:var(--ink);line-height:1;}
-.best-l{font-size:clamp(8px,2vw,9.5px);font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-top:3px;}
+        /* Grid Pattern Overlay */
+        .grid-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--text-primary) 1px, transparent 1px),
+                linear-gradient(90deg, var(--text-primary) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
 
-/* ══════════════════════════════════════
-   CHALLENGE CARD
-══════════════════════════════════════ */
-.chal-card{
-  background:linear-gradient(145deg,#EEF0FF,#E8ECFF);
-  border:2px solid #C7D0FF;
-  border-radius:var(--r-lg);
-  box-shadow:var(--sh);
-  overflow:hidden;
-  transition:background .35s,border-color .35s;
-}
-.chal-head{
-  padding:clamp(12px,3vw,16px) clamp(14px,3.5vw,20px);
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:2px solid rgba(99,102,241,.15);
-}
-.chal-head-left{display:flex;align-items:center;gap:10px;}
-.chal-head-emoji{font-size:22px;}
-.chal-head-title{font-size:clamp(13px,3.5vw,15px);font-weight:900;color:var(--ink);}
-.chal-head-sub{font-size:clamp(10px,2.5vw,11.5px);font-weight:600;color:var(--ink3);margin-top:1px;}
-.chal-toggle-btn{
-  font-size:clamp(10px,2.5vw,11.5px);font-weight:800;
-  color:var(--violet);background:var(--violet-lt);
-  border:1.5px solid var(--violet-bd);
-  padding:5px 12px;border-radius:99px;cursor:pointer;
-  transition:all .18s;white-space:nowrap;
-  font-family:var(--fn);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.chal-toggle-btn:hover{background:var(--violet);color:#fff;}
+        /* Main Container */
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            padding: var(--space-md);
+            padding-bottom: max(var(--space-xl), env(safe-area-inset-bottom));
+            position: relative;
+            z-index: 1;
+        }
 
-/* Create section */
-.chal-create-box{
-  padding:clamp(14px,3.5vw,20px);
-  background:var(--surface);
-  border-bottom:1.5px solid var(--border);
-  display:none;
-}
-.chal-create-box.open{display:block;}
-.chal-create-title{font-size:clamp(11px,3vw,13px);font-weight:800;color:var(--ink2);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
-.chal-create-title span{font-size:16px;}
-.chal-mode-select{
-  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;
-}
-.chal-mode-btn{
-  font-family:var(--fn);font-size:clamp(10px,2.5vw,12px);font-weight:800;
-  padding:6px 12px;border-radius:99px;border:2px solid;
-  cursor:pointer;transition:all .18s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  background:var(--s2);color:var(--ink2);border-color:var(--border);
-}
-.chal-mode-btn.selected{background:var(--violet);color:#fff;border-color:var(--violet);}
-.chal-input-row{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
-.chal-input-lbl{font-size:clamp(9.5px,2.5vw,11px);font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;}
-.chal-digit-boxes{display:flex;gap:6px;flex:1;}
-.chal-digit-box{
-  flex:1;min-width:0;height:clamp(40px,10vw,50px);
-  background:var(--s2);border:2px solid var(--border);
-  border-radius:var(--r-sm);font-family:var(--ft);
-  font-size:clamp(16px,4.5vw,22px);text-align:center;
-  color:var(--ink3);cursor:pointer;
-  transition:all .17s;
-  display:flex;align-items:center;justify-content:center;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  user-select:none;
-}
-.chal-digit-box.filled{background:var(--sky-lt);border-color:var(--sky-bd);color:var(--sky);}
-.chal-digit-box.active{border-color:var(--sky);box-shadow:0 0 0 4px rgba(59,130,246,.15);}
-.chal-random-btn{
-  font-size:18px;width:40px;height:40px;flex-shrink:0;
-  background:var(--amber-lt);border:2px solid var(--amber-bd);
-  border-radius:var(--r-sm);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .18s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.chal-random-btn:hover{background:var(--amber);transform:rotate(90deg);}
-.chal-err{font-size:11px;font-weight:700;color:var(--coral);min-height:16px;margin-bottom:6px;}
-.chal-gen-btn{
-  width:100%;padding:clamp(10px,2.5vw,13px);
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
-  font-family:var(--fn);font-size:clamp(12px,3vw,14px);font-weight:800;
-  border:none;border-radius:var(--r-sm);cursor:pointer;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:0 4px 16px rgba(99,102,241,.36);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-}
-.chal-gen-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.48);}
-.chal-gen-btn:active{transform:scale(.97);}
-.chal-gen-btn:disabled{background:var(--border2);color:var(--ink3);cursor:not-allowed;box-shadow:none;transform:none;}
+        /* Header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) 0;
+            margin-bottom: var(--space-lg);
+        }
 
-/* Link result */
-.chal-link-result{
-  padding:clamp(12px,3vw,16px) clamp(14px,3.5vw,20px);
-  display:none;
-  border-bottom:1.5px solid var(--border);
-}
-.chal-link-result.show{display:block;}
-.chal-link-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink3);margin-bottom:8px;}
-.chal-link-wrap{display:flex;gap:8px;align-items:center;}
-.chal-link-box{
-  flex:1;font-size:11.5px;font-weight:700;color:var(--ink2);
-  background:var(--s2);border:1.5px solid var(--border);
-  border-radius:var(--r-sm);padding:9px 11px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  font-family:monospace;
-}
-.chal-copy-btn{
-  flex-shrink:0;padding:9px 14px;
-  font-family:var(--fn);font-size:12px;font-weight:800;
-  background:var(--violet-lt);color:var(--violet);
-  border:1.5px solid var(--violet-bd);border-radius:var(--r-sm);
-  cursor:pointer;transition:all .18s;white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.chal-copy-btn:hover{background:var(--violet);color:#fff;}
-.chal-copy-btn.copied{background:var(--mint);color:#fff;border-color:var(--mint);}
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
 
-/* ── Shortcode row (NEW) ── */
-.chal-shortcode-row{
-  display:flex;align-items:center;gap:8px;
-  margin-top:10px;padding-top:10px;
-  border-top:1.5px dashed var(--border2);
-}
-.chal-shortcode-lbl{
-  font-size:10px;font-weight:800;text-transform:uppercase;
-  letter-spacing:.8px;color:var(--violet);white-space:nowrap;
-  flex-shrink:0;
-}
-.chal-shortcode-box{
-  flex:1;font-family:monospace;font-size:12.5px;font-weight:800;
-  color:var(--violet);background:var(--violet-lt);
-  border:1.5px solid var(--violet-bd);border-radius:var(--r-sm);
-  padding:7px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  letter-spacing:.5px;
-}
-.chal-copy-code-btn{
-  flex-shrink:0;padding:7px 12px;
-  font-family:var(--fn);font-size:11px;font-weight:800;
-  background:var(--violet-lt);color:var(--violet);
-  border:1.5px solid var(--violet-bd);border-radius:var(--r-sm);
-  cursor:pointer;transition:all .18s;white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.chal-copy-code-btn:hover{background:var(--violet);color:#fff;}
-.chal-copy-code-btn.copied{background:var(--mint);color:#fff;border-color:var(--mint);}
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
 
-.chal-share-row{display:flex;gap:7px;margin-top:9px;}
-.chal-share-btn{
-  flex:1;padding:8px 6px;
-  font-family:var(--fn);font-size:11.5px;font-weight:800;
-  border:1.5px solid;border-radius:var(--r-sm);cursor:pointer;
-  transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.chal-share-wa{background:#DCF8C6;color:#128C7E;border-color:#A7D7A0;}
-.chal-share-wa:hover{background:#128C7E;color:#fff;}
-.chal-share-tw{background:#E7F3FE;color:#1DA1F2;border-color:#A8D4F8;}
-.chal-share-tw:hover{background:#1DA1F2;color:#fff;}
-.chal-share-gen{background:var(--s2);color:var(--ink2);border-color:var(--border);}
-.chal-share-gen:hover{background:var(--ink2);color:#fff;}
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+        }
 
-/* ── JOIN BY CODE section (NEW) ── */
-.chal-join-section{
-  padding:clamp(14px,3.5vw,18px) clamp(14px,3.5vw,20px);
-  background:var(--surface);
-  border-top:1.5px solid var(--border);
-}
-.chal-join-title{
-  font-size:clamp(11px,3vw,13px);font-weight:800;color:var(--ink2);
-  margin-bottom:10px;display:flex;align-items:center;gap:7px;
-}
-.chal-join-title span{font-size:16px;}
-.chal-join-hint{
-  font-size:11px;font-weight:600;color:var(--ink3);margin-bottom:9px;line-height:1.5;
-}
-.chal-join-row{display:flex;gap:8px;align-items:stretch;}
-.chal-code-input{
-  flex:1;padding:10px 12px;
-  background:var(--s2);color:var(--ink);
-  border:1.5px solid var(--border2);border-radius:var(--r-sm);
-  font-family:monospace;font-size:12.5px;font-weight:700;
-  outline:none;transition:border-color .18s,box-shadow .18s;
-  -webkit-appearance:none;
-}
-.chal-code-input:focus{border-color:var(--violet);box-shadow:0 0 0 4px rgba(139,92,246,.13);}
-.chal-code-input::placeholder{color:var(--ink3);font-family:var(--fn);font-size:12px;}
-.chal-join-btn{
-  flex-shrink:0;padding:10px 16px;
-  background:linear-gradient(135deg,#10B981,#059669);color:#fff;
-  font-family:var(--fn);font-size:clamp(11px,3vw,13px);font-weight:800;
-  border:none;border-radius:var(--r-sm);cursor:pointer;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:0 3px 12px rgba(16,185,129,.32);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  white-space:nowrap;
-}
-.chal-join-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(16,185,129,.44);}
-.chal-join-btn:active{transform:scale(.96);}
-.chal-join-err{font-size:11px;font-weight:700;color:var(--coral);min-height:15px;margin-top:6px;}
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
 
-/* Incoming challenge banner */
-.chal-banner{
-  background:linear-gradient(135deg,#F3F0FF,#EBF4FF);
-  border:2px solid var(--violet-bd);
-  border-radius:var(--r-lg);
-  padding:clamp(14px,3.5vw,20px);
-  display:none;
-  animation:fbIn .4s cubic-bezier(.34,1.3,.64,1);
-  box-shadow:0 4px 20px rgba(99,102,241,.2);
-}
-.chal-banner.show{display:block;}
-.chal-banner-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.chal-banner-emoji{font-size:32px;}
-.chal-banner-title{font-family:var(--ft);font-size:clamp(17px,4.5vw,21px);color:var(--violet);}
-.chal-banner-sub{font-size:clamp(11px,3vw,13px);font-weight:600;color:var(--ink2);margin-top:2px;}
-.chal-banner-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-.chal-meta-pill{font-size:clamp(10px,2.5vw,12px);font-weight:800;padding:4px 12px;border-radius:99px;border:1.5px solid;}
-.chal-meta-digits{color:var(--violet);background:var(--violet-lt);border-color:var(--violet-bd);}
-.chal-meta-from{color:var(--sky);background:var(--sky-lt);border-color:var(--sky-bd);}
-.chal-accept-btn{
-  width:100%;padding:clamp(11px,3vw,14px);
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
-  font-family:var(--fn);font-size:clamp(13px,3.5vw,15px);font-weight:800;
-  border:none;border-radius:var(--r-sm);cursor:pointer;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:0 4px 18px rgba(99,102,241,.38);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-}
-.chal-accept-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(99,102,241,.5);}
-.chal-accept-btn:active{transform:scale(.96);}
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
 
-/* Challenge numpad */
-.chal-numpad-overlay{
-  position:fixed;inset:0;z-index:400;
-  background:transparent;
-  display:none;flex-direction:column;justify-content:flex-end;
-  padding-bottom:max(0px,env(safe-area-inset-bottom));
-}
-.chal-numpad-overlay.show{display:flex;}
-.chal-numpad-backdrop{position:absolute;inset:0;}
-.chal-numpad-wrap{
-  position:relative;z-index:1;
-  background:var(--surface);border:1.5px solid var(--border2);
-  border-radius:var(--r-2xl) var(--r-2xl) 0 0;
-  padding:14px 16px 20px;
-  box-shadow:0 -10px 40px rgba(0,0,0,.18);
-  animation:slideUp .25s cubic-bezier(.34,1.1,.64,1);
-}
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+        .header-actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
 
-/* ══ GAME ══ */
-.game-hdr{display:flex;align-items:center;justify-content:space-between;padding:clamp(10px,2.5vw,14px) 0 2px;}
-.back-btn{
-  display:flex;align-items:center;gap:7px;
-  font-size:clamp(12px,3.2vw,14px);font-weight:700;color:var(--ink2);
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r-sm);padding:clamp(7px,1.8vw,10px) clamp(10px,2.5vw,14px);
-  cursor:pointer;transition:all .18s;box-shadow:var(--sh);
-  font-family:var(--fn);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.back-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-.back-btn:hover{background:var(--s3);border-color:var(--border2);color:var(--ink);}
-.mode-pill{font-size:clamp(9px,2.5vw,11px);font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:clamp(5px,1.3vw,7px) clamp(10px,2.5vw,14px);border-radius:99px;border:2px solid;white-space:nowrap;}
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-primary);
+            position: relative;
+        }
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(7px,2vw,11px);}
-.stat{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);padding:clamp(9px,2.5vw,13px) 8px;text-align:center;transition:background .35s,border-color .35s;}
-.stat-n{font-family:var(--ft);font-size:clamp(18px,5vw,24px);line-height:1;}
-.stat-n.cs{color:var(--sky);}.stat-n.cm{color:var(--mint);}.stat-n.cv{color:var(--violet);}
-.stat-l{font-size:clamp(7.5px,2vw,9.5px);font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-top:3px;}
+        .icon-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
 
-.prog-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);padding:clamp(9px,2.5vw,13px) clamp(12px,3vw,17px);transition:background .35s,border-color .35s;}
-.prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(6px,1.5vw,9px);}
-.prog-lbl{font-size:clamp(9px,2.5vw,10.5px);font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.9px;}
-.prog-val{font-size:clamp(10.5px,2.5vw,12px);font-weight:800;color:var(--ink2);}
-.prog-track{height:8px;background:var(--s3);border-radius:99px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:99px;width:0%;background:linear-gradient(90deg,var(--sky) 0%,var(--violet) 55%,#EC4899 100%);transition:width .5s cubic-bezier(.4,0,.2,1);}
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
 
-/* FB */
-.fb{border-radius:var(--r-lg);border:2px solid transparent;display:none;animation:fbIn .3s cubic-bezier(.34,1.3,.64,1);}
-.fb.show{display:block;}
-@keyframes fbIn{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-.fb-plus{background:var(--mint-lt);border-color:var(--mint-bd);}
-.fb-minus{background:var(--coral-lt);border-color:var(--coral-bd);}
-.fb-zero{background:var(--s2);border-color:var(--border2);}
-.fb-win{background:var(--amber-lt);border-color:var(--amber-bd);}
-.fb-inner{padding:clamp(10px,2.5vw,14px) clamp(13px,3vw,17px);display:flex;align-items:center;gap:13px;}
-.fb-icon{font-size:clamp(19px,5vw,24px);flex-shrink:0;line-height:1;}
-.fb-right{flex:1;min-width:0;}
-.fb-scores{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
-.fbs{font-family:var(--ft);font-size:clamp(13px,3.5vw,17px);padding:3px clamp(9px,2.5vw,13px);border-radius:8px;border:2px solid;}
-.fbs.fp{color:var(--mint);background:#fff;border-color:var(--mint-bd);}
-.fbs.fm{color:var(--coral);background:#fff;border-color:var(--coral-bd);}
-.fbs.fz{color:var(--ink3);background:#fff;border-color:var(--border2);}
-.fbs.fw{color:var(--amber);background:#fff;border-color:var(--amber-bd);}
-.fb-msg{font-size:clamp(10.5px,2.5vw,12.5px);font-weight:700;color:var(--ink2);margin-top:3px;}
+        /* Screen Management */
+        .screen {
+            display: none;
+            animation: screenIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.hint-box{display:none;background:var(--amber-lt);border:2px solid var(--amber-bd);border-radius:var(--r);padding:clamp(10px,2.5vw,14px) clamp(13px,3vw,17px);animation:fbIn .26s ease;}
-.hint-box.show{display:flex;align-items:flex-start;gap:10px;}
-.hint-icon{font-size:15px;margin-top:1px;flex-shrink:0;}
-.hint-lbl{font-size:clamp(9px,2vw,10px);font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--amber);margin-bottom:2px;}
-.hint-text{font-size:clamp(11.5px,3vw,13px);font-weight:700;color:#78350F;line-height:1.45;}
+        .screen.active {
+            display: block;
+        }
 
-/* INPUT CARD */
-.input-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);padding:clamp(12px,3vw,16px);transition:background .35s,border-color .35s;}
-.input-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(8px,2vw,11px);}
-.input-lbl{font-size:clamp(9.5px,2.5vw,11px);font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--ink3);}
-.err-msg{font-size:clamp(9.5px,2.5vw,11px);font-weight:700;color:var(--coral);min-height:14px;text-align:right;}
+        @keyframes screenIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.digit-row{display:flex;gap:clamp(5px,1.5vw,9px);margin-bottom:clamp(9px,2.5vw,12px);}
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            transition: all var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
 
-.dbox{
-  flex:1;background:var(--s2);border:2px solid var(--border);
-  border-radius:var(--r-sm);font-family:var(--ft);
-  text-align:center;
-  color:var(--ink);padding:clamp(7px,2vw,10px) 2px clamp(6px,1.8vw,9px);
-  outline:none;transition:border-color .17s,background .17s,color .17s,box-shadow .17s;
-  -webkit-appearance:none;appearance:none;
-  caret-color:transparent;
-  font-size:max(16px,clamp(19px,5.5vw,26px));
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-  user-select:none;
-  display:flex;align-items:center;justify-content:center;
-  min-height:clamp(48px,12vw,60px);
-}
-.dbox:focus,.dbox.active{border-color:var(--sky);background:var(--sky-lt);color:var(--sky);box-shadow:0 0 0 4px rgba(59,130,246,.14);}
-.dbox.filled{border-color:var(--sky);background:var(--sky-lt);color:var(--sky);}
-.dbox.shake{animation:shake .38s ease;}
-@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}50%{transform:translateX(6px);}80%{transform:translateX(-3px);}}
-.dbox.flip{animation:flip .35s ease;}
-@keyframes flip{0%{transform:scaleY(1);}50%{transform:scaleY(.1);}100%{transform:scaleY(1);}}
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
 
-/* NUMPAD OVERLAY */
-.numpad-overlay{
-  position:fixed;inset:0;z-index:400;
-  background:transparent;
-  display:none;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding-bottom:max(0px,env(safe-area-inset-bottom));
-}
-.numpad-overlay.show{display:flex;}
-.numpad-backdrop{position:absolute;inset:0;}
-.numpad-wrap{
-  position:relative;z-index:1;
-  background:var(--surface);
-  border:1.5px solid var(--border2);
-  border-radius:var(--r-2xl) var(--r-2xl) 0 0;
-  padding:14px 16px 20px;
-  box-shadow:0 -10px 40px rgba(0,0,0,.18);
-  animation:slideUp .25s cubic-bezier(.34,1.1,.64,1);
-}
-.numpad-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.numpad-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);}
-.numpad-close{
-  width:28px;height:28px;border-radius:50%;
-  background:var(--s3);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;cursor:pointer;color:var(--ink2);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.numpad-preview{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
-.np-digit{
-  width:38px;height:38px;border-radius:10px;
-  background:var(--s3);border:2px solid var(--border);
-  font-family:var(--ft);font-size:20px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--ink3);transition:all .15s;
-}
-.np-digit.has-val{background:var(--sky-lt);border-color:var(--sky-bd);color:var(--sky);}
-.np-digit.is-active{border-color:var(--sky);box-shadow:0 0 0 3px rgba(59,130,246,.2);}
-.numpad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.numpad-btn{
-  padding:14px 8px;
-  font-family:var(--ft);font-size:22px;
-  background:var(--s2);border:1.5px solid var(--border);
-  border-radius:var(--r-sm);cursor:pointer;color:var(--ink);
-  transition:transform .1s,background .12s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;text-align:center;
-}
-.numpad-btn:active{transform:scale(.93);background:var(--sky-lt);}
-.numpad-del{background:var(--coral-lt);border-color:var(--coral-bd);color:var(--coral);font-size:18px;}
-.numpad-del:active{background:var(--coral);color:#fff;}
-.numpad-submit{
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);border-color:transparent;color:#fff;
-  font-size:16px;font-family:var(--fn);font-weight:800;letter-spacing:.3px;
-}
-.numpad-submit:active{transform:scale(.95);opacity:.9;}
-.numpad-submit:disabled{background:var(--border2);color:var(--ink3);cursor:not-allowed;}
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+        }
 
-/* BTN ROW */
-.btn-primary{
-  display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
-  padding:clamp(11px,3vw,14px);
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
-  font-family:var(--fn);font-size:clamp(13px,3.5vw,15px);font-weight:800;
-  border:none;border-radius:var(--r-sm);cursor:pointer;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:0 4px 18px rgba(99,102,241,.38);letter-spacing:.3px;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.btn-primary svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;}
-.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 26px rgba(99,102,241,.5);}
-.btn-primary:active:not(:disabled){transform:translateY(0);}
-.btn-primary:disabled{background:var(--border2);color:var(--ink3);cursor:not-allowed;box-shadow:none;}
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.5s;
+        }
 
-.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.5vw,9px);margin-top:clamp(7px,1.8vw,10px);}
-.btn-sec{
-  padding:clamp(8px,2vw,11px) 10px;background:var(--surface);
-  color:var(--ink2);font-family:var(--fn);font-size:clamp(11px,3vw,13px);font-weight:700;
-  border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;
-  transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;
-  box-shadow:var(--sh);-webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.btn-sec svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;}
-.btn-sec.hint:hover:not(:disabled){background:var(--sky-lt);border-color:var(--sky-bd);color:var(--sky);}
-.btn-sec.reset:hover{background:var(--coral-lt);border-color:var(--coral-bd);color:var(--coral);}
-.btn-sec:disabled{opacity:.38;cursor:not-allowed;}
+        .card-glow:hover::before {
+            left: 100%;
+        }
 
-/* HIST */
-.hist-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;transition:background .35s,border-color .35s;}
-.hist-head{padding:clamp(9px,2.5vw,13px) clamp(13px,3vw,17px);display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--border);}
-.hist-title{font-size:clamp(10px,2.5vw,11.5px);font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);}
-.hist-pill{font-size:clamp(10px,2.5vw,11.5px);font-weight:800;color:var(--sky);background:var(--sky-lt);border:1.5px solid var(--sky-bd);padding:2px 10px;border-radius:99px;}
-.hrow{display:grid;grid-template-columns:clamp(26px,6vw,34px) 1fr auto;align-items:center;gap:clamp(7px,2vw,11px);padding:clamp(9px,2.5vw,12px) clamp(13px,3vw,17px);border-bottom:1.5px solid var(--border);animation:rowIn .22s ease;transition:background .14s;}
-.hrow:last-child{border-bottom:none;}
-.hrow:hover{background:var(--s2);}
-@keyframes rowIn{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:translateX(0);}}
-.hrow-n{font-size:clamp(9.5px,2.5vw,11px);font-weight:700;color:var(--ink3);text-align:center;}
-.hrow-g{font-family:var(--ft);font-size:clamp(17px,4.5vw,22px);color:var(--ink);letter-spacing:clamp(2px,1vw,5px);}
-.hrow-bs{display:flex;gap:4px;flex-shrink:0;}
-.hb{font-family:var(--ft);font-size:clamp(11px,3vw,14px);padding:3px clamp(7px,2vw,10px);border-radius:7px;border:2px solid;}
-.hb.hbp{color:var(--mint);background:var(--mint-lt);border-color:var(--mint-bd);}
-.hb.hbm{color:var(--coral);background:var(--coral-lt);border-color:var(--coral-bd);}
-.hb.hbz{color:var(--ink3);background:var(--s2);border-color:var(--border2);}
+        /* Section Title */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
 
-/* MODALS */
-.modal-back{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:500;align-items:center;justify-content:center;padding:clamp(14px,4vw,22px);}
-.modal-back.show{display:flex;}
-.modal{background:var(--surface);border:2px solid var(--border);border-radius:var(--r-2xl);box-shadow:0 36px 72px rgba(0,0,0,.24);padding:clamp(24px,6vw,34px) clamp(20px,5vw,30px) clamp(20px,5vw,28px);width:100%;max-width:min(360px,94vw);text-align:center;animation:modalIn .44s cubic-bezier(.34,1.4,.64,1);transition:background .35s,border-color .35s;}
-@keyframes modalIn{from{opacity:0;transform:scale(.74) translateY(24px);}to{opacity:1;transform:scale(1) translateY(0);}}
-.modal-emoji{font-size:clamp(42px,11vw,56px);display:block;margin-bottom:10px;animation:bounce .72s ease infinite alternate;}
-@keyframes bounce{to{transform:scale(1.14) rotate(5deg);}}
-.modal-title{font-family:var(--ft);font-size:clamp(22px,6.5vw,30px);color:var(--ink);margin-bottom:4px;}
-.modal-sub{font-size:clamp(12px,3vw,14px);font-weight:600;color:var(--ink3);margin-bottom:clamp(15px,4vw,22px);}
-.modal-secret-wrap{background:linear-gradient(135deg,var(--sky-lt),var(--violet-lt));border:2px solid var(--sky-bd);border-radius:var(--r-lg);padding:clamp(13px,3.5vw,18px);margin-bottom:clamp(13px,3.5vw,18px);}
-.modal-secret-lbl{font-size:clamp(9px,2.5vw,10.5px);font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--sky);margin-bottom:7px;}
-.modal-secret{font-family:var(--ft);font-size:clamp(38px,11vw,54px);background:linear-gradient(135deg,var(--sky),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:clamp(5px,2vw,10px);line-height:1.1;}
-.modal-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:clamp(15px,4vw,22px);}
-.mstat{background:var(--s2);border-radius:var(--r-sm);padding:clamp(10px,2.5vw,14px) 8px;text-align:center;}
-.mstat-n{font-family:var(--ft);font-size:clamp(22px,5.5vw,28px);color:var(--ink);}
-.mstat-n.g{color:var(--mint);}
-.mstat-l{font-size:clamp(9px,2vw,10.5px);font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-top:2px;}
-.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-.btn-modal{
-  padding:clamp(11px,3vw,14px);
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
-  font-family:var(--fn);font-size:clamp(12.5px,3.5vw,14.5px);font-weight:800;
-  border:none;border-radius:var(--r-sm);cursor:pointer;
-  transition:transform .18s,box-shadow .18s;box-shadow:0 4px 16px rgba(99,102,241,.34);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-}
-.btn-modal:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,.46);}
-.btn-modal.outline{background:transparent;color:var(--ink2);border:2px solid var(--border);box-shadow:var(--sh);}
-.btn-modal.outline:hover{background:var(--s2);border-color:var(--border2);color:var(--ink);box-shadow:none;}
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
 
-/* NAME MODAL */
-.name-input{width:100%;padding:12px 14px;margin:16px 0 20px;font-family:var(--fn);font-size:16px;font-weight:700;background:var(--s2);color:var(--ink);border:2px solid var(--border2);border-radius:var(--r-sm);outline:none;text-align:center;transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;}
-.name-input:focus{border-color:var(--violet);box-shadow:0 0 0 4px rgba(139,92,246,.13);}
-.name-input::placeholder{color:var(--ink3);}
-.name-emoji{font-size:40px;display:block;margin-bottom:10px;}
-.name-title{font-family:var(--ft);font-size:22px;color:var(--ink);}
-.name-sub{font-size:12px;font-weight:600;color:var(--ink3);margin-top:4px;}
+        /* Game Modes Grid */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
 
-/* CONFETTI */
-.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden;}
-.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall linear forwards;}
-@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+        .mode-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+        }
 
-/* TUTORIAL */
-.tut-trigger-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:clamp(10px,2.5vw,13px);background:var(--surface);color:var(--ink2);font-family:var(--fn);font-size:clamp(12px,3vw,13.5px);font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .18s;box-shadow:var(--sh);letter-spacing:.2px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-.tut-trigger-btn:hover{background:var(--violet-lt);border-color:var(--violet-bd);color:var(--violet);}
-.tut-trigger-btn .tut-icon{font-size:16px;}
-.tut-overlay{display:none;position:fixed;inset:0;z-index:700;background:rgba(10,12,40,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding-bottom:max(0px,env(safe-area-inset-bottom));}
-.tut-overlay.show{display:flex;}
-.tut-panel{width:100%;max-width:520px;background:var(--surface);border-radius:24px 24px 0 0;border:1.5px solid var(--border2);box-shadow:0 -16px 60px rgba(0,0,0,.32);padding-bottom:max(16px,env(safe-area-inset-bottom));animation:tutSlideUp .38s cubic-bezier(.34,1.1,.64,1);height:95dvh;max-height:95dvh;overflow:hidden;display:flex;flex-direction:column;}
-@keyframes tutSlideUp{from{transform:translateY(100%);opacity:.4;}to{transform:translateY(0);opacity:1;}}
-.tut-steps-wrap{flex:1;min-height:0;overflow:hidden;position:relative;}
-.tut-steps{display:flex;transition:transform .42s cubic-bezier(.4,0,.2,1);height:100%;will-change:transform;}
-.tut-step{min-width:100%;width:100%;height:100%;padding:28px 22px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;gap:0;flex-shrink:0;}
-.tut-step-emoji{font-size:clamp(48px,13vw,64px);margin-bottom:14px;flex-shrink:0;display:block;animation:tutPop .5s cubic-bezier(.34,1.6,.64,1) both;}
-@keyframes tutPop{from{transform:scale(.3) rotate(-15deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
-.tut-step-title{font-family:var(--fn);font-size:clamp(22px,6vw,28px);font-weight:900;color:var(--ink);margin-bottom:10px;line-height:1.2;flex-shrink:0;}
-.tut-step-desc{font-family:var(--fn);font-size:clamp(13px,3.5vw,15px);font-weight:600;color:var(--ink2);line-height:1.65;margin-bottom:18px;max-width:380px;flex-shrink:0;}
-.tut-demo{width:100%;max-width:100%;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:10px;text-align:left;flex-shrink:0;}
-.tut-demo-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1.5px solid var(--border);}
-.tut-demo-row:last-child{border-bottom:none;}
-.tut-demo-num{font-family:var(--ft);font-size:18px;letter-spacing:4px;color:var(--ink);flex:1;}
-.tut-demo-badges{display:flex;gap:5px;flex-shrink:0;}
-.tut-badge{font-family:var(--fn);font-size:13px;font-weight:800;padding:4px 12px;border-radius:8px;border:2px solid;}
-.tut-badge.plus{color:var(--mint);background:var(--mint-lt);border-color:var(--mint-bd);}
-.tut-badge.minus{color:var(--coral);background:var(--coral-lt);border-color:var(--coral-bd);}
-.tut-badge.zero{color:var(--ink3);background:var(--s3);border-color:var(--border2);}
-.tut-rules{display:flex;flex-direction:column;gap:9px;width:100%;margin-bottom:8px;flex-shrink:0;}
-.tut-rule-item{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 14px;text-align:left;}
-.tut-rule-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
-.tut-rule-title{font-family:var(--fn);font-size:14px;font-weight:800;color:var(--ink);margin-bottom:3px;}
-.tut-rule-desc{font-family:var(--fn);font-size:12.5px;font-weight:600;color:var(--ink2);line-height:1.5;}
-.tut-digit-row{display:flex;gap:8px;margin-bottom:14px;flex-shrink:0;}
-.tut-dbox{width:44px;height:50px;border-radius:10px;background:var(--s2);border:2px solid var(--border);font-family:var(--ft);font-size:22px;display:flex;align-items:center;justify-content:center;color:var(--ink3);transition:all .3s;}
-.tut-dbox.filled{background:var(--sky-lt);border-color:var(--sky-bd);color:var(--sky);}
-.tut-dbox.correct{background:var(--mint-lt);border-color:var(--mint-bd);color:var(--mint);}
-.tut-dbox.wrong-pos{background:var(--coral-lt);border-color:var(--coral-bd);color:var(--coral);}
-.tut-dots{display:flex;gap:7px;justify-content:center;padding:10px 0 8px;flex-shrink:0;}
-.tut-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);transition:all .3s cubic-bezier(.4,0,.2,1);cursor:pointer;}
-.tut-dot.active{background:var(--violet);width:22px;border-radius:4px;}
-.tut-dot.done{background:var(--mint);}
-.tut-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:10px 20px 10px;flex-shrink:0;border-top:1.5px solid var(--border);}
-.tut-skip-btn{font-family:var(--fn);font-size:13px;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-align:left;padding:8px 0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-.tut-skip-btn:hover{color:var(--ink2);}
-.tut-next-btn{padding:12px 26px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-family:var(--fn);font-size:14px;font-weight:800;border:none;border-radius:var(--r-sm);cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 4px 18px rgba(99,102,241,.38);-webkit-tap-highlight-color:transparent;touch-action:manipulation;white-space:nowrap;}
-.tut-next-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,.5);}
-.tut-next-btn:active{transform:scale(.96);}
-.tut-next-btn.finish{background:linear-gradient(135deg,var(--mint),#059669);}
-.tut-step-counter{font-family:var(--fn);font-size:12px;font-weight:800;color:var(--ink3);text-align:center;letter-spacing:.5px;}
-.tut-new-badge{display:inline-block;font-family:var(--fn);font-size:9px;font-weight:800;background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;padding:2px 7px;border-radius:99px;vertical-align:middle;margin-left:6px;letter-spacing:.4px;animation:newPulse 1.6s ease infinite;}
-@keyframes newPulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+        .mode-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-xl);
+        }
 
-/* RESPONSIVE */
-@media(max-width:359px){.modes{grid-template-columns:1fr 1fr;gap:7px;}.mode-card{padding:11px 9px;}.hrow-g{letter-spacing:1px;}.modal-secret{font-size:32px;letter-spacing:4px;}.chal-digit-box{height:36px;font-size:14px;}}
-@media(min-width:540px){.app{max-width:560px;}.modes{grid-template-columns:repeat(4,1fr);gap:10px;}.mode-card{padding:15px 12px;}.mode-name{font-size:13px;}.mode-desc{font-size:10.5px;}}
-@media(min-width:768px){.app{max-width:700px;}.screen{gap:15px;}.modes{grid-template-columns:repeat(4,1fr);gap:13px;}.stat-n{font-size:26px;}.dbox{font-size:28px;padding:11px 3px;}.hrow-g{font-size:24px;letter-spacing:5px;}.numpad-overlay{display:none!important;}.chal-numpad-overlay{display:none!important;}}
-@media(min-width:1024px){body{padding:0 28px max(60px,5vh);}.app{max-width:820px;}.screen{gap:16px;padding-top:24px;}.modes{gap:15px;}.mode-card{padding:20px 17px;}.stat{padding:16px 10px;}.btn-primary{font-size:16px;padding:14px;}.btn-sec{font-size:13.5px;}.numpad-overlay{display:none!important;}.chal-numpad-overlay{display:none!important;}}
-@media(max-height:500px) and (orientation:landscape){.home-hdr{padding:10px 0 6px;}.home-logo{width:52px;height:52px;font-size:18px;margin-bottom:8px;}.home-title{font-size:20px;}.screen{gap:8px;padding-top:10px;}.stat{padding:8px 6px;}.prog-card{padding:8px 12px;}.dbox{font-size:18px;}.btn-primary{padding:9px;}.numpad-overlay{display:none!important;}.chal-numpad-overlay{display:none!important;}}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
-</style>
+        .mode-card:active {
+            transform: scale(0.97);
+        }
+
+        .mode-card.selected {
+            border-color: var(--accent-primary);
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-md);
+        }
+
+        .badge-easy {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-medium {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-info);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .badge-hard {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .badge-extreme {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .mode-digits {
+            font-family: var(--font-mono);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mode-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .mode-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border-color);
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        /* Game Area */
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .stat-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            text-align: center;
+            transition: all var(--transition-smooth);
+        }
+
+        .stat-value {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--space-md);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+            border-radius: var(--radius-full);
+        }
+
+        /* Digit Input */
+        .digit-container {
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: center;
+            margin: var(--space-lg) 0;
+        }
+
+        .digit-box {
+            width: 56px;
+            height: 64px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            user-select: none;
+            position: relative;
+        }
+
+        .digit-box:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .digit-box.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            background: var(--bg-elevated);
+        }
+
+        .digit-box.filled {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .digit-box.correct {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--accent-success);
+            color: var(--accent-success);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .digit-box.wrong-position {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-warning);
+            color: var(--accent-warning);
+        }
+
+        .digit-box.wrong {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-danger);
+            color: var(--accent-danger);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        /* Feedback */
+        .feedback-box {
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            border: 2px solid;
+            margin-bottom: var(--space-md);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .feedback-box.show {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .feedback-positive {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--accent-success);
+        }
+
+        .feedback-negative {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-danger);
+        }
+
+        .feedback-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-warning);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* History */
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border-color);
+            animation: fadeInRow 0.3s ease;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Challenge Section */
+        .challenge-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            transition: all var(--transition-fast);
+        }
+
+        .challenge-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Numpad */
+        .numpad-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            backdrop-filter: blur(5px);
+            z-index: 500;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .numpad-overlay.show {
+            display: flex;
+        }
+
+        .numpad {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: var(--space-lg);
+            width: 100%;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .numpad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .numpad-btn {
+            aspect-ratio: 1;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .numpad-btn:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .numpad-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2000;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .digit-box {
+                width: 48px;
+                height: 56px;
+                font-size: 24px;
+            }
+            
+            .mode-digits {
+                font-size: 28px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                padding: var(--space-xl);
+            }
+            
+            .modes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container {
+                padding: var(--space-2xl);
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="confetti-container" id="confettiContainer"></div>
-<button class="theme-btn" id="themeBtn" aria-label="Tema değiştir">☀️</button>
-<div class="signature">yapımcı: Mehmet Buğrahan Şaşmaz</div>
-
-<div class="app">
-
-  <!-- ══ HOME ══ -->
-  <div class="screen active" id="homeScreen">
-    <div class="home-hdr">
-      <div class="home-logo">+/−</div>
-      <div class="home-title">Sayı Tahmin</div>
-      <div class="home-sub">Gizli sayıyı bul &nbsp;·&nbsp; 0 kullanılmaz &nbsp;·&nbsp; tekrar yok</div>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-blob"></div>
+        <div class="bg-blob"></div>
+        <div class="bg-blob"></div>
     </div>
+    <div class="grid-pattern"></div>
 
-    <button class="tut-trigger-btn" id="openTutorialBtn">
-      <span class="tut-icon">🎓</span>
-      Nasıl Oynanır? — Rehberi Gör
-      <span class="tut-new-badge" id="tutNewBadge">YENİ</span>
-    </button>
-
-    <div class="rules-strip">
-      <div class="rs-item">
-        <div class="rs-pip pip-plus">+N</div>
-        <div><div class="rs-t">Doğru Yerde</div><div class="rs-d">Sayı var, konum doğru</div></div>
-      </div>
-      <div class="rs-item">
-        <div class="rs-pip pip-minus">−N</div>
-        <div><div class="rs-t">Yanlış Yerde</div><div class="rs-d">Sayı var, konum yanlış</div></div>
-      </div>
-    </div>
-
-    <div class="sec-lbl">Zorluk Seç</div>
-    <div class="modes" id="modesGrid">
-      <button class="mode-card mc-easy" data-digits="3">
-        <div class="mc-top"><div class="mode-digit-badge">3</div><div class="mode-diff-badge">Kolay</div></div>
-        <div class="mode-name">3 Basamak</div><div class="mode-desc">Başlangıç için, 10 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best3">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-      <button class="mode-card mc-norm" data-digits="4">
-        <div class="mc-top"><div class="mode-digit-badge">4</div><div class="mode-diff-badge">Normal</div></div>
-        <div class="mode-name">4 Basamak</div><div class="mode-desc">Klasik mod, 10 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best4">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-      <button class="mode-card mc-hard" data-digits="5">
-        <div class="mc-top"><div class="mode-digit-badge">5</div><div class="mode-diff-badge">Zor</div></div>
-        <div class="mode-name">5 Basamak</div><div class="mode-desc">Daha zor, 12 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best5">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-      <button class="mode-card mc-exp" data-digits="6">
-        <div class="mc-top"><div class="mode-digit-badge">6</div><div class="mode-diff-badge">Uzman</div></div>
-        <div class="mode-name">6 Basamak</div><div class="mode-desc">En zor, 14 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best6">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-      <button class="mode-card mc-leg7" data-digits="7">
-        <div class="mc-top"><div class="mode-digit-badge">7</div><div class="mode-diff-badge">Efsane</div></div>
-        <div class="mode-name">7 Basamak</div><div class="mode-desc">Efsanevi mod, 16 hak</div>
-        <div class="mode-footer"><span class="mode-stat" id="best7">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-      <button class="mode-card mc-leg8" data-digits="4" data-free="true">
-        <div class="mc-top"><div class="mode-digit-badge" style="font-size:clamp(13px,3.5vw,17px)">4±0</div><div class="mode-diff-badge">Serbest</div></div>
-        <div class="mode-name">4 Hane Serbest</div><div class="mode-desc">0 dahil, tekrar serbest!</div>
-        <div class="mode-footer"><span class="mode-stat" id="best4f">—</span><span class="mode-stat-lbl">en iyi</span></div>
-      </button>
-    </div>
-
-    <!-- ══ CHALLENGE CARD ══ -->
-    <div class="sec-lbl">Arkadaşa Meydan Oku 👥</div>
-
-    <!-- Incoming challenge banner (shown when URL has challenge param) -->
-    <div class="chal-banner" id="chalBanner">
-      <div class="chal-banner-top">
-        <div class="chal-banner-emoji">⚔️</div>
-        <div>
-          <div class="chal-banner-title">Meydan Okuma Geldi!</div>
-          <div class="chal-banner-sub" id="chalBannerSub">Bir arkadaşın sana meydan okuyor</div>
-        </div>
-      </div>
-      <div class="chal-banner-meta" id="chalBannerMeta"></div>
-      <button class="chal-accept-btn" id="chalAcceptBtn">
-        ⚔️ Meydan Okumayı Kabul Et!
-      </button>
-    </div>
-
-    <div class="chal-card">
-      <div class="chal-head">
-        <div class="chal-head-left">
-          <span class="chal-head-emoji">🎯</span>
-          <div>
-            <div class="chal-head-title">Arkadaşa Meydan Oku</div>
-            <div class="chal-head-sub">Sayını belirle, kodu gönder!</div>
-          </div>
-        </div>
-        <button class="chal-toggle-btn" id="chalToggleBtn">Oluştur →</button>
-      </div>
-
-      <!-- Create section -->
-      <div class="chal-create-box" id="chalCreateBox">
-        <div class="chal-create-title"><span>🎲</span> Zorluk Seç</div>
-        <div class="chal-mode-select" id="chalModeSelect">
-          <button class="chal-mode-btn selected" data-d="3">3 Hane</button>
-          <button class="chal-mode-btn" data-d="4">4 Hane</button>
-          <button class="chal-mode-btn" data-d="5">5 Hane</button>
-          <button class="chal-mode-btn" data-d="6">6 Hane</button>
-          <button class="chal-mode-btn" data-d="7">7 Hane</button>
-          <button class="chal-mode-btn" data-d="8">8 Hane</button>
-        </div>
-
-        <div class="chal-create-title" style="margin-top:4px"><span>🔢</span> Gizli Sayını Belirle</div>
-        <div class="chal-input-row">
-          <div class="chal-digit-boxes" id="chalDigitBoxes"></div>
-          <button class="chal-random-btn" id="chalRandomBtn" title="Rastgele üret">🎲</button>
-        </div>
-        <div class="chal-err" id="chalErr"></div>
-        <button class="chal-gen-btn" id="chalGenBtn">
-          🔗 Kod Oluştur & Paylaş
-        </button>
-      </div>
-
-      <!-- Link result -->
-      <div class="chal-link-result" id="chalLinkResult">
-        <div class="chal-link-title">✅ Meydan Okuma Hazır!</div>
-
-        <!-- SHORT CODE (works everywhere, even local files) -->
-        <div style="margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--violet);margin-bottom:6px;">
-            🔑 Paylaşım Kodu — Arkadaşına bunu gönder
-          </div>
-          <div class="chal-shortcode-row">
-            <div class="chal-shortcode-box" id="chalShortcodeBox"></div>
-            <button class="chal-copy-code-btn" id="chalCopyCodeBtn">Kodu Kopyala</button>
-          </div>
-        </div>
-
-        <!-- FULL URL (only works when hosted online) -->
-        <details style="margin-bottom:10px;">
-          <summary style="font-size:11px;font-weight:800;color:var(--ink3);cursor:pointer;padding:4px 0;user-select:none;">
-            🌐 Tam Link (sadece online sunucuda çalışır)
-          </summary>
-          <div style="margin-top:8px;">
-            <div class="chal-link-wrap">
-              <div class="chal-link-box" id="chalLinkBox"></div>
-              <button class="chal-copy-btn" id="chalCopyBtn">Kopyala</button>
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="logo-icon">🎯</div>
+                <div class="logo-text">
+                    <h1>Sayı Tahmin</h1>
+                    <span>v3.0 • Profesyonel</span>
+                </div>
             </div>
-          </div>
-        </details>
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="Tema Değiştir">
+                    🌙
+                </button>
+                <button class="icon-btn" id="statsBtn" title="İstatistikler">
+                    📊
+                </button>
+            </div>
+        </header>
 
-        <div class="chal-share-row">
-          <button class="chal-share-btn chal-share-wa" id="chalShareWa">📱 WhatsApp</button>
-          <button class="chal-share-btn chal-share-tw" id="chalShareTw">🐦 Twitter</button>
-          <button class="chal-share-btn chal-share-gen" id="chalShareGen">↗ Paylaş</button>
+        <!-- Home Screen -->
+        <div class="screen active" id="homeScreen">
+            <!-- Welcome Card -->
+            <div class="card card-glow" style="text-align: center; padding: var(--space-xl);">
+                <div style="font-size: 64px; margin-bottom: var(--space-md);">🧠</div>
+                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: var(--space-sm);">
+                    Zekanı Test Et!
+                </h2>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                    Gizli sayıyı bul • 0 kullanılmaz • Rakamlar tekrar etmez
+                </p>
+            </div>
+
+            <!-- Game Rules -->
+            <div class="card">
+                <div class="section-title">Nasıl Oynanır?</div>
+                <div style="display: grid; gap: var(--space-md);">
+                    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong>+N = Doğru Yerde</strong>
+                            <p style="color: var(--text-secondary); font-size: 13px;">N tane rakam hem doğru hem doğru konumda</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+                        <span style="font-size: 24px;">🔄</span>
+                        <div>
+                            <strong>-N = Yanlış Yerde</strong>
+                            <p style="color: var(--text-secondary); font-size: 13px;">N tane rakam var ama yanlış konumda</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difficulty Selection -->
+            <div class="section-title">Zorluk Seviyesi</div>
+            <div class="modes-grid" id="modesGrid">
+                <!-- 3 Digits - Easy -->
+                <div class="mode-card" data-digits="3" data-free="false">
+                    <span class="mode-badge badge-easy">Kolay</span>
+                    <div class="mode-digits">3</div>
+                    <div class="mode-info">Basamak • 10 Hak</div>
+                    <div class="mode-stats">
+                        <span>En İyi: <strong id="best3">-</strong></span>
+                        <span>🎯</span>
+                    </div>
+                </div>
+
+                <!-- 4 Digits - Normal -->
+                <div class="mode-card" data-digits="4" data-free="false">
+                    <span class="mode-badge badge-medium">Normal</span>
+                    <div class="mode-digits">4</div>
+                    <div class="mode-info">Basamak • 10 Hak</div>
+                    <div class="mode-stats">
+                        <span>En İyi: <strong id="best4">-</strong></span>
+                        <span>🎯</span>
+                    </div>
+                </div>
+
+                <!-- 5 Digits - Hard -->
+                <div class="mode-card" data-digits="5" data-free="false">
+                    <span class="mode-badge badge-hard">Zor</span>
+                    <div class="mode-digits">5</div>
+                    <div class="mode-info">Basamak • 12 Hak</div>
+                    <div class="mode-stats">
+                        <span>En İyi: <strong id="best5">-</strong></span>
+                        <span>🎯</span>
+                    </div>
+                </div>
+
+                <!-- 6 Digits - Extreme -->
+                <div class="mode-card" data-digits="6" data-free="false">
+                    <span class="mode-badge badge-extreme">Uzman</span>
+                    <div class="mode-digits">6</div>
+                    <div class="mode-info">Basamak • 14 Hak</div>
+                    <div class="mode-stats">
+                        <span>En İyi: <strong id="best6">-</strong></span>
+                        <span>🎯</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge Section -->
+            <div class="challenge-section">
+                <div class="section-title">Arkadaşına Meydan Oku</div>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: var(--space-md);">
+                    Kendi gizli sayını belirle, arkadaşına gönder!
+                </p>
+                <div style="display: flex; gap: var(--space-sm);">
+                    <input type="text" class="challenge-input" id="challengeInput" placeholder="Kodu yapıştır veya oluştur...">
+                    <button class="btn btn-primary" id="createChallengeBtn" style="width: auto; padding: 12px 20px;">
+                        Oluştur
+                    </button>
+                </div>
+                <div id="challengeResult" style="margin-top: var(--space-md); display: none;"></div>
+            </div>
         </div>
-      </div>
 
-      <!-- JOIN BY CODE section (NEW — always visible at bottom of card) -->
-      <div class="chal-join-section">
-        <div class="chal-join-title"><span>🎮</span> Arkadaşının Kodunu Gir</div>
-        <div class="chal-join-hint">Arkadaşından aldığın kodu ya da tam linki buraya yapıştır:</div>
-        <div class="chal-join-row">
-          <input
-            type="text"
-            class="chal-code-input"
-            id="chalCodeInput"
-            placeholder="Kodu buraya yapıştır..."
-            autocomplete="off"
-            autocorrect="off"
-            spellcheck="false"
-          >
-          <button class="chal-join-btn" id="chalJoinBtn">Katıl →</button>
+        <!-- Game Screen -->
+        <div class="screen" id="gameScreen">
+            <!-- Game Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md);">
+                <button class="btn btn-outline" id="backToHomeBtn" style="width: auto; padding: 8px 16px;">
+                    ← Geri
+                </button>
+                <span id="modeLabel" style="font-weight: 700; font-size: 14px;"></span>
+            </div>
+
+            <!-- Game Stats -->
+            <div class="game-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="attemptCount" style="color: var(--accent-info);">0</div>
+                    <div class="stat-label">Deneme</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="remainingCount" style="color: var(--accent-success);">10</div>
+                    <div class="stat-label">Kalan Hak</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="hintCount" style="color: var(--accent-warning);">2</div>
+                    <div class="stat-label">İpucu</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback-box" id="feedbackBox">
+                <span style="font-size: 24px;" id="feedbackIcon"></span>
+                <div>
+                    <strong id="feedbackTitle"></strong>
+                    <p style="font-size: 13px; color: var(--text-secondary);" id="feedbackMsg"></p>
+                </div>
+            </div>
+
+            <!-- Digit Input -->
+            <div class="card">
+                <div style="text-align: center; margin-bottom: var(--space-md); color: var(--text-tertiary); font-size: 12px; font-weight: 600;">
+                    TAHMİNİNİ GİR
+                </div>
+                <div class="digit-container" id="digitContainer"></div>
+                <div id="errorMessage" style="text-align: center; color: var(--accent-danger); font-size: 13px; min-height: 20px; margin-bottom: var(--space-sm);"></div>
+                
+                <button class="btn btn-primary" id="submitGuessBtn">
+                    ✓ Tahmin Et
+                </button>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="hintBtn">
+                        💡 İpucu
+                    </button>
+                    <button class="btn btn-secondary" id="resetGameBtn">
+                        🔄 Yeniden Başlat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Guess History -->
+            <div class="card" id="historyCard" style="display: none;">
+                <div class="section-title">Tahmin Geçmişi</div>
+                <div id="historyList"></div>
+            </div>
         </div>
-        <div class="chal-join-err" id="chalJoinErr"></div>
-      </div>
     </div>
 
-    <div class="sec-lbl">Bu Oturum</div>
-    <div class="best-card">
-      <div class="best-head">📊 Oturum İstatistikleri</div>
-      <div class="best-grid">
-        <div class="best-item"><div class="best-n" id="gs3">—</div><div class="best-l">3 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs4">—</div><div class="best-l">4 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs5">—</div><div class="best-l">5 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs6">—</div><div class="best-l">6 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs7">—</div><div class="best-l">7 Hane</div></div>
-        <div class="best-item"><div class="best-n" id="gs4f">—</div><div class="best-l">4 Serbest</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ GAME ══ -->
-  <div class="screen" id="gameScreen">
-    <div class="game-hdr">
-      <button class="back-btn" id="backBtn">
-        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Ana Sayfa
-      </button>
-      <div class="mode-pill" id="modePill"></div>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><div class="stat-n cs" id="sDeneme">0</div><div class="stat-l">Deneme</div></div>
-      <div class="stat"><div class="stat-n cm" id="sBest">—</div><div class="stat-l">En İyi</div></div>
-      <div class="stat"><div class="stat-n cv" id="sWins">0</div><div class="stat-l">Kazanma</div></div>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-row"><span class="prog-lbl">Kalan Hak</span><span class="prog-val" id="progVal">0/10</span></div>
-      <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-    </div>
-
-    <div class="fb" id="fbWrap">
-      <div class="fb-inner">
-        <div class="fb-icon" id="fbIcon"></div>
-        <div class="fb-right">
-          <div class="fb-scores" id="fbScores"></div>
-          <div class="fb-msg" id="fbMsg"></div>
+    <!-- Numpad -->
+    <div class="numpad-overlay" id="numpadOverlay">
+        <div class="numpad">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
+                <span style="font-weight: 700;">Rakam Seç</span>
+                <button class="icon-btn" id="closeNumpadBtn" style="width: 36px; height: 36px; font-size: 14px;">✕</button>
+            </div>
+            <div class="digit-container" id="numpadPreview" style="margin-bottom: var(--space-md);"></div>
+            <div class="numpad-grid" id="numpadGrid"></div>
+            <button class="btn btn-primary" id="numpadSubmitBtn" style="margin-top: var(--space-md);">
+                Onayla
+            </button>
         </div>
-      </div>
     </div>
 
-    <div class="hint-box" id="hintBox">
-      <div class="hint-icon">💡</div>
-      <div><div class="hint-lbl">İpucu</div><div class="hint-text" id="hintText"></div></div>
-    </div>
+    <!-- Win Modal -->
+    <div class="modal-overlay" id="winModal">
+        <div class="modal-content">
+            <div style="font-size: 64px; margin-bottom: var(--space-md);">🎉</div>
+            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: var(--space-sm);">Tebrikler!</h2>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);" id="winMessage"></p>
+            
+            <div style="background: var(--bg-tertiary); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-lg);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: var(--space-sm);">GİZLİ SAYI</div>
+                <div style="font-family: var(--font-mono); font-size: 36px; font-weight: 800; letter-spacing: 4px; color: var(--accent-primary);" id="winSecret"></div>
+            </div>
 
-    <div class="input-card">
-      <div class="input-top">
-        <span class="input-lbl">Tahminini Gir</span>
-        <span class="err-msg" id="errMsg"></span>
-      </div>
-      <div class="digit-row" id="digitRow"></div>
-      <button class="btn-primary" id="guessBtn">
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Tahmin Et
-      </button>
-      <div class="btn-row">
-        <button class="btn-sec hint" id="hintBtn">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          İpucu Al
-        </button>
-        <button class="btn-sec reset" id="resetBtn">
-          <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          Yeniden
-        </button>
-      </div>
-    </div>
+            <div class="game-stats" style="margin-bottom: var(--space-lg);">
+                <div class="stat-box">
+                    <div class="stat-value" id="winAttempts" style="color: var(--accent-info);">0</div>
+                    <div class="stat-label">Deneme</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="winBest" style="color: var(--accent-success);">0</div>
+                    <div class="stat-label">En İyi</div>
+                </div>
+            </div>
 
-    <div class="hist-card" id="histCard" style="display:none">
-      <div class="hist-head">
-        <span class="hist-title">Tahmin Geçmişi</span>
-        <span class="hist-pill" id="histPill">0</span>
-      </div>
-      <div id="histBody"></div>
-    </div>
-  </div>
-
-</div><!-- /app -->
-
-<!-- NUMPAD OVERLAY (game) -->
-<div class="numpad-overlay" id="numpadOverlay">
-  <div class="numpad-backdrop" id="numpadBackdrop"></div>
-  <div class="numpad-wrap">
-    <div class="numpad-top">
-      <span class="numpad-title" id="numpadTitle">Rakam Gir (0 kullanılamaz)</span>
-      <button class="numpad-close" id="numpadCloseBtn">✕</button>
-    </div>
-    <div class="numpad-preview" id="numpadPreview"></div>
-    <div class="numpad-grid" id="numpadGrid"></div>
-  </div>
-</div>
-
-<!-- CHALLENGE NUMPAD OVERLAY -->
-<div class="chal-numpad-overlay" id="chalNumpadOverlay">
-  <div class="chal-numpad-backdrop" id="chalNumpadBackdrop"></div>
-  <div class="chal-numpad-wrap">
-    <div class="numpad-top">
-      <span class="numpad-title">Gizli Sayı Rakamı (0 yok, tekrar yok)</span>
-      <button class="numpad-close" id="chalNumpadCloseBtn">✕</button>
-    </div>
-    <div class="numpad-preview" id="chalNumpadPreview"></div>
-    <div class="numpad-grid" id="chalNumpadGrid"></div>
-  </div>
-</div>
-
-<!-- FREE MODE TUTORIAL MODAL -->
-<div class="modal-back" id="freeTutModal">
-  <div class="modal" style="max-width:min(380px,94vw);">
-    <span class="modal-emoji" style="animation:none;font-size:44px;">🔓</span>
-    <div class="modal-title" style="font-size:clamp(20px,5.5vw,26px);">Serbest Mod!</div>
-    <div class="modal-sub" style="margin-bottom:14px;">Bu mod normal moddan farklı çalışıyor:</div>
-
-    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;text-align:left;">
-      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 13px;">
-        <span style="font-size:20px;flex-shrink:0;">0️⃣</span>
-        <div>
-          <div style="font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:2px;">0 kullanılabilir!</div>
-          <div style="font-size:12px;font-weight:600;color:var(--ink2);line-height:1.5;">Normal moddan farklı olarak gizli sayıda ve tahmininde 0 bulunabilir.</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+                <button class="btn btn-secondary" id="winHomeBtn">Ana Sayfa</button>
+                <button class="btn btn-primary" id="winRestartBtn">Tekrar Oyna</button>
+            </div>
         </div>
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 13px;">
-        <span style="font-size:20px;flex-shrink:0;">🔁</span>
-        <div>
-          <div style="font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:2px;">Tekrar eden rakam serbest!</div>
-          <div style="font-size:12px;font-weight:600;color:var(--ink2);line-height:1.5;">Hem gizli sayıda hem de tahmininde aynı rakam birden fazla kez çıkabilir. Örn: 1 1 2 3</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:11px;background:var(--amber-lt);border:1.5px solid var(--amber-bd);border-radius:var(--r);padding:12px 13px;">
-        <span style="font-size:20px;flex-shrink:0;">⚠️</span>
-        <div>
-          <div style="font-size:13.5px;font-weight:800;color:#92400E;margin-bottom:2px;">+/− mantığı aynı!</div>
-          <div style="font-size:12px;font-weight:600;color:#92400E;line-height:1.5;"><strong>+N</strong> → doğru yerde, <strong>−N</strong> → var ama yanlış yerde. Ama tekrar eden rakamlar sayımı zorlaştırır!</div>
-        </div>
-      </div>
     </div>
 
-    <button class="btn-modal" id="freeTutStartBtn" style="width:100%;padding:13px;">
-      🎮 Anladım, Oynayalım!
-    </button>
-  </div>
-</div>
-
-<!-- WIN MODAL -->
-<div class="modal-back" id="winModal">
-  <div class="modal">
-    <span class="modal-emoji">🎉</span>
-    <div class="modal-title">Tebrikler!</div>
-    <div class="modal-sub" id="modalSub"></div>
-    <div class="modal-secret-wrap">
-      <div class="modal-secret-lbl">Gizli Sayı</div>
-      <div class="modal-secret" id="modalSecret"></div>
-    </div>
-    <div class="modal-stats">
-      <div class="mstat"><div class="mstat-n" id="mTries"></div><div class="mstat-l">Deneme</div></div>
-      <div class="mstat"><div class="mstat-n g" id="mBest"></div><div class="mstat-l">En İyi</div></div>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-modal outline" id="winHomeBtn">Ana Sayfa</button>
-      <button class="btn-modal" id="winRestartBtn">Tekrar →</button>
-    </div>
-  </div>
-</div>
-
-<!-- TUTORIAL OVERLAY -->
-<div class="tut-overlay" id="tutOverlay">
-  <div class="tut-panel" id="tutPanel">
-    <div class="tut-steps-wrap">
-      <div class="tut-steps" id="tutSteps">
-        <div class="tut-step" id="tutStep0">
-          <span class="tut-step-emoji">🎯</span>
-          <div class="tut-step-title">Sayı Tahmin'e Hoş Geldin!</div>
-          <div class="tut-step-desc">Gizli bir sayıyı bulmaya çalışıyorsun. Rakamlar <strong>sıfır içermez</strong> ve <strong>hepsi birbirinden farklı</strong>tır.</div>
-          <div class="tut-rules">
-            <div class="tut-rule-item"><span class="tut-rule-icon">🔢</span><div><div class="tut-rule-title">3 ile 8 basamak</div><div class="tut-rule-desc">Kolaydan imkansıza 6 farklı zorluk seviyesi var.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">🚫</span><div><div class="tut-rule-title">0 kullanılmaz, tekrar yok</div><div class="tut-rule-desc">Gizli sayıda 0 yoktur ve hiçbir rakam tekrar etmez.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">⏱️</span><div><div class="tut-rule-title">Sınırlı hakkın var</div><div class="tut-rule-desc">Her modun belirlenmiş bir tahmin hakkı var. Dikkatli oyna!</div></div></div>
-          </div>
-        </div>
-        <div class="tut-step" id="tutStep1">
-          <span class="tut-step-emoji">📊</span>
-          <div class="tut-step-title">Sonuçlar Ne Anlama Gelir?</div>
-          <div class="tut-step-desc">Her tahminden sonra <strong>+N</strong> ve <strong>−N</strong> geri bildirimi alırsın.</div>
-          <div class="tut-demo">
-            <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);margin-bottom:8px;">Örnek: Gizli sayı 5 3 7 1</div>
-            <div class="tut-demo-row"><div class="tut-demo-num">5 2 7 8</div><div class="tut-demo-badges"><span class="tut-badge plus">+2</span><span class="tut-badge zero">−0</span></div></div>
-            <div class="tut-demo-row"><div class="tut-demo-num">3 5 9 1</div><div class="tut-demo-badges"><span class="tut-badge zero">+1</span><span class="tut-badge minus">−2</span></div></div>
-            <div class="tut-demo-row"><div class="tut-demo-num">4 6 2 8</div><div class="tut-demo-badges"><span class="tut-badge zero">±0</span></div></div>
-          </div>
-          <div class="tut-rules" style="margin-top:4px;">
-            <div class="tut-rule-item"><span class="tut-rule-icon" style="color:var(--mint)">✅</span><div><div class="tut-rule-title" style="color:var(--mint)">+N → Doğru Yerde</div><div class="tut-rule-desc">N tane rakam, hem değer hem konum olarak doğru.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon" style="color:var(--coral)">🔄</span><div><div class="tut-rule-title" style="color:var(--coral)">−N → Yanlış Yerde</div><div class="tut-rule-desc">N tane rakam gizli sayıda var, ama yanlış konumda.</div></div></div>
-          </div>
-        </div>
-        <div class="tut-step" id="tutStep2">
-          <span class="tut-step-emoji">⌨️</span>
-          <div class="tut-step-title">Tahmin Nasıl Girilir?</div>
-          <div class="tut-step-desc">Kutulara tıklayarak rakamları gir. Mobilde numpad açılır, masaüstünde klavyeni kullanabilirsin.</div>
-          <div class="tut-digit-row" id="tutDigitAnim">
-            <div class="tut-dbox" id="td0">·</div>
-            <div class="tut-dbox" id="td1">·</div>
-            <div class="tut-dbox" id="td2">·</div>
-            <div class="tut-dbox" id="td3">·</div>
-          </div>
-          <div class="tut-rules">
-            <div class="tut-rule-item"><span class="tut-rule-icon">📱</span><div><div class="tut-rule-title">Mobil — Numpad</div><div class="tut-rule-desc">Bir kutuya dokununca numpad açılır. Rakamları sırayla gir.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">💻</span><div><div class="tut-rule-title">Masaüstü — Klavye</div><div class="tut-rule-desc">1–9 tuşlarıyla yaz, ← → ile kutu değiştir, Enter ile gönder.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">💡</span><div><div class="tut-rule-title">İpucu Hakkı</div><div class="tut-rule-desc">Her oyunda 2 kez ipucu alabilirsin.</div></div></div>
-          </div>
-        </div>
-        <div class="tut-step" id="tutStep3">
-          <span class="tut-step-emoji">👥</span>
-          <div class="tut-step-title">Arkadaşa Meydan Oku!</div>
-          <div class="tut-step-desc">Kendi gizli sayını belirleyip arkadaşına <strong>kodu</strong> gönderebilirsin. Bakalım kaçta bulabilecek!</div>
-          <div class="tut-rules">
-            <div class="tut-rule-item"><span class="tut-rule-icon">🔢</span><div><div class="tut-rule-title">Sayını belirle</div><div class="tut-rule-desc">İstediğin basamak sayısını seç, gizli sayını gir (veya rastgele üret).</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">🔑</span><div><div class="tut-rule-title">Kod oluştur & gönder</div><div class="tut-rule-desc">Kısa bir kod oluşturulur. Arkadaşın bu kodu "Kod ile Katıl" kutusuna yapıştırarak oyuna girer.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">🏆</span><div><div class="tut-rule-title">Rekabet et</div><div class="tut-rule-desc">Arkadaşın kaçta buldu? WhatsApp veya Twitter'da paylaş!</div></div></div>
-          </div>
-        </div>
-        <div class="tut-step" id="tutStep4">
-          <span class="tut-step-emoji">🚀</span>
-          <div class="tut-step-title">Hazırsın!</div>
-          <div class="tut-step-desc">Artık oyunu oynamaya hazırsın. Başlangıç için <strong>3 Basamak (Kolay)</strong> modunu dene!</div>
-          <div class="tut-rules">
-            <div class="tut-rule-item"><span class="tut-rule-icon">🟢</span><div><div class="tut-rule-title">Kolay — 3 Basamak, 10 hak</div><div class="tut-rule-desc">İlk oyun için mükemmel.</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">🔵</span><div><div class="tut-rule-title">Normal — 4 Basamak, 10 hak</div><div class="tut-rule-desc">Klasik deneyim. Arkadaşlarınla rekabet et!</div></div></div>
-            <div class="tut-rule-item"><span class="tut-rule-icon">🔴</span><div><div class="tut-rule-title">Uzman+ — 6, 7, 8 Basamak</div><div class="tut-rule-desc">Gerçek ustalar için. Başarabilir misin?</div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tut-dots" id="tutDots">
-      <div class="tut-dot active" data-i="0"></div>
-      <div class="tut-dot" data-i="1"></div>
-      <div class="tut-dot" data-i="2"></div>
-      <div class="tut-dot" data-i="3"></div>
-      <div class="tut-dot" data-i="4"></div>
-    </div>
-    <div class="tut-nav">
-      <button class="tut-skip-btn" id="tutSkipBtn">Atla</button>
-      <span class="tut-step-counter" id="tutStepCounter">1 / 5</span>
-      <div style="display:flex;justify-content:flex-end;">
-        <button class="tut-next-btn" id="tutNextBtn">İleri →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-/* ── HELPERS ── */
-const $ = id => document.getElementById(id);
-const tx = (id, v) => $(id).textContent = v;
-
-/* ── THEME ── */
-const html = document.documentElement;
-const themeBtn = $('themeBtn');
-const metaColor = $('themeColorMeta');
-const TC = { light: '#EEF2FF', dark: '#0C0E1F' };
-function applyTheme(t) {
-  html.setAttribute('data-theme', t);
-  themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
-  metaColor.content = TC[t];
-}
-try {
-  const sv = localStorage.getItem('st-theme');
-  if (sv) applyTheme(sv);
-  else if (window.matchMedia('(prefers-color-scheme: dark)').matches) applyTheme('dark');
-} catch (e) {}
-themeBtn.addEventListener('click', () => {
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  applyTheme(next);
-  try { localStorage.setItem('st-theme', next); } catch (e) {}
-});
-
-/* ═══════════════════════════════════════════
-   CHALLENGE SYSTEM
-═══════════════════════════════════════════ */
-
-function encodeChallenge(digits, number) {
-  const key = 'STv2xK9';
-  const payload = `${digits}:${number}`;
-  let xored = '';
-  for (let i = 0; i < payload.length; i++) {
-    xored += String.fromCharCode(payload.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-  }
-  return btoa(xored).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-}
-
-function decodeChallenge(encoded) {
-  try {
-    // Strip whitespace that might appear after copy-paste
-    encoded = encoded.trim();
-    const b64 = encoded.replace(/-/g,'+').replace(/_/g,'/');
-    const xored = atob(b64);
-    const key = 'STv2xK9';
-    let payload = '';
-    for (let i = 0; i < xored.length; i++) {
-      payload += String.fromCharCode(xored.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-    }
-    const colonIdx = payload.indexOf(':');
-    if (colonIdx === -1) return null;
-    const dStr = payload.slice(0, colonIdx);
-    const number = payload.slice(colonIdx + 1);
-    const digits = parseInt(dStr);
-    if (!digits || !number || isNaN(digits)) return null;
-    if (number.length !== digits) return null;
-    if ([...number].some(c => c === '0')) return null;
-    if (new Set(number).size !== digits) return null;
-    if (!/^\d+$/.test(number)) return null;
-    return { digits, number };
-  } catch(e) { return null; }
-}
-
-/* Extract code from a pasted value — handles raw code OR full URL */
-function extractCode(raw) {
-  raw = raw.trim();
-  // If it looks like a URL with ?c= param
-  try {
-    const urlObj = new URL(raw);
-    const c = urlObj.searchParams.get('c');
-    if (c) return c;
-  } catch(e) {}
-  // Try hash fragment #c=...
-  if (raw.includes('#c=')) {
-    return raw.split('#c=')[1].split('&')[0].trim();
-  }
-  // Try ?c= without full URL
-  if (raw.includes('?c=')) {
-    return raw.split('?c=')[1].split('&')[0].trim();
-  }
-  // Assume it's the raw code itself
-  return raw;
-}
-
-/* Challenge creator state */
-let chalDigits = 3;
-let chalValues = [];
-let chalActiveIdx = 0;
-
-function initChalDigitBoxes() {
-  chalValues = Array(chalDigits).fill('');
-  chalActiveIdx = 0;
-  const container = $('chalDigitBoxes');
-  container.innerHTML = '';
-  for (let i = 0; i < chalDigits; i++) {
-    const box = document.createElement('div');
-    box.className = 'chal-digit-box';
-    box.id = 'cd' + i;
-    box.textContent = '·';
-    box.dataset.index = i;
-    box.addEventListener('click', () => {
-      chalActiveIdx = i;
-      updateChalBoxes();
-      if (isMobile()) openChalNumpad();
-    });
-    container.appendChild(box);
-  }
-  updateChalBoxes();
-  $('chalLinkResult').classList.remove('show');
-  $('chalErr').textContent = '';
-}
-
-function updateChalBoxes() {
-  for (let i = 0; i < chalDigits; i++) {
-    const el = $('cd' + i);
-    if (!el) continue;
-    el.textContent = chalValues[i] || '·';
-    el.classList.toggle('filled', chalValues[i] !== '');
-    el.classList.toggle('active', i === chalActiveIdx && isMobile());
-  }
-}
-
-function chalKeyInput(val) {
-  if (chalValues.includes(val)) {
-    $('chalErr').textContent = '⚠ Bu rakam zaten kullanıldı';
-    setTimeout(() => $('chalErr').textContent = '', 1400);
-    return;
-  }
-  chalValues[chalActiveIdx] = val;
-  let next = -1;
-  for (let i = chalActiveIdx + 1; i < chalDigits; i++) {
-    if (chalValues[i] === '') { next = i; break; }
-  }
-  if (next === -1) for (let i = 0; i < chalDigits; i++) {
-    if (chalValues[i] === '') { next = i; break; }
-  }
-  if (next !== -1) chalActiveIdx = next;
-  updateChalBoxes();
-  updateChalNumpadPreview();
-}
-
-function chalKeyDelete() {
-  if (chalValues[chalActiveIdx] !== '') {
-    chalValues[chalActiveIdx] = '';
-  } else if (chalActiveIdx > 0) {
-    chalActiveIdx--;
-    chalValues[chalActiveIdx] = '';
-  }
-  updateChalBoxes();
-  updateChalNumpadPreview();
-}
-
-// Desktop keyboard for challenge input
-document.addEventListener('keydown', (e) => {
-  if ($('chalCreateBox').classList.contains('open') && !isMobile()) {
-    const key = e.key;
-    if (key >= '1' && key <= '9') { e.preventDefault(); if (!chalValues.includes(key)) { chalValues[chalActiveIdx] = key; let nxt = -1; for(let i=chalActiveIdx+1;i<chalDigits;i++){if(chalValues[i]===''){nxt=i;break;}} if(nxt!==-1) chalActiveIdx=nxt; updateChalBoxes(); } }
-    else if (key === 'Backspace') { e.preventDefault(); chalKeyDelete(); }
-    else if (key === 'ArrowLeft' && chalActiveIdx > 0) { chalActiveIdx--; updateChalBoxes(); }
-    else if (key === 'ArrowRight' && chalActiveIdx < chalDigits-1) { chalActiveIdx++; updateChalBoxes(); }
-    else if (key === '0') { $('chalErr').textContent = '⚠ 0 kullanılamaz'; setTimeout(()=>$('chalErr').textContent='',1200); }
-  }
-});
-
-// Mode buttons
-$('chalModeSelect').addEventListener('click', e => {
-  const btn = e.target.closest('.chal-mode-btn');
-  if (!btn) return;
-  document.querySelectorAll('.chal-mode-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  chalDigits = +btn.dataset.d;
-  initChalDigitBoxes();
-  buildChalNumpad();
-});
-
-// Toggle open/close
-$('chalToggleBtn').addEventListener('click', () => {
-  const box = $('chalCreateBox');
-  const isOpen = box.classList.contains('open');
-  if (isOpen) {
-    box.classList.remove('open');
-    $('chalToggleBtn').textContent = 'Oluştur →';
-  } else {
-    box.classList.add('open');
-    $('chalToggleBtn').textContent = 'Kapat ✕';
-    initChalDigitBoxes();
-    buildChalNumpad();
-  }
-});
-
-// Random button
-$('chalRandomBtn').addEventListener('click', () => {
-  const digits = ['1','2','3','4','5','6','7','8','9']
-    .sort(() => Math.random()-.5).slice(0, chalDigits);
-  chalValues = digits;
-  chalActiveIdx = chalDigits - 1;
-  updateChalBoxes();
-  updateChalNumpadPreview();
-  $('chalErr').textContent = '';
-});
-
-// Generate code & link
-$('chalGenBtn').addEventListener('click', () => {
-  if (chalValues.some(v => v === '')) {
-    $('chalErr').textContent = '⚠ Tüm haneleri doldur';
-    setTimeout(() => $('chalErr').textContent = '', 1400);
-    return;
-  }
-  if (new Set(chalValues).size !== chalDigits) {
-    $('chalErr').textContent = '⚠ Rakamlar tekrar etmemeli';
-    setTimeout(() => $('chalErr').textContent = '', 1400);
-    return;
-  }
-  $('chalErr').textContent = '';
-  const number = chalValues.join('');
-  const encoded = encodeChallenge(chalDigits, number);
-
-  // Show short code (works everywhere)
-  $('chalShortcodeBox').textContent = encoded;
-
-  // Show full URL (only works when hosted)
-  const url = `${location.href.split('?')[0]}?c=${encoded}`;
-  $('chalLinkBox').textContent = url;
-
-  $('chalLinkResult').classList.add('show');
-
-  // Share message uses the short code prominently
-  const modeNames = {3:'Kolay',4:'Normal',5:'Zor',6:'Uzman',7:'Efsane',8:'İmkansız'};
-  const msg = `🎯 Sayı Tahmin Meydan Okuma!\n${chalDigits} basamaklı (${modeNames[chalDigits]}) gizli sayımı kaçta bulabilirsin?\n\n📋 Kod: ${encoded}\n\nOyunu aç → "Kodla Katıl" kutusuna kodu yapıştır!`;
-
-  $('chalShareWa').onclick = () => {
-    const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(waUrl, '_blank');
-  };
-  $('chalShareTw').onclick = () => {
-    const shortMsg = `🎯 ${chalDigits} basamaklı sayımı tahmin edebilir misin? Kod: ${encoded}`;
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shortMsg)}`, '_blank');
-  };
-  $('chalShareGen').onclick = () => {
-    if (navigator.share) {
-      navigator.share({ title: 'Sayı Tahmin Meydan Okuma!', text: msg });
-    } else {
-      navigator.clipboard.writeText(encoded).catch(()=>{});
-      alert('Kod kopyalandı: ' + encoded);
-    }
-  };
-
-  closeChalNumpad();
-  setTimeout(() => $('chalLinkResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-});
-
-// Copy short code
-$('chalCopyCodeBtn').addEventListener('click', () => {
-  const code = $('chalShortcodeBox').textContent;
-  const btn = $('chalCopyCodeBtn');
-  const doCopy = () => {
-    btn.textContent = '✓ Kopyalandı!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Kodu Kopyala'; btn.classList.remove('copied'); }, 2000);
-  };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(code).then(doCopy).catch(() => fallbackCopy(code, doCopy));
-  } else {
-    fallbackCopy(code, doCopy);
-  }
-});
-
-// Copy full link
-$('chalCopyBtn').addEventListener('click', () => {
-  const url = $('chalLinkBox').textContent;
-  const btn = $('chalCopyBtn');
-  const doCopy = () => {
-    btn.textContent = '✓ Kopyalandı!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Kopyala'; btn.classList.remove('copied'); }, 2000);
-  };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(doCopy).catch(() => fallbackCopy(url, doCopy));
-  } else {
-    fallbackCopy(url, doCopy);
-  }
-});
-
-function fallbackCopy(text, cb) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;';
-  document.body.appendChild(ta);
-  ta.focus(); ta.select();
-  try { document.execCommand('copy'); cb(); } catch(e) {}
-  document.body.removeChild(ta);
-}
-
-/* ── JOIN BY CODE (NEW) ── */
-$('chalJoinBtn').addEventListener('click', handleJoin);
-$('chalCodeInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleJoin(); });
-
-function handleJoin() {
-  const raw = $('chalCodeInput').value;
-  if (!raw.trim()) {
-    $('chalJoinErr').textContent = '⚠ Önce bir kod gir';
-    setTimeout(() => $('chalJoinErr').textContent = '', 1600);
-    return;
-  }
-  const code = extractCode(raw);
-  const data = decodeChallenge(code);
-  if (!data) {
-    $('chalJoinErr').textContent = '⚠ Geçersiz kod! Tam kodu kopyaladığından emin ol.';
-    setTimeout(() => $('chalJoinErr').textContent = '', 2500);
-    return;
-  }
-  $('chalJoinErr').textContent = '';
-  $('chalCodeInput').value = '';
-  startChallengeGame(data.digits, data.number);
-}
-
-/* Challenge numpad */
-function buildChalNumpad() {
-  const grid = $('chalNumpadGrid');
-  grid.innerHTML = '';
-  for (let n = 1; n <= 9; n++) {
-    const btn = document.createElement('button');
-    btn.className = 'numpad-btn';
-    btn.textContent = n;
-    btn.addEventListener('click', () => chalKeyInput(String(n)));
-    grid.appendChild(btn);
-  }
-  const del = document.createElement('button');
-  del.className = 'numpad-btn numpad-del';
-  del.innerHTML = '⌫';
-  del.addEventListener('click', chalKeyDelete);
-  const empty = document.createElement('div');
-  empty.style.visibility = 'hidden';
-  const done = document.createElement('button');
-  done.className = 'numpad-btn numpad-submit';
-  done.textContent = 'Tamam ✓';
-  done.addEventListener('click', closeChalNumpad);
-  grid.appendChild(del);
-  grid.appendChild(empty);
-  grid.appendChild(done);
-}
-
-function openChalNumpad() {
-  updateChalNumpadPreview();
-  $('chalNumpadOverlay').classList.add('show');
-}
-
-function closeChalNumpad() {
-  $('chalNumpadOverlay').classList.remove('show');
-}
-
-function updateChalNumpadPreview() {
-  const prev = $('chalNumpadPreview');
-  prev.innerHTML = chalValues.map((v, i) => {
-    return `<div class="np-digit${v?' has-val':''}${i===chalActiveIdx?' is-active':''}">${v||'·'}</div>`;
-  }).join('');
-}
-
-$('chalNumpadBackdrop').addEventListener('click', closeChalNumpad);
-$('chalNumpadCloseBtn').addEventListener('click', closeChalNumpad);
-
-/* Check URL for incoming challenge */
-function checkIncomingChallenge() {
-  try {
-    const params = new URLSearchParams(location.search);
-    const c = params.get('c');
-    if (!c) return;
-    const data = decodeChallenge(c);
-    if (!data) return;
-    showIncomingBanner(data);
-    // Clean URL
-    try { history.replaceState({}, '', location.pathname); } catch(e) {}
-  } catch(e) {}
-}
-
-function showIncomingBanner(data) {
-  const modeNames = {3:'Kolay',4:'Normal',5:'Zor',6:'Uzman',7:'Efsane',8:'İmkansız'};
-  $('chalBannerSub').textContent = 'Gizli sayıyı tahmin edebilir misin?';
-  $('chalBannerMeta').innerHTML = `
-    <span class="chal-meta-pill chal-meta-digits">🔢 ${data.digits} Basamak</span>
-    <span class="chal-meta-pill chal-meta-from">⚔️ ${modeNames[data.digits] || ''} Mod</span>
-  `;
-  $('chalBanner').classList.add('show');
-
-  // Remove any old listeners by replacing button
-  const oldBtn = $('chalAcceptBtn');
-  const newBtn = oldBtn.cloneNode(true);
-  oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-  newBtn.addEventListener('click', () => {
-    $('chalBanner').classList.remove('show');
-    startChallengeGame(data.digits, data.number);
-  });
-}
-
-function startChallengeGame(digits, number) {
-  isChallengeMode = true;
-  startGame(digits, number);
-}
-
-/* ═══════════════════════════════════════════
-   TUTORIAL SYSTEM
-═══════════════════════════════════════════ */
-const TOTAL_STEPS = 5;
-let tutCurrentStep = 0;
-let digitAnimTimer = null;
-
-function openTutorial() {
-  tutCurrentStep = 0;
-  $('tutOverlay').classList.add('show');
-  goToTutStep(0);
-  try { localStorage.setItem('st-tut-seen', '1'); } catch(e) {}
-  const badge = $('tutNewBadge');
-  if (badge) badge.style.display = 'none';
-}
-
-function closeTutorial() {
-  $('tutOverlay').classList.remove('show');
-  clearDigitAnim();
-}
-
-function goToTutStep(idx) {
-  if (idx < 0 || idx >= TOTAL_STEPS) return;
-  tutCurrentStep = idx;
-  $('tutSteps').style.transform = `translateX(-${idx * 100}%)`;
-  document.querySelectorAll('.tut-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === idx);
-    d.classList.toggle('done', i < idx);
-  });
-  tx('tutStepCounter', `${idx + 1} / ${TOTAL_STEPS}`);
-  const nextBtn = $('tutNextBtn');
-  if (idx === TOTAL_STEPS - 1) { nextBtn.textContent = 'Oynamaya Başla! 🎮'; nextBtn.classList.add('finish'); }
-  else { nextBtn.textContent = 'İleri →'; nextBtn.classList.remove('finish'); }
-  tx('tutSkipBtn', idx === TOTAL_STEPS - 1 ? 'Kapat' : 'Atla');
-  const stepEl = $('tutStep' + idx);
-  const emoji = stepEl && stepEl.querySelector('.tut-step-emoji');
-  if (emoji) { emoji.style.animation = 'none'; void emoji.offsetWidth; emoji.style.animation = ''; }
-  clearDigitAnim();
-  if (idx === 2) startDigitAnim();
-}
-
-const animSeq = [
-  { boxes: ['3','·','·','·'], classes: ['filled','','',''] },
-  { boxes: ['3','7','·','·'], classes: ['filled','filled','',''] },
-  { boxes: ['3','7','1','·'], classes: ['filled','filled','filled',''] },
-  { boxes: ['3','7','1','9'], classes: ['filled','filled','filled','filled'] },
-  { boxes: ['3','7','1','9'], classes: ['correct','wrong-pos','filled','correct'] },
-];
-let animIdx = 0;
-function startDigitAnim() {
-  animIdx = 0; runDigitFrame();
-  digitAnimTimer = setInterval(() => { animIdx = (animIdx + 1) % animSeq.length; runDigitFrame(); }, 800);
-}
-function runDigitFrame() {
-  const frame = animSeq[animIdx];
-  for (let i = 0; i < 4; i++) {
-    const el = $('td' + i); if (!el) continue;
-    el.textContent = frame.boxes[i];
-    el.className = 'tut-dbox' + (frame.classes[i] ? ' ' + frame.classes[i] : '');
-  }
-}
-function clearDigitAnim() { if (digitAnimTimer) { clearInterval(digitAnimTimer); digitAnimTimer = null; } }
-
-$('openTutorialBtn').addEventListener('click', openTutorial);
-$('tutNextBtn').addEventListener('click', () => { tutCurrentStep === TOTAL_STEPS - 1 ? closeTutorial() : goToTutStep(tutCurrentStep + 1); });
-$('tutSkipBtn').addEventListener('click', closeTutorial);
-$('tutOverlay').addEventListener('click', e => { if (e.target === $('tutOverlay')) closeTutorial(); });
-document.querySelectorAll('.tut-dot').forEach(d => { d.addEventListener('click', () => goToTutStep(+d.dataset.i)); });
-let tutTouchX = null;
-$('tutPanel').addEventListener('touchstart', e => { tutTouchX = e.touches[0].clientX; }, { passive: true });
-$('tutPanel').addEventListener('touchend', e => {
-  if (tutTouchX === null) return;
-  const dx = e.changedTouches[0].clientX - tutTouchX;
-  if (Math.abs(dx) > 50) { dx < 0 && tutCurrentStep < TOTAL_STEPS - 1 ? goToTutStep(tutCurrentStep + 1) : dx > 0 && tutCurrentStep > 0 ? goToTutStep(tutCurrentStep - 1) : null; }
-  tutTouchX = null;
-});
-try {
-  if (!localStorage.getItem('st-tut-seen')) { setTimeout(openTutorial, 600); }
-  else { const badge = $('tutNewBadge'); if (badge) badge.style.display = 'none'; }
-} catch(e) {}
-
-/* ── GAME STATE ── */
-const MODES = {
-  3:   { label: '3 Basamak',       diff: 'Kolay',    max: 10, color: '#10B981', bg: '#D1FAE5', bd: '#6EE7B7' },
-  4:   { label: '4 Basamak',       diff: 'Normal',   max: 10, color: '#3B82F6', bg: '#DBEAFE', bd: '#93C5FD' },
-  5:   { label: '5 Basamak',       diff: 'Zor',      max: 12, color: '#8B5CF6', bg: '#EDE9FE', bd: '#C4B5FD' },
-  6:   { label: '6 Basamak',       diff: 'Uzman',    max: 14, color: '#F43F5E', bg: '#FFE4E6', bd: '#FDA4AF' },
-  7:   { label: '7 Basamak',       diff: 'Efsane',   max: 16, color: '#F97316', bg: '#FFF7ED', bd: '#FDBA74' },
-  '4f':{ label: '4 Hane Serbest',  diff: 'Serbest',  max: 10, color: '#0D9488', bg: '#F0FDFA', bd: '#5EEAD4' },
-};
-
-let D = 4, secret = '', attempts = 0, gameOver = false, hintsUsed = 0;
-let isChallengeMode = false;
-let freeMode = false; // 0 allowed, repeats allowed
-const stats = { 3:{best:null,wins:0}, 4:{best:null,wins:0}, 5:{best:null,wins:0}, 6:{best:null,wins:0}, 7:{best:null,wins:0}, '4f':{best:null,wins:0} };
-let digitValues = [];
-let activeDigitIndex = 0;
-
-const isMobile = () => window.innerWidth < 768 || ('ontouchstart' in window);
-
-/* ── NUMPAD ── */
-function openNumpad() {
-  if (!isMobile()) return;
-  buildNumpadPreview();
-  $('numpadOverlay').classList.add('show');
-}
-function closeNumpad() { $('numpadOverlay').classList.remove('show'); updateDigitBoxes(); }
-function buildNumpadPreview() {
-  const prev = $('numpadPreview');
-  prev.innerHTML = digitValues.map((v, i) => `<div class="np-digit${v?' has-val':''}${i===activeDigitIndex?' is-active':''}">${v||'·'}</div>`).join('');
-}
-function buildNumpad() {
-  const grid = $('numpadGrid'); grid.innerHTML = '';
-  if (freeMode) {
-    // Layout: 1-9 then ⌫ 0 →
-    for (let n = 1; n <= 9; n++) {
-      const btn = document.createElement('button'); btn.className = 'numpad-btn'; btn.textContent = n;
-      btn.addEventListener('click', () => numpadInput(String(n)));
-      grid.appendChild(btn);
-    }
-    const del = document.createElement('button'); del.className = 'numpad-btn numpad-del'; del.innerHTML = '⌫'; del.addEventListener('click', numpadDelete);
-    const zero = document.createElement('button'); zero.className = 'numpad-btn'; zero.textContent = '0';
-    zero.addEventListener('click', () => numpadInput('0'));
-    const sub = document.createElement('button'); sub.className = 'numpad-btn numpad-submit'; sub.id = 'numpadSubmit'; sub.textContent = 'Tahmin →';
-    sub.addEventListener('click', () => { closeNumpad(); makeGuess(); });
-    grid.appendChild(del); grid.appendChild(zero); grid.appendChild(sub);
-  } else {
-    for (let n = 1; n <= 9; n++) {
-      const btn = document.createElement('button'); btn.className = 'numpad-btn'; btn.textContent = n;
-      btn.setAttribute('data-val', n);
-      btn.addEventListener('click', () => numpadInput(String(n)));
-      grid.appendChild(btn);
-    }
-    const del = document.createElement('button'); del.className = 'numpad-btn numpad-del'; del.innerHTML = '⌫'; del.addEventListener('click', numpadDelete);
-    const empty = document.createElement('div'); empty.style.cssText = 'visibility:hidden';
-    const sub = document.createElement('button'); sub.className = 'numpad-btn numpad-submit'; sub.id = 'numpadSubmit'; sub.textContent = 'Tahmin →';
-    sub.addEventListener('click', () => { closeNumpad(); makeGuess(); });
-    grid.appendChild(del); grid.appendChild(empty); grid.appendChild(sub);
-  }
-}
-function numpadInput(val) {
-  if (!freeMode && digitValues.includes(val)) { tx('errMsg','⚠ Bu rakam zaten var'); setTimeout(()=>tx('errMsg',''),1200); return; }
-  digitValues[activeDigitIndex] = val;
-  let next = -1;
-  for (let i = activeDigitIndex+1; i < D; i++) { if (digitValues[i]==='') { next=i; break; } }
-  if (next===-1) for (let i=0; i<D; i++) { if (digitValues[i]==='') { next=i; break; } }
-  if (next !== -1) activeDigitIndex = next;
-  updateDigitBoxes(); buildNumpadPreview();
-  const sub = $('numpadSubmit'); if (sub) sub.disabled = !digitValues.every(v=>v!=='');
-}
-function numpadDelete() {
-  if (digitValues[activeDigitIndex]!=='') { digitValues[activeDigitIndex]=''; }
-  else if (activeDigitIndex>0) { activeDigitIndex--; digitValues[activeDigitIndex]=''; }
-  updateDigitBoxes(); buildNumpadPreview();
-  const sub = $('numpadSubmit'); if (sub) sub.disabled = true;
-}
-function updateDigitBoxes() {
-  for (let i=0; i<D; i++) {
-    const el = $('d'+i); if (!el) continue;
-    el.textContent = digitValues[i]||'·';
-    el.classList.toggle('filled', digitValues[i]!=='');
-    el.classList.toggle('active', i===activeDigitIndex && isMobile());
-  }
-}
-
-/* ── SCREENS ── */
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  $(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function goHome() {
-  $('winModal').classList.remove('show');
-  isChallengeMode = false;
-  closeNumpad();
-  updateHomeStats();
-  showScreen('homeScreen');
-}
-function updateHomeStats() {
-  [3,4,5,6,7].forEach(d => {
-    const b = stats[d].best;
-    tx(`best${d}`, b ? b+' deneme' : '—');
-    tx(`gs${d}`, b||'—');
-  });
-  const bf = stats['4f'].best;
-  tx('best4f', bf ? bf+' deneme' : '—');
-  tx('gs4f', bf||'—');
-}
-
-/* ── GAME FUNCTIONS ── */
-function startGame(digits, forcedSecret, isFree) {
-  freeMode = !!isFree;
-  D = digits;
-  digitValues = Array(digits).fill('');
-  activeDigitIndex = 0;
-  buildInputs(digits);
-  buildNumpad();
-  // Update numpad title
-  const nt = $('numpadTitle');
-  if (nt) nt.textContent = freeMode ? 'Rakam Gir (0 ve tekrar serbest)' : 'Rakam Gir (0 kullanılamaz)';
-  restartGame(forcedSecret);
-  showScreen('gameScreen');
-  const modeKey = freeMode ? '4f' : digits;
-  const m = MODES[modeKey], pill = $('modePill');
-  let pillText = m.diff + ' · ' + m.label;
-  if (isChallengeMode) pillText = '⚔️ Meydan Okuma · ' + m.label;
-  pill.textContent = pillText;
-  pill.style.cssText = `color:${m.color};background:${m.bg};border-color:${m.bd};font-size:clamp(9px,2.5vw,11px);font-weight:800;text-transform:uppercase;letter-spacing:0.6px;padding:6px 12px;border-radius:99px;border:2px solid;`;
-  // Show free mode tutorial
-  if (freeMode && !isChallengeMode) {
-    setTimeout(() => $('freeTutModal').classList.add('show'), 300);
-  }
-}
-
-function buildInputs(n) {
-  const row = $('digitRow'); row.innerHTML = '';
-  for (let i=0; i<n; i++) {
-    const div = document.createElement('div');
-    div.className='dbox'; div.id='d'+i;
-    div.setAttribute('role','button'); div.setAttribute('tabindex','0');
-    div.textContent='·'; div.setAttribute('data-index',i);
-    div.addEventListener('click', () => {
-      if (isMobile()) { activeDigitIndex=i; openNumpad(); }
-      else { activeDigitIndex=i; updateDigitBoxes(); }
-    });
-    row.appendChild(div);
-  }
-}
-
-function handleKeyboard(e) {
-  if (gameOver) return;
-  const active = document.querySelector('.screen.active');
-  if (!active || active.id !== 'gameScreen') return;
-  const key = e.key;
-  const validKeys = freeMode ? (key>='0'&&key<='9') : (key>='1'&&key<='9');
-  if (validKeys) {
-    e.preventDefault();
-    if (!freeMode && digitValues.includes(key)) return;
-    if (!freeMode && key==='0') { tx('errMsg','⚠ 0 kullanılamaz'); setTimeout(()=>tx('errMsg',''),1200); shakeAll(); return; }
-    digitValues[activeDigitIndex]=key;
-    let next=-1;
-    for(let i=activeDigitIndex+1;i<D;i++){if(digitValues[i]===''){next=i;break;}}
-    if(next!==-1) activeDigitIndex=next;
-    updateDigitBoxes();
-  } else if (key==='Backspace') {
-    e.preventDefault();
-    if(digitValues[activeDigitIndex]!==''){digitValues[activeDigitIndex]='';}
-    else if(activeDigitIndex>0){activeDigitIndex--;digitValues[activeDigitIndex]='';}
-    updateDigitBoxes();
-  } else if (key==='ArrowLeft'&&activeDigitIndex>0){activeDigitIndex--;updateDigitBoxes();}
-  else if (key==='ArrowRight'&&activeDigitIndex<D-1){activeDigitIndex++;updateDigitBoxes();}
-  else if (key==='Enter'){makeGuess();}
-  else if (!freeMode&&key==='0'){tx('errMsg','⚠ 0 kullanılamaz');setTimeout(()=>tx('errMsg',''),1200);shakeAll();}
-}
-document.addEventListener('keydown', handleKeyboard);
-
-function restartGame(forcedSecret) {
-  const modeKey = freeMode ? '4f' : D;
-  const m = MODES[modeKey];
-  secret = forcedSecret || gen(D);
-  attempts=0; gameOver=false; hintsUsed=0;
-  digitValues=Array(D).fill('');
-  activeDigitIndex=0;
-  tx('sDeneme','0'); tx('errMsg',''); tx('histBody','');
-  $('histCard').style.display='none';
-  $('winModal').classList.remove('show');
-  closeNumpad();
-  $('guessBtn').disabled=false;
-  $('hintBtn').disabled=false;
-  $('hintBtn').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> İpucu Al`;
-  $('fbWrap').className='fb';
-  $('hintBox').classList.remove('show');
-  const s=stats[modeKey];
-  tx('sBest',s.best||'—');
-  tx('sWins',s.wins);
-  updateProg();
-  updateDigitBoxes();
-  if(!isMobile()) setTimeout(()=>{activeDigitIndex=0;updateDigitBoxes();},55);
-}
-
-function gen(n) {
-  if (freeMode) {
-    // 0-9, repeats allowed
-    let r='';
-    for(let i=0;i<n;i++) r+=String(Math.floor(Math.random()*10));
-    return r;
-  }
-  return ['1','2','3','4','5','6','7','8','9'].sort(()=>Math.random()-.5).slice(0,n).join('');
-}
-
-function updateProg(digits,mode) {
-  const modeKey = freeMode ? '4f' : (digits||D);
-  const m = mode || MODES[modeKey];
-  $('progFill').style.width=Math.min((attempts/m.max)*100,100)+'%';
-  tx('progVal',`${attempts} / ${m.max}`);
-}
-
-function shakeAll() {
-  document.querySelectorAll('.dbox').forEach(el=>{el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');});
-}
-
-function makeGuess() {
-  if (gameOver) return;
-  tx('errMsg','');
-  if (digitValues.some(v=>v==='')) { tx('errMsg','⚠ Tüm haneleri doldur'); shakeAll(); if(isMobile())openNumpad(); return; }
-  if (!freeMode && new Set(digitValues).size!==D) { tx('errMsg','⚠ Her rakam farklı olmalı'); shakeAll(); return; }
-  const guess=digitValues.join('');
-  const modeKey = freeMode ? '4f' : D;
-  attempts++; tx('sDeneme',attempts); updateProg();
-  let plus=0, minus=0;
-  for(let i=0;i<D;i++){if(guess[i]===secret[i])plus++;else if(secret.includes(guess[i]))minus++;}
-  document.querySelectorAll('.dbox').forEach((el,i)=>{
-    if(guess[i]===secret[i]){el.classList.add('flip');setTimeout(()=>el.classList.remove('flip'),400);}
-  });
-  addRow(attempts,guess,plus,minus);
-  showFb(plus,minus);
-  if(plus===D){
-    gameOver=true;
-    const s=stats[modeKey]; s.wins++;
-    if(s.best===null||attempts<s.best)s.best=attempts;
-    tx('sBest',s.best); tx('sWins',s.wins);
-    $('guessBtn').disabled=true; $('hintBtn').disabled=true;
-    launchConfetti();
-    setTimeout(()=>{
-      $('modalSecret').textContent=secret;
-      $('mTries').textContent=attempts;
-      $('mBest').textContent=s.best;
-      if(isChallengeMode){
-        $('modalSub').textContent = `⚔️ Meydan okumayı ${attempts} denemede tamamladın! 🎯`;
-      } else {
-        $('modalSub').textContent=`${freeMode?'Serbest mod':D+' basamaklı'} sayıyı ${attempts} denemede buldun! 🎯`;
-      }
-      $('winModal').classList.add('show');
-    },700);
-  } else if(attempts>=MODES[modeKey].max){
-    gameOver=true;
-    $('guessBtn').disabled=true; $('hintBtn').disabled=true;
-  }
-  digitValues=Array(D).fill('');
-  activeDigitIndex=0;
-  updateDigitBoxes();
-  closeNumpad();
-}
-
-function showFb(plus,minus) {
-  const wrap=$('fbWrap');
-  if(plus===D){
-    $('fbIcon').textContent='🎯';
-    $('fbScores').innerHTML=`<span class="fbs fw">Tam İsabet!</span>`;
-    tx('fbMsg',`${attempts} denemede buldun 🌟`);
-    wrap.className='fb show fb-win'; return;
-  }
-  if(gameOver&&attempts>=MODES[D].max){
-    $('fbIcon').textContent='😔';
-    $('fbScores').innerHTML=`<span class="fbs fz">Oyun Bitti</span>`;
-    tx('fbMsg',`Gizli sayı: ${secret}`);
-    wrap.className='fb show fb-zero'; return;
-  }
-  const sc=[];
-  if(plus>0)sc.push(`<span class="fbs fp">+${plus}</span>`);
-  if(minus>0)sc.push(`<span class="fbs fm">−${minus}</span>`);
-  if(!sc.length)sc.push(`<span class="fbs fz">±0</span>`);
-  const t=plus>0?'plus':minus>0?'minus':'zero';
-  $('fbIcon').textContent={plus:'✅',minus:'🔄',zero:'❌'}[t];
-  $('fbScores').innerHTML=sc.join('');
-  tx('fbMsg',{plus:`${plus} rakam doğru konumda`,minus:`Doğru rakam var, konum yanlış`,zero:`Hiç eşleşme yok`}[t]);
-  wrap.className=`fb show fb-${t}`;
-}
-
-function addRow(num,guess,plus,minus) {
-  $('histCard').style.display='block'; tx('histPill',num);
-  const body=$('histBody'), row=document.createElement('div');
-  row.className='hrow';
-  const pb=plus>0?`<span class="hb hbp">+${plus}</span>`:'';
-  const mb=minus>0?`<span class="hb hbm">−${minus}</span>`:'';
-  const zb=(!plus&&!minus)?`<span class="hb hbz">±0</span>`:'';
-  row.innerHTML=`<div class="hrow-n">#${num}</div><div class="hrow-g">${guess}</div><div class="hrow-bs">${pb}${mb}${zb}</div>`;
-  body.insertBefore(row,body.firstChild);
-}
-
-function showHint() {
-  if(gameOver||hintsUsed>=2)return;
-  hintsUsed++;
-  let hint='';
-  if(hintsUsed===1){hint=`İlk rakam ${parseInt(secret[0])>=5?'5 veya daha büyük':'4 veya daha küçük'}.`;}
-  else{const last=parseInt(secret[secret.length-1]);hint=`Son rakam ${last%2===0?'çift':'tek'} (${last}).`;$('hintBtn').disabled=true;$('hintBtn').innerHTML='💡 İpucu Bitti';}
-  tx('hintText',hint);
-  $('hintBox').classList.add('show');
-}
-
-function launchConfetti() {
-  const container=$('confettiContainer');
-  const colors=['#6366F1','#8B5CF6','#F59E0B','#10B981','#F43F5E','#3B82F6','#EC4899'];
-  for(let i=0;i<80;i++){
-    const piece=document.createElement('div');
-    piece.className='confetti-piece';
-    const color=colors[Math.floor(Math.random()*colors.length)];
-    const left=Math.random()*100;
-    const delay=Math.random()*1.5;
-    const dur=2+Math.random()*2;
-    const size=8+Math.random()*8;
-    piece.style.cssText=`left:${left}%;background:${color};width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${dur}s;animation-delay:${delay}s;`;
-    container.appendChild(piece);
-  }
-  setTimeout(()=>{container.innerHTML='';},5000);
-}
-
-/* ── WIRE BUTTONS ── */
-$('modesGrid').addEventListener('click', e => {
-  const card=e.target.closest('.mode-card');
-  if(!card)return;
-  isChallengeMode=false;
-  const isFree = card.dataset.free === 'true';
-  startGame(+card.dataset.digits, undefined, isFree);
-});
-$('backBtn').addEventListener('click', goHome);
-$('guessBtn').addEventListener('click', makeGuess);
-$('hintBtn').addEventListener('click', showHint);
-$('resetBtn').addEventListener('click', () => { isChallengeMode=false; freeMode=false; restartGame(); });
-$('winHomeBtn').addEventListener('click', goHome);
-$('winRestartBtn').addEventListener('click', () => { $('winModal').classList.remove('show'); restartGame(); });
-$('winModal').addEventListener('click', e=>{if(e.target===$('winModal'))goHome();});
-$('numpadBackdrop').addEventListener('click', closeNumpad);
-$('numpadCloseBtn').addEventListener('click', closeNumpad);
-
-$('freeTutStartBtn').addEventListener('click', () => $('freeTutModal').classList.remove('show'));
-$('freeTutModal').addEventListener('click', e => { if(e.target===$('freeTutModal')) $('freeTutModal').classList.remove('show'); });
-
-/* ── INIT ── */
-updateHomeStats();
-checkIncomingChallenge();
-</script>
+    <script>
+        (function() {
+            'use strict';
+            
+            // ===== STATE MANAGEMENT =====
+            const state = {
+                digits: 4,
+                secret: '',
+                attempts: 0,
+                maxTries: 10,
+                hintsUsed: 0,
+                maxHints: 2,
+                gameOver: false,
+                digitValues: [],
+                activeIndex: 0,
+                history: [],
+                stats: {}
+            };
+            
+            const MODES = {
+                3: { label: '3 Basamak • Kolay', maxTries: 10 },
+                4: { label: '4 Basamak • Normal', maxTries: 10 },
+                5: { label: '5 Basamak • Zor', maxTries: 12 },
+                6: { label: '6 Basamak • Uzman', maxTries: 14 }
+            };
+            
+            // ===== HELPERS =====
+            const $ = (id) => document.getElementById(id);
+            const qs = (selector) => document.querySelector(selector);
+            const qsa = (selector) => document.querySelectorAll(selector);
+            
+            function generateSecret(digits) {
+                const nums = '123456789'.split('');
+                for (let i = nums.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [nums[i], nums[j]] = [nums[j], nums[i]];
+                }
+                return nums.slice(0, digits).join('');
+            }
+            
+            // ===== THEME =====
+            function initTheme() {
+                const themeBtn = $('themeToggle');
+                const html = document.documentElement;
+                
+                function setTheme(theme) {
+                    html.setAttribute('data-theme', theme);
+                    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    localStorage.setItem('guess-game-theme', theme);
+                }
+                
+                const saved = localStorage.getItem('guess-game-theme');
+                if (saved) setTheme(saved);
+                else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+                
+                themeBtn.addEventListener('click', () => {
+                    const current = html.getAttribute('data-theme');
+                    setTheme(current === 'dark' ? 'light' : 'dark');
+                });
+            }
+            
+            // ===== STATS =====
+            function loadStats() {
+                try {
+                    const saved = localStorage.getItem('guess-game-stats-v3');
+                    if (saved) state.stats = JSON.parse(saved);
+                    else state.stats = {
+                        3: { best: null, wins: 0 },
+                        4: { best: null, wins: 0 },
+                        5: { best: null, wins: 0 },
+                        6: { best: null, wins: 0 }
+                    };
+                } catch(e) {
+                    state.stats = {
+                        3: { best: null, wins: 0 },
+                        4: { best: null, wins: 0 },
+                        5: { best: null, wins: 0 },
+                        6: { best: null, wins: 0 }
+                    };
+                }
+            }
+            
+            function saveStats() {
+                try {
+                    localStorage.setItem('guess-game-stats-v3', JSON.stringify(state.stats));
+                } catch(e) {}
+            }
+            
+            function updateHomeStats() {
+                [3,4,5,6].forEach(d => {
+                    const el = $(`best${d}`);
+                    if (el) {
+                        el.textContent = state.stats[d]?.best || '-';
+                    }
+                });
+            }
+            
+            // ===== SCREEN MANAGEMENT =====
+            function showScreen(screenId) {
+                qsa('.screen').forEach(s => s.classList.remove('active'));
+                const screen = $(screenId);
+                if (screen) {
+                    screen.classList.add('active');
+                    screen.style.animation = 'none';
+                    screen.offsetHeight; // Trigger reflow
+                    screen.style.animation = '';
+                }
+            }
+            
+            // ===== BUILD DIGIT INPUTS =====
+            function buildDigitInputs() {
+                const container = $('digitContainer');
+                container.innerHTML = '';
+                
+                for (let i = 0; i < state.digits; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'digit-box';
+                    box.textContent = '·';
+                    box.dataset.index = i;
+                    box.id = `digit${i}`;
+                    
+                    box.addEventListener('click', () => {
+                        if (state.gameOver) return;
+                        state.activeIndex = i;
+                        updateDigitDisplay();
+                        if (window.innerWidth < 768) openNumpad();
+                    });
+                    
+                    container.appendChild(box);
+                }
+                
+                updateDigitDisplay();
+            }
+            
+            function updateDigitDisplay() {
+                for (let i = 0; i < state.digits; i++) {
+                    const box = $(`digit${i}`);
+                    if (!box) continue;
+                    
+                    box.textContent = state.digitValues[i] || '·';
+                    box.className = 'digit-box';
+                    
+                    if (state.digitValues[i]) box.classList.add('filled');
+                    if (i === state.activeIndex && !state.gameOver) box.classList.add('active');
+                }
+            }
+            
+            // ===== NUMPAD =====
+            function buildNumpad() {
+                const grid = $('numpadGrid');
+                grid.innerHTML = '';
+                
+                for (let i = 1; i <= 9; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'numpad-btn';
+                    btn.textContent = i;
+                    btn.addEventListener('click', () => numpadInput(i.toString()));
+                    grid.appendChild(btn);
+                }
+                
+                // Delete button
+                const delBtn = document.createElement('button');
+                delBtn.className = 'numpad-btn';
+                delBtn.textContent = '⌫';
+                delBtn.style.color = 'var(--accent-danger)';
+                delBtn.addEventListener('click', numpadDelete);
+                grid.appendChild(delBtn);
+                
+                // 0 button (disabled in normal mode)
+                const zeroBtn = document.createElement('button');
+                zeroBtn.className = 'numpad-btn';
+                zeroBtn.textContent = '0';
+                zeroBtn.style.opacity = '0.3';
+                zeroBtn.style.cursor = 'not-allowed';
+                grid.appendChild(zeroBtn);
+                
+                updateNumpadPreview();
+            }
+            
+            function updateNumpadPreview() {
+                const preview = $('numpadPreview');
+                preview.innerHTML = '';
+                
+                for (let i = 0; i < state.digits; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'digit-box';
+                    box.textContent = state.digitValues[i] || '·';
+                    if (state.digitValues[i]) box.classList.add('filled');
+                    if (i === state.activeIndex) box.classList.add('active');
+                    preview.appendChild(box);
+                }
+            }
+            
+            function openNumpad() {
+                updateNumpadPreview();
+                $('numpadOverlay').classList.add('show');
+            }
+            
+            function closeNumpad() {
+                $('numpadOverlay').classList.remove('show');
+                updateDigitDisplay();
+            }
+            
+            function numpadInput(value) {
+                if (state.gameOver) return;
+                if (state.digitValues.includes(value)) {
+                    showError('Bu rakam zaten kullanıldı!');
+                    return;
+                }
+                
+                state.digitValues[state.activeIndex] = value;
+                
+                // Move to next empty
+                let next = -1;
+                for (let i = state.activeIndex + 1; i < state.digits; i++) {
+                    if (!state.digitValues[i]) { next = i; break; }
+                }
+                if (next === -1) {
+                    for (let i = 0; i < state.digits; i++) {
+                        if (!state.digitValues[i]) { next = i; break; }
+                    }
+                }
+                if (next !== -1) state.activeIndex = next;
+                
+                updateNumpadPreview();
+            }
+            
+            function numpadDelete() {
+                if (state.digitValues[state.activeIndex]) {
+                    state.digitValues[state.activeIndex] = '';
+                } else if (state.activeIndex > 0) {
+                    state.activeIndex--;
+                    state.digitValues[state.activeIndex] = '';
+                }
+                updateNumpadPreview();
+            }
+            
+            // ===== KEYBOARD HANDLING =====
+            document.addEventListener('keydown', (e) => {
+                const gameScreen = $('gameScreen');
+                if (!gameScreen || !gameScreen.classList.contains('active')) return;
+                if (state.gameOver) return;
+                
+                const key = e.key;
+                
+                if (key >= '1' && key <= '9') {
+                    e.preventDefault();
+                    if (state.digitValues.includes(key)) {
+                        showError('Bu rakam zaten kullanıldı!');
+                        shakeBoxes();
+                        return;
+                    }
+                    
+                    state.digitValues[state.activeIndex] = key;
+                    
+                    let next = -1;
+                    for (let i = state.activeIndex + 1; i < state.digits; i++) {
+                        if (!state.digitValues[i]) { next = i; break; }
+                    }
+                    if (next === -1) {
+                        for (let i = 0; i < state.digits; i++) {
+                            if (!state.digitValues[i]) { next = i; break; }
+                        }
+                    }
+                    if (next !== -1) state.activeIndex = next;
+                    updateDigitDisplay();
+                }
+                else if (key === 'Backspace') {
+                    e.preventDefault();
+                    if (state.digitValues[state.activeIndex]) {
+                        state.digitValues[state.activeIndex] = '';
+                    } else if (state.activeIndex > 0) {
+                        state.activeIndex--;
+                        state.digitValues[state.activeIndex] = '';
+                    }
+                    updateDigitDisplay();
+                }
+                else if (key === 'ArrowLeft' && state.activeIndex > 0) {
+                    e.preventDefault();
+                    state.activeIndex--;
+                    updateDigitDisplay();
+                }
+                else if (key === 'ArrowRight' && state.activeIndex < state.digits - 1) {
+                    e.preventDefault();
+                    state.activeIndex++;
+                    updateDigitDisplay();
+                }
+                else if (key === 'Enter') {
+                    e.preventDefault();
+                    submitGuess();
+                }
+                else if (key === '0') {
+                    e.preventDefault();
+                    showError('0 rakamı kullanılamaz!');
+                    shakeBoxes();
+                }
+            });
+            
+            function showError(msg) {
+                $('errorMessage').textContent = '⚠ ' + msg;
+                setTimeout(() => { $('errorMessage').textContent = ''; }, 2000);
+            }
+            
+            function shakeBoxes() {
+                qsa('.digit-box').forEach(box => {
+                    box.classList.add('wrong');
+                    setTimeout(() => box.classList.remove('wrong'), 400);
+                });
+            }
+            
+            // ===== SUBMIT GUESS =====
+            function submitGuess() {
+                if (state.gameOver) return;
+                
+                if (state.digitValues.some(v => !v)) {
+                    showError('Tüm haneleri doldurun!');
+                    shakeBoxes();
+                    return;
+                }
+                
+                if (new Set(state.digitValues).size !== state.digits) {
+                    showError('Rakamlar tekrar etmemeli!');
+                    shakeBoxes();
+                    return;
+                }
+                
+                const guess = state.digitValues.join('');
+                state.attempts++;
+                
+                // Calculate +N / -N
+                let plus = 0, minus = 0;
+                for (let i = 0; i < state.digits; i++) {
+                    if (guess[i] === state.secret[i]) {
+                        plus++;
+                    } else if (state.secret.includes(guess[i])) {
+                        minus++;
+                    }
+                }
+                
+                // Visual feedback on digit boxes
+                qsa('.digit-box').forEach((box, i) => {
+                    if (guess[i] === state.secret[i]) {
+                        box.classList.add('correct');
+                        setTimeout(() => box.classList.remove('correct'), 600);
+                    }
+                });
+                
+                // Add to history
+                state.history.unshift({ guess, plus, minus, attempt: state.attempts });
+                updateHistory();
+                
+                // Show feedback
+                showFeedback(plus, minus);
+                
+                // Update UI
+                $('attemptCount').textContent = state.attempts;
+                $('remainingCount').textContent = state.maxTries - state.attempts;
+                
+                const progressPercent = (state.attempts / state.maxTries) * 100;
+                $('progressFill').style.width = Math.min(progressPercent, 100) + '%';
+                
+                // Check win/lose
+                if (plus === state.digits) {
+                    handleWin();
+                    return;
+                }
+                
+                if (state.attempts >= state.maxTries) {
+                    handleLose();
+                    return;
+                }
+                
+                // Reset inputs
+                state.digitValues = new Array(state.digits).fill('');
+                state.activeIndex = 0;
+                updateDigitDisplay();
+            }
+            
+            function showFeedback(plus, minus) {
+                const fb = $('feedbackBox');
+                fb.className = 'feedback-box show';
+                
+                if (plus === state.digits) {
+                    fb.classList.add('feedback-positive');
+                    $('feedbackIcon').textContent = '🎯';
+                    $('feedbackTitle').textContent = 'Mükemmel!';
+                    $('feedbackMsg').textContent = 'Tüm rakamları doğru bildin!';
+                } else if (plus > 0 && minus > 0) {
+                    fb.classList.add('feedback-warning');
+                    $('feedbackIcon').textContent = '🎯';
+                    $('feedbackTitle').textContent = `+${plus} / −${minus}`;
+                    $('feedbackMsg').textContent = `${plus} doğru yerde, ${minus} yanlış yerde`;
+                } else if (plus > 0) {
+                    fb.classList.add('feedback-positive');
+                    $('feedbackIcon').textContent = '✅';
+                    $('feedbackTitle').textContent = `+${plus}`;
+                    $('feedbackMsg').textContent = `${plus} rakam doğru konumda`;
+                } else if (minus > 0) {
+                    fb.classList.add('feedback-warning');
+                    $('feedbackIcon').textContent = '🔄';
+                    $('feedbackTitle').textContent = `−${minus}`;
+                    $('feedbackMsg').textContent = `${minus} rakam var ama yanlış yerde`;
+                } else {
+                    fb.classList.add('feedback-negative');
+                    $('feedbackIcon').textContent = '❌';
+                    $('feedbackTitle').textContent = '±0';
+                    $('feedbackMsg').textContent = 'Hiç eşleşme yok';
+                }
+            }
+            
+            function updateHistory() {
+                const card = $('historyCard');
+                const list = $('historyList');
+                
+                if (state.history.length === 0) {
+                    card.style.display = 'none';
+                    return;
+                }
+                
+                card.style.display = 'block';
+                
+                list.innerHTML = state.history.map(h => {
+                    let badges = '';
+                    if (h.plus > 0) badges += `<span style="background: rgba(16,185,129,0.2); color: var(--accent-success); padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;">+${h.plus}</span>`;
+                    if (h.minus > 0) badges += `<span style="background: rgba(245,158,11,0.2); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; margin-left: 4px;">−${h.minus}</span>`;
+                    if (h.plus === 0 && h.minus === 0) badges += `<span style="background: rgba(239,68,68,0.2); color: var(--accent-danger); padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;">±0</span>`;
+                    
+                    return `
+                        <div class="history-item">
+                            <span style="font-size: 11px; color: var(--text-tertiary);">#${h.attempt}</span>
+                            <span style="font-family: var(--font-mono); font-size: 22px; font-weight: 800; letter-spacing: 3px;">${h.guess}</span>
+                            <div>${badges}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // ===== HINT =====
+            function showHint() {
+                if (state.gameOver || state.hintsUsed >= state.maxHints) return;
+                
+                state.hintsUsed++;
+                $('hintCount').textContent = state.maxHints - state.hintsUsed;
+                
+                let hintText = '';
+                if (state.hintsUsed === 1) {
+                    const firstDigit = parseInt(state.secret[0]);
+                    hintText = `İlk rakam ${firstDigit >= 5 ? '5 veya daha büyük' : '4 veya daha küçük'}`;
+                } else {
+                    const lastDigit = parseInt(state.secret[state.secret.length - 1]);
+                    hintText = `Son rakam ${lastDigit % 2 === 0 ? 'çift' : 'tek'}`;
+                }
+                
+                if (state.hintsUsed >= state.maxHints) {
+                    $('hintBtn').disabled = true;
+                    $('hintBtn').textContent = 'İpucu Bitti';
+                }
+                
+                const fb = $('feedbackBox');
+                fb.className = 'feedback-box show feedback-warning';
+                $('feedbackIcon').textContent = '💡';
+                $('feedbackTitle').textContent = 'İpucu';
+                $('feedbackMsg').textContent = hintText;
+            }
+            
+            // ===== WIN / LOSE =====
+            function handleWin() {
+                state.gameOver = true;
+                
+                if (!state.stats[state.digits]) {
+                    state.stats[state.digits] = { best: null, wins: 0 };
+                }
+                
+                state.stats[state.digits].wins++;
+                if (!state.stats[state.digits].best || state.attempts < state.stats[state.digits].best) {
+                    state.stats[state.digits].best = state.attempts;
+                }
+                
+                saveStats();
+                updateHomeStats();
+                
+                $('submitGuessBtn').disabled = true;
+                $('hintBtn').disabled = true;
+                
+                createConfetti();
+                
+                setTimeout(() => {
+                    $('winSecret').textContent = state.secret;
+                    $('winAttempts').textContent = state.attempts;
+                    $('winBest').textContent = state.stats[state.digits].best;
+                    $('winMessage').textContent = `${state.digits} basamaklı sayıyı ${state.attempts} denemede buldun!`;
+                    $('winModal').classList.add('show');
+                }, 800);
+            }
+            
+            function handleLose() {
+                state.gameOver = true;
+                $('submitGuessBtn').disabled = true;
+                $('hintBtn').disabled = true;
+                
+                const fb = $('feedbackBox');
+                fb.className = 'feedback-box show feedback-negative';
+                $('feedbackIcon').textContent = '😔';
+                $('feedbackTitle').textContent = 'Oyun Bitti';
+                $('feedbackMsg').textContent = `Gizli sayı: ${state.secret}`;
+            }
+            
+            // ===== START GAME =====
+            function startGame(digits) {
+                state.digits = digits;
+                state.maxTries = MODES[digits].maxTries;
+                state.secret = generateSecret(digits);
+                state.attempts = 0;
+                state.hintsUsed = 0;
+                state.gameOver = false;
+                state.digitValues = new Array(digits).fill('');
+                state.activeIndex = 0;
+                state.history = [];
+                
+                console.log('🎯 Gizli sayı:', state.secret); // Debug
+                
+                $('modeLabel').textContent = MODES[digits].label;
+                $('attemptCount').textContent = '0';
+                $('remainingCount').textContent = state.maxTries;
+                $('hintCount').textContent = state.maxHints;
+                $('progressFill').style.width = '0%';
+                $('feedbackBox').className = 'feedback-box';
+                $('errorMessage').textContent = '';
+                $('historyCard').style.display = 'none';
+                $('historyList').innerHTML = '';
+                
+                $('submitGuessBtn').disabled = false;
+                $('hintBtn').disabled = false;
+                $('hintBtn').textContent = '💡 İpucu';
+                
+                buildDigitInputs();
+                showScreen('gameScreen');
+            }
+            
+            function resetGame() {
+                startGame(state.digits);
+            }
+            
+            // ===== CONFETTI =====
+            function createConfetti() {
+                const colors = ['#6366f1', '#8b5cf6', '#f59e0b', '#10b981', '#ef4444', '#3b82f6', '#ec4899', '#14b8a6'];
+                const fragment = document.createDocumentFragment();
+                
+                for (let i = 0; i < 100; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 3;
+                    const duration = 2 + Math.random() * 4;
+                    const size = 6 + Math.random() * 12;
+                    
+                    piece.style.cssText = `
+                        left: ${left}%;
+                        top: -20px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${color};
+                        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                        animation-duration: ${duration}s;
+                        animation-delay: ${delay}s;
+                    `;
+                    
+                    fragment.appendChild(piece);
+                }
+                
+                document.body.appendChild(fragment);
+                setTimeout(() => {
+                    qsa('.confetti-piece').forEach(p => p.remove());
+                }, 6000);
+            }
+            
+            // ===== EVENT LISTENERS =====
+            $('modesGrid').addEventListener('click', (e) => {
+                const card = e.target.closest('.mode-card');
+                if (!card) return;
+                const digits = parseInt(card.dataset.digits);
+                startGame(digits);
+            });
+            
+            $('backToHomeBtn').addEventListener('click', () => {
+                showScreen('homeScreen');
+                updateHomeStats();
+            });
+            
+            $('submitGuessBtn').addEventListener('click', submitGuess);
+            $('hintBtn').addEventListener('click', showHint);
+            $('resetGameBtn').addEventListener('click', resetGame);
+            
+            // Numpad
+            $('numpadOverlay').addEventListener('click', (e) => {
+                if (e.target === $('numpadOverlay')) closeNumpad();
+            });
+            
+            $('closeNumpadBtn').addEventListener('click', closeNumpad);
+            $('numpadSubmitBtn').addEventListener('click', () => {
+                closeNumpad();
+                submitGuess();
+            });
+            
+            // Win modal
+            $('winHomeBtn').addEventListener('click', () => {
+                $('winModal').classList.remove('show');
+                showScreen('homeScreen');
+                updateHomeStats();
+            });
+            
+            $('winRestartBtn').addEventListener('click', () => {
+                $('winModal').classList.remove('show');
+                resetGame();
+            });
+            
+            $('winModal').addEventListener('click', (e) => {
+                if (e.target === $('winModal')) {
+                    $('winModal').classList.remove('show');
+                    showScreen('homeScreen');
+                    updateHomeStats();
+                }
+            });
+            
+            // Challenge
+            $('createChallengeBtn').addEventListener('click', () => {
+                const digits = state.digits || 4;
+                const secret = generateSecret(digits);
+                const encoded = btoa(`${digits}:${secret}`);
+                
+                const resultDiv = $('challengeResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <div style="background: var(--bg-tertiary); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-sm);">
+                        <strong>Kod:</strong> <span style="font-family: var(--font-mono);">${encoded}</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${encoded}')">
+                        📋 Kopyala
+                    </button>
+                `;
+            });
+            
+            // ===== INIT =====
+            initTheme();
+            loadStats();
+            updateHomeStats();
+            buildNumpad();
+            
+            console.log('🚀 Sayı Tahmin v3.0 başlatıldı');
+            console.log('👨‍💻 Mehmet Buğrahan Şaşmaz');
+            
+        })();
+    </script>
 </body>
 </html>
