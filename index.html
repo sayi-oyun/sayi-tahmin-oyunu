@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Sayı Tahmin | </title>
+    <title>Sayı Tahmin | Profesyonel v5.0</title>
     <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş, arkadaşlarına meydan oku!">
     <meta name="author" content="Mehmet Buğrahan Şaşmaz">
     
@@ -174,6 +174,28 @@
         .mode-info { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
         .mode-stats { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-tertiary); }
 
+        /* Turn Selector */
+        .turn-selector-overlay {
+            display: none; position: fixed; inset: 0; background: var(--overlay);
+            backdrop-filter: blur(10px); z-index: 800; align-items: center;
+            justify-content: center; padding: var(--space-lg);
+        }
+        .turn-selector-overlay.show { display: flex; }
+        .turn-selector-content {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl); padding: var(--space-xl); max-width: 380px;
+            width: 100%; text-align: center; animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-xl);
+        }
+        .turn-option {
+            display: flex; align-items: center; gap: var(--space-md);
+            padding: var(--space-md); background: var(--bg-tertiary); border: 2px solid var(--border-color);
+            border-radius: var(--radius-md); cursor: pointer; margin-bottom: var(--space-sm);
+            transition: all var(--transition-fast); font-size: 14px; font-weight: 600;
+        }
+        .turn-option:hover { border-color: var(--accent-primary); background: var(--bg-elevated); transform: translateX(4px); }
+        .turn-option-icon { font-size: 32px; flex-shrink: 0; }
+
         .race-track {
             position: relative; height: 16px; background: var(--bg-tertiary);
             border-radius: var(--radius-full); margin: var(--space-lg) 0; overflow: visible;
@@ -234,7 +256,6 @@
             transition: all var(--transition-fast);
         }
         .diff-option:hover { border-color: var(--accent-warning); background: var(--bg-elevated); }
-        .diff-option.selected { border-color: var(--accent-warning); background: rgba(245,158,11,0.1); }
 
         .game-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); margin-bottom: var(--space-md); }
         .stat-box {
@@ -366,7 +387,7 @@
                 <div class="logo-icon">🎯</div>
                 <div class="logo-text">
                     <h1>Sayı Tahmin</h1>
-                    <span>v4.0 • Profesyonel</span>
+                    <span>v5.0 • Profesyonel</span>
                 </div>
             </div>
             <div class="header-actions">
@@ -377,12 +398,10 @@
         <!-- HOME SCREEN -->
         <div class="screen active" id="homeScreen">
             
-            <!-- ÖĞRETİCİ REHBER KARTI -->
             <div class="card" style="padding: var(--space-lg);">
                 <div class="section-title">📚 Nasıl Oynanır?</div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
                     
-                    <!-- SAYI TAHMİN REHBER -->
                     <div class="guide-card classic" onclick="toggleGuide('classicGuide')">
                         <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm);">
                             <span style="font-size: 28px;">🎯</span>
@@ -429,7 +448,6 @@
                         </div>
                     </div>
 
-                    <!-- İLK 100 REHBER -->
                     <div class="guide-card race" onclick="toggleGuide('raceGuide')">
                         <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm);">
                             <span style="font-size: 28px;">🏁</span>
@@ -560,9 +578,9 @@
                     <div class="diff-option" data-diff="hard">
                         <div>
                             <strong>🔴 Çok Zor</strong>
-                            <p style="font-size: 11px; color: var(--text-tertiary);">PC mükemmel oynar, yenmesi imkansıza yakın!</p>
+                            <p style="font-size: 11px; color: var(--text-tertiary);">PC asla hata yapmaz, yenilmez!</p>
                         </div>
-                        <span style="font-size: 20px;">→</span>
+                        <span style="font-size: 20px;">💀</span>
                     </div>
                 </div>
             </div>
@@ -675,6 +693,39 @@
         </div>
     </div>
 
+    <!-- TURN SELECTOR MODAL -->
+    <div class="turn-selector-overlay" id="turnSelectorOverlay">
+        <div class="turn-selector-content">
+            <div style="font-size: 48px; margin-bottom: var(--space-md);">🎲</div>
+            <h3 style="font-size: 22px; font-weight: 800; margin-bottom: var(--space-sm);">Kim Başlasın?</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: var(--space-lg);">İlk hamleyi kim yapacak?</p>
+            
+            <div class="turn-option" onclick="selectTurn('human')">
+                <span class="turn-option-icon">🧑</span>
+                <div style="text-align: left;">
+                    <strong>Ben Başlayayım</strong>
+                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk sayıyı sen seç</p>
+                </div>
+            </div>
+            
+            <div class="turn-option" onclick="selectTurn('pc')">
+                <span class="turn-option-icon">🤖</span>
+                <div style="text-align: left;">
+                    <strong>Bilgisayar Başlasın</strong>
+                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk sayıyı PC seçsin</p>
+                </div>
+            </div>
+            
+            <div class="turn-option" onclick="selectTurn('random')">
+                <span class="turn-option-icon">🎰</span>
+                <div style="text-align: left;">
+                    <strong>Rastgele</strong>
+                    <p style="font-size: 11px; color: var(--text-tertiary);">Şansa bırak</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- NUMPAD -->
     <div class="numpad-overlay" id="numpadOverlay">
         <div class="numpad">
@@ -721,7 +772,8 @@
             gameOver: false, digitValues: [], activeIndex: 0, history: [], stats: {},
             raceTotal: 0, raceHumanScore: 0, racePcScore: 0, raceDifficulty: 'easy',
             raceGameOver: false, raceHumanTurn: true,
-            raceMediumMistakes: 0 // Orta mod için hata sayacı
+            raceMediumMistakes: 0,
+            pendingRaceDifficulty: null
         };
         
         const MODES = {
@@ -739,9 +791,9 @@
             function setTheme(t) {
                 html.setAttribute('data-theme', t);
                 themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
-                localStorage.setItem('guess-game-theme-v4', t);
+                localStorage.setItem('guess-game-theme-v5', t);
             }
-            const saved = localStorage.getItem('guess-game-theme-v4');
+            const saved = localStorage.getItem('guess-game-theme-v5');
             if (saved) setTheme(saved);
             else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
             themeBtn.addEventListener('click', () => {
@@ -751,13 +803,13 @@
         
         function loadStats() {
             try {
-                const saved = localStorage.getItem('guess-game-stats-v4');
+                const saved = localStorage.getItem('guess-game-stats-v5');
                 state.stats = saved ? JSON.parse(saved) : { 2:{best:null,wins:0}, 3:{best:null,wins:0}, 4:{best:null,wins:0}, 5:{best:null,wins:0}, 6:{best:null,wins:0}, 7:{best:null,wins:0} };
             } catch(e) {
                 state.stats = { 2:{best:null,wins:0}, 3:{best:null,wins:0}, 4:{best:null,wins:0}, 5:{best:null,wins:0}, 6:{best:null,wins:0}, 7:{best:null,wins:0} };
             }
         }
-        function saveStats() { try { localStorage.setItem('guess-game-stats-v4', JSON.stringify(state.stats)); } catch(e) {} }
+        function saveStats() { try { localStorage.setItem('guess-game-stats-v5', JSON.stringify(state.stats)); } catch(e) {} }
         function updateHomeStats() {
             [2,3,4,5,6,7].forEach(d => { const el = $(`best${d}`); if(el) el.textContent = state.stats[d]?.best || '-'; });
         }
@@ -781,6 +833,23 @@
                 if (toggleText) toggleText.innerHTML = '▶ Rehberi Göster';
             }
         };
+        
+        window.selectTurn = function(choice) {
+            $('turnSelectorOverlay').classList.remove('show');
+            
+            let humanTurn;
+            if (choice === 'human') humanTurn = true;
+            else if (choice === 'pc') humanTurn = false;
+            else humanTurn = Math.random() < 0.5;
+            
+            startRaceMode(state.pendingRaceDifficulty, humanTurn);
+            state.pendingRaceDifficulty = null;
+        };
+        
+        function showTurnSelector(difficulty) {
+            state.pendingRaceDifficulty = difficulty;
+            $('turnSelectorOverlay').classList.add('show');
+        }
         
         function generateSecret(d) {
             const nums = '123456789'.split('');
@@ -997,7 +1066,6 @@
             state.digits = digits; state.maxTries = MODES[digits].maxTries;
             state.secret = generateSecret(digits); state.attempts = 0; state.hintsUsed = 0;
             state.gameOver = false; state.digitValues = new Array(digits).fill(''); state.activeIndex = 0; state.history = [];
-            console.log('🎯 Gizli sayı:', state.secret);
             $('modeLabel').textContent = MODES[digits].label;
             $('attemptCount').textContent='0'; $('remainingCount').textContent=state.maxTries;
             $('hintCount').textContent=state.maxHints; $('progressFill').style.width='0%';
@@ -1007,20 +1075,33 @@
             buildDigitInputs(); showScreen('gameScreen');
         }
         
-        function startRaceMode(difficulty) {
+        function startRaceMode(difficulty, humanTurn) {
             state.raceTotal = 0; state.raceHumanScore = 0; state.racePcScore = 0;
-            state.raceDifficulty = difficulty; state.raceGameOver = false; state.raceHumanTurn = true;
-            state.raceMediumMistakes = 0; // Hata sayacını sıfırla
+            state.raceDifficulty = difficulty; state.raceGameOver = false;
+            state.raceHumanTurn = humanTurn;
+            state.raceMediumMistakes = 0;
             
-            const labels = { easy: 'Kolay', medium: 'Orta', hard: 'Çok Zor' };
+            const labels = { easy: 'Kolay', medium: 'Orta', hard: '🔴 Çok Zor' };
             $('raceDiffLabel').textContent = `🏁 İlk 100 • ${labels[difficulty]}`;
             $('raceHumanScore').textContent = '0'; $('racePcScore').textContent = '0';
             $('raceTotalDisplay').textContent = '0';
             $('raceProgressHuman').style.width = '0%'; $('raceProgressPc').style.width = '0%';
             $('racePcChoice').style.display = 'none'; $('raceMessage').textContent = '';
-            $('raceTurnLabel').textContent = 'Sıra sende!'; $('raceTurnLabel').style.color = 'var(--accent-primary)';
+            
+            if (state.raceHumanTurn) {
+                $('raceTurnLabel').textContent = 'Sıra sende!';
+                $('raceTurnLabel').style.color = 'var(--accent-primary)';
+            } else {
+                $('raceTurnLabel').textContent = 'Bilgisayar düşünüyor...';
+                $('raceTurnLabel').style.color = 'var(--accent-warning)';
+            }
+            
             buildRaceButtons();
             showScreen('raceScreen');
+            
+            if (!state.raceHumanTurn) {
+                setTimeout(() => pcRaceMove(), 1000);
+            }
         }
         
         function buildRaceButtons() {
@@ -1075,13 +1156,10 @@
             } else if (state.raceDifficulty === 'medium') {
                 // Orta: Stratejik ama 2 defa hata yapabilir
                 if (state.raceMediumMistakes < 2 && Math.random() < 0.3) {
-                    // Hata yap: rastgele sayı seç
                     state.raceMediumMistakes++;
                     pcNum = Math.floor(Math.random() * 10) + 1;
                     pcNum = Math.min(pcNum, remaining);
-                    console.log('🟡 PC hata yaptı! Kalan hata hakkı:', 2 - state.raceMediumMistakes);
                 } else {
-                    // Stratejik oyna: 11'in katlarına ulaşmaya çalış
                     const targets = [89,78,67,56,45,34,23,12,1];
                     let found = false;
                     for (const t of targets) {
@@ -1092,13 +1170,25 @@
                     }
                     if (!found) pcNum = Math.min(Math.floor(Math.random()*10)+1, remaining);
                 }
-            } else {
-                // Zor: Mükemmel oyun
+            } else if (state.raceDifficulty === 'hard') {
+                // ÇOK ZOR: Yenilmez! Her zaman 11'in katına ulaş, asla hata yapma
                 const target = state.raceTotal % 11;
-                if (target === 0) pcNum = Math.min(Math.floor(Math.random()*5)+1, remaining);
-                else {
+                if (target === 0) {
+                    // 11'in katındayız, rakibe 1 bırak (en kötü senaryo)
+                    pcNum = 1;
+                } else {
+                    // 11'in katına tamamla
                     pcNum = 11 - target;
-                    if (pcNum < 1 || pcNum > 10 || pcNum > remaining) pcNum = Math.min(Math.floor(Math.random()*3)+1, remaining);
+                }
+                
+                // Eğer direkt kazanabiliyorsak kazan
+                if (remaining <= 10 && remaining >= 1) {
+                    pcNum = remaining;
+                }
+                
+                // Güvenlik kontrolü
+                if (pcNum < 1 || pcNum > 10 || pcNum > remaining) {
+                    pcNum = Math.max(1, Math.min(10, remaining));
                 }
             }
             
@@ -1204,7 +1294,6 @@
                 state.secret = secret; state.attempts = 0; state.hintsUsed = 0;
                 state.gameOver = false; state.digitValues = new Array(digits).fill(''); state.activeIndex = 0; state.history = [];
                 
-                console.log('⚔️ Meydan okuma! Gizli sayı:', state.secret);
                 $('modeLabel').textContent = `⚔️ Meydan Okuma • ${MODES[digits].label}`;
                 $('attemptCount').textContent='0'; $('remainingCount').textContent=state.maxTries;
                 $('hintCount').textContent=state.maxHints; $('progressFill').style.width='0%';
@@ -1258,7 +1347,7 @@
                 e.stopPropagation();
                 const diff = opt.dataset.diff;
                 $('difficultyPicker').classList.remove('show');
-                startRaceMode(diff);
+                showTurnSelector(diff);
             });
         });
         
@@ -1268,7 +1357,7 @@
         $('resetGameBtn').addEventListener('click', () => startClassicGame(state.digits));
         
         $('raceBackBtn').addEventListener('click', () => showScreen('homeScreen'));
-        $('raceResetBtn').addEventListener('click', () => startRaceMode(state.raceDifficulty));
+        $('raceResetBtn').addEventListener('click', () => showTurnSelector(state.raceDifficulty));
         
         $('numpadOverlay').addEventListener('click', (e) => { if (e.target===$('numpadOverlay')) closeNumpad(); });
         $('closeNumpadBtn').addEventListener('click', closeNumpad);
@@ -1284,12 +1373,19 @@
         $('joinChallengeBtn').addEventListener('click', joinChallenge);
         $('challengeCodeInput').addEventListener('keydown', (e) => { if (e.key==='Enter') joinChallenge(); });
         
+        $('turnSelectorOverlay').addEventListener('click', (e) => {
+            if (e.target === $('turnSelectorOverlay')) {
+                $('turnSelectorOverlay').classList.remove('show');
+                state.pendingRaceDifficulty = null;
+            }
+        });
+        
         // Init
         initTheme();
         loadStats();
         updateHomeStats();
         buildNumpad();
-        console.log('🚀 Sayı Tahmin v4.0 başlatıldı!');
+        console.log('🚀 Sayı Tahmin v5.0 başlatıldı!');
         console.log('👨‍💻 Mehmet Buğrahan Şaşmaz');
     })();
     </script>
