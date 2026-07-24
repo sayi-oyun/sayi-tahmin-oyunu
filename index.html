@@ -10,7 +10,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Sayı Tahmin</title>
-    <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş!">
+    <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş, 1000'e çarp!">
     <meta name="author" content="Mehmet Buğrahan Şaşmaz">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,7 @@
             --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
             --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             --gradient-race: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #8b5cf6 100%);
+            --gradient-multiply: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
             color-scheme: light;
         }
 
@@ -57,6 +58,7 @@
             --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
             --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
             --gradient-race: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #8b5cf6 100%);
+            --gradient-multiply: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #fbbf24 100%);
             color-scheme: dark;
         }
 
@@ -111,16 +113,18 @@
         .icon-btn:hover { background: var(--bg-tertiary); border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .icon-btn:active { transform: scale(0.95); }
 
-        .screen { display: none; animation: screenIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .screen { display: none; animation: screenIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .screen.active { display: block; }
-        @keyframes screenIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes screenIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
         .card {
             background: var(--bg-secondary); border: 1px solid var(--border-color);
             border-radius: var(--radius-xl); padding: var(--space-lg); margin-bottom: var(--space-md);
             transition: all var(--transition-smooth); box-shadow: var(--shadow-sm);
+            animation: cardAppear 0.5s ease both;
         }
         .card:hover { box-shadow: var(--shadow-md); }
+        @keyframes cardAppear { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
         .section-title {
             font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
@@ -148,6 +152,7 @@
             background: var(--bg-secondary); border: 2px solid var(--border-color);
             border-radius: var(--radius-lg); padding: var(--space-lg); cursor: pointer;
             transition: all var(--transition-bounce); position: relative; overflow: hidden;
+            animation: cardAppear 0.5s ease both;
         }
         .mode-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); box-shadow: var(--shadow-xl); }
         .mode-card:active { transform: scale(0.97); }
@@ -155,6 +160,10 @@
         .mode-card.race-card { border-color: var(--accent-warning); }
         .mode-card.race-card:hover { border-color: var(--accent-warning); box-shadow: 0 0 30px rgba(245,158,11,0.3); }
         .mode-card.race-card .mode-digits { background: var(--gradient-race); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        
+        .mode-card.multiply-card { border-color: #a855f7; }
+        .mode-card.multiply-card:hover { border-color: #c084fc; box-shadow: 0 0 30px rgba(168,85,247,0.3); }
+        .mode-card.multiply-card .mode-digits { background: var(--gradient-multiply); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         .mode-badge {
             display: inline-block; padding: 4px 12px; border-radius: var(--radius-full);
@@ -167,7 +176,9 @@
         .badge-extreme { background: rgba(239,68,68,0.1); color: var(--accent-danger); border: 1px solid rgba(239,68,68,0.2); }
         .badge-impossible { background: rgba(139,92,246,0.1); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
         .badge-race { background: rgba(245,158,11,0.15); color: var(--accent-warning); border: 1px solid rgba(245,158,11,0.3); animation: racePulse 2s ease-in-out infinite; }
+        .badge-multiply { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); animation: multiplyPulse 2s ease-in-out infinite; }
         @keyframes racePulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+        @keyframes multiplyPulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
         .mode-digits { font-family: var(--font-mono); font-size: 36px; font-weight: 800; margin-bottom: var(--space-sm); }
         .mode-info { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
@@ -364,6 +375,27 @@
         .confetti-piece { position: fixed; pointer-events: none; z-index: 2000; animation: confettiFall linear forwards; }
         @keyframes confettiFall { 0%{transform:translateY(-100vh)rotate(0deg);opacity:1} 100%{transform:translateY(100vh)rotate(720deg);opacity:0} }
 
+        .firework {
+            position: fixed; pointer-events: none; z-index: 1999;
+            width: 6px; height: 6px; border-radius: 50%;
+            animation: fireworkBurst 1s ease-out forwards;
+        }
+        @keyframes fireworkBurst {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--fx), var(--fy)) scale(0); opacity: 0; }
+        }
+
+        .shake-effect {
+            animation: shakeCard 0.5s ease;
+        }
+        @keyframes shakeCard {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+
         @media (max-width: 480px) {
             .modes-grid { grid-template-columns: repeat(2, 1fr); }
             .digit-box { width: 44px; height: 52px; font-size: 22px; }
@@ -404,17 +436,19 @@
         <!-- HOME SCREEN -->
         <div class="screen active" id="homeScreen">
             
+            <!-- ÖĞRETİCİ REHBER KARTI - 3'LÜ ALT ALTA -->
             <div class="card" style="padding: var(--space-lg);">
                 <div class="section-title">📚 Nasıl Oynanır?</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+                <div style="display: flex; flex-direction: column; gap: var(--space-md);">
                     
-                    <div class="guide-card classic" onclick="toggleGuide('classicGuide')">
+                    <!-- 1. SAYI TAHMİN REHBER -->
+                    <div class="guide-card classic" onclick="toggleGuide('classicGuide')" style="width: 100%;">
                         <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm);">
                             <span style="font-size: 28px;">🎯</span>
                             <strong style="font-size: 14px; color: var(--accent-primary);">Sayı Tahmin</strong>
                         </div>
                         <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
-                            Gizli sayıyı bulmak için ipuçlarını kullan
+                            Gizli sayıyı bulmak için +N / −N ipuçlarını kullan
                         </p>
                         <div id="classicGuide" style="display: none; margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--border-color);">
                             <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
@@ -454,7 +488,8 @@
                         </div>
                     </div>
 
-                    <div class="guide-card race" onclick="toggleGuide('raceGuide')">
+                    <!-- 2. İLK 100 REHBER -->
+                    <div class="guide-card race" onclick="toggleGuide('raceGuide')" style="width: 100%;">
                         <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm);">
                             <span style="font-size: 28px;">🏁</span>
                             <strong style="font-size: 14px; color: var(--accent-warning);">İlk 100'e Ulaş</strong>
@@ -476,10 +511,6 @@
                                     <span style="font-size: 16px; flex-shrink: 0;">🤖</span>
                                     <span style="color: var(--text-secondary);">Sıra bilgisayara geçer, o da sayı seçer</span>
                                 </div>
-                                <div style="display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 11px;">
-                                    <span style="font-size: 16px; flex-shrink: 0;">🏆</span>
-                                    <span style="color: var(--text-secondary);">Toplam 100'e ilk ulaşan kazanır!</span>
-                                </div>
                                 <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: var(--space-sm); margin-top: var(--space-xs);">
                                     <div style="font-size: 10px; color: var(--text-tertiary); margin-bottom: 6px;">🎬 Örnek Oyun Akışı:</div>
                                     <div style="display: flex; flex-direction: column; gap: 4px;">
@@ -493,19 +524,64 @@
                                             <span style="font-weight: 700; color: var(--accent-warning);">5</span>
                                             <span style="color: var(--text-tertiary);">→ Toplam: 12</span>
                                         </div>
-                                        <div style="display: flex; align-items: center; gap: 6px; font-size: 10px; animation: guideFadeIn 0.5s ease 0.6s both;">
-                                            <span>🧑</span>
-                                            <span style="font-weight: 700; color: var(--accent-primary);">8</span>
-                                            <span style="color: var(--text-tertiary);">→ Toplam: 20</span>
-                                        </div>
                                     </div>
-                                </div>
-                                <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 4px;">
-                                    💡 100'e yaklaşırken dikkatli ol!
                                 </div>
                             </div>
                         </div>
                         <div style="font-size: 10px; color: var(--accent-warning); margin-top: var(--space-sm); font-weight: 600;" id="raceGuideToggle">
+                            ▶ Rehberi Göster
+                        </div>
+                    </div>
+
+                    <!-- 3. 1000'E ÇARP REHBER -->
+                    <div class="guide-card" onclick="toggleGuide('multiplyGuide')" style="width: 100%; border-color: rgba(168,85,247,0.3);">
+                        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm);">
+                            <span style="font-size: 28px;">✖️</span>
+                            <strong style="font-size: 14px; color: #c084fc;">1000'e Çarp</strong>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
+                            1'den başla, çarparak 1000'e ilk ulaşan kazansın!
+                        </p>
+                        <div id="multiplyGuide" style="display: none; margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--border-color);">
+                            <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                                <div style="display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 11px;">
+                                    <span style="font-size: 16px; flex-shrink: 0;">✖️</span>
+                                    <span style="color: var(--text-secondary);">Her tur 2-5 arası bir çarpan seçersin</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 11px;">
+                                    <span style="font-size: 16px; flex-shrink: 0;">📈</span>
+                                    <span style="color: var(--text-secondary);">Sayı seçtiğin çarpanla çarpılır</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 11px;">
+                                    <span style="font-size: 16px; flex-shrink: 0;">🤖</span>
+                                    <span style="color: var(--text-secondary);">Sıra bilgisayara geçer, o da çarpan seçer</span>
+                                </div>
+                                <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: var(--space-sm); margin-top: var(--space-xs);">
+                                    <div style="font-size: 10px; color: var(--text-tertiary); margin-bottom: 6px;">🎬 Örnek: 1'den başla</div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; font-size: 10px; animation: guideFadeIn 0.5s ease both;">
+                                            <span>🧑</span>
+                                            <span style="font-weight: 700; color: #c084fc;">×3</span>
+                                            <span style="color: var(--text-tertiary);">1 → 3</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 6px; font-size: 10px; animation: guideFadeIn 0.5s ease 0.3s both;">
+                                            <span>🤖</span>
+                                            <span style="font-weight: 700; color: var(--accent-warning);">×4</span>
+                                            <span style="color: var(--text-tertiary);">3 → 12</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 6px; font-size: 10px; animation: guideFadeIn 0.5s ease 0.6s both;">
+                                            <span>🧑</span>
+                                            <span style="font-weight: 700; color: #c084fc;">×5</span>
+                                            <span style="color: var(--text-tertiary);">12 → 60</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 4px;">
+                                    💡 1000'e yaklaşırken taşmamaya dikkat et!
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-size: 10px; color: #c084fc; margin-top: var(--space-sm); font-weight: 600;" id="multiplyGuideToggle">
                             ▶ Rehberi Göster
                         </div>
                     </div>
@@ -552,7 +628,7 @@
                 </div>
             </div>
 
-            <div class="mode-card race-card" id="raceModeCard" style="border: 2px solid var(--accent-warning); margin-bottom: var(--space-lg);">
+            <div class="mode-card race-card" id="raceModeCard" style="border: 2px solid var(--accent-warning); margin-bottom: var(--space-md);">
                 <span class="mode-badge badge-race">🏁</span>
                 <div class="mode-digits">100</div>
                 <div class="mode-info">İlk 100'e Ulaşan Kazanır!</div>
@@ -584,6 +660,45 @@
                         <div>
                             <strong>🔴 Çok Zor</strong>
                             <p style="font-size: 11px; color: var(--text-tertiary);">PC asla hata yapmaz, yenilmez!</p>
+                        </div>
+                        <span style="font-size: 20px;">💀</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ÇARPMA MODU KARTI -->
+            <div class="mode-card multiply-card" id="multiplyModeCard" style="border: 2px solid #a855f7; margin-bottom: var(--space-lg);">
+                <span class="mode-badge badge-multiply">✖️</span>
+                <div class="mode-digits">1000</div>
+                <div class="mode-info">1000'e Çarp! İlk ulaşan kazanır!</div>
+                <div class="mode-stats">
+                    <span>2-5 arası sayılarla çarp</span>
+                    <span>🏆</span>
+                </div>
+                <div style="margin-top: var(--space-md); font-size: 12px; color: var(--text-secondary);">
+                    1'den başla! Sırayla 2-5 arası sayı seç, sayıyı çarp. 1000'e ilk ulaşan kazanır!
+                </div>
+                
+                <div class="difficulty-picker" id="multiplyDifficultyPicker">
+                    <div style="font-weight: 700; margin-bottom: var(--space-sm); color: #c084fc;">Zorluk Seç:</div>
+                    <div class="diff-option" data-diff="easy" data-mode="multiply">
+                        <div>
+                            <strong>🟢 Kolay</strong>
+                            <p style="font-size: 11px; color: var(--text-tertiary);">PC rastgele çarpar</p>
+                        </div>
+                        <span style="font-size: 20px;">→</span>
+                    </div>
+                    <div class="diff-option" data-diff="medium" data-mode="multiply">
+                        <div>
+                            <strong>🟡 Orta</strong>
+                            <p style="font-size: 11px; color: var(--text-tertiary);">PC stratejik çarpar ama hata yapabilir</p>
+                        </div>
+                        <span style="font-size: 20px;">→</span>
+                    </div>
+                    <div class="diff-option" data-diff="hard" data-mode="multiply">
+                        <div>
+                            <strong>🔴 Çok Zor</strong>
+                            <p style="font-size: 11px; color: var(--text-tertiary);">PC mükemmel çarpar, yenilmez!</p>
                         </div>
                         <span style="font-size: 20px;">💀</span>
                     </div>
@@ -631,8 +746,8 @@
             </div>
             
             <div class="card" style="text-align: center;">
-                <h3 style="margin-bottom: var(--space-sm);">🏁 İlk 100'e Ulaş!</h3>
-                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: var(--space-lg);">
+                <h3 style="margin-bottom: var(--space-sm);" id="raceGameTitle">🏁 İlk 100'e Ulaş!</h3>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: var(--space-lg);" id="raceGameDesc">
                     1-10 arası sayı söyle. Sırayla toplanacak. 100'e ilk ulaşan kazanır!
                 </p>
                 
@@ -664,7 +779,7 @@
                 
                 <div class="race-round-info" id="raceRoundInfo">
                     <strong id="raceTurnLabel" style="color: var(--accent-primary);">Sıra sende!</strong>
-                    <p style="font-size: 12px; color: var(--text-tertiary);">1-10 arası bir sayı seç</p>
+                    <p style="font-size: 12px; color: var(--text-tertiary);" id="raceTurnDesc">1-10 arası bir sayı seç</p>
                 </div>
                 
                 <div class="race-pc-choice" id="racePcChoice" style="display: none;"></div>
@@ -691,7 +806,7 @@
                 <span class="turn-option-icon">🧑</span>
                 <div style="text-align: left;">
                     <strong>Ben Başlayayım</strong>
-                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk sayıyı sen seç</p>
+                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk hamleyi sen yap</p>
                 </div>
             </div>
             
@@ -699,7 +814,7 @@
                 <span class="turn-option-icon">🤖</span>
                 <div style="text-align: left;">
                     <strong>Bilgisayar Başlasın</strong>
-                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk sayıyı PC seçsin</p>
+                    <p style="font-size: 11px; color: var(--text-tertiary);">İlk hamleyi PC yapsın</p>
                 </div>
             </div>
             
@@ -763,7 +878,10 @@
             raceTotal: 0, raceHumanScore: 0, racePcScore: 0, raceDifficulty: 'easy',
             raceGameOver: false, raceHumanTurn: true,
             raceMediumMistakes: 0,
-            pendingRaceDifficulty: null
+            pendingRaceDifficulty: null,
+            multiplyGame: false,
+            multiplyValue: 1,
+            multiplyTarget: 1000
         };
         
         const MODES = {
@@ -838,7 +956,11 @@
             else if (choice === 'pc') humanTurn = false;
             else humanTurn = Math.random() < 0.5;
             
-            startRaceMode(state.pendingRaceDifficulty, humanTurn);
+            if (state.multiplyGame) {
+                startMultiplyMode(state.pendingRaceDifficulty, humanTurn);
+            } else {
+                startRaceMode(state.pendingRaceDifficulty, humanTurn);
+            }
             state.pendingRaceDifficulty = null;
         };
         
@@ -966,8 +1088,8 @@
         
         function submitGuess() {
             if (state.gameOver) return;
-            if (state.digitValues.some(v=>!v)) { showError('Tüm haneleri doldurun!'); return; }
-            if (new Set(state.digitValues).size !== state.digits) { showError('Rakamlar tekrar etmemeli!'); return; }
+            if (state.digitValues.some(v=>!v)) { showError('Tüm haneleri doldurun!'); shakeCard(); return; }
+            if (new Set(state.digitValues).size !== state.digits) { showError('Rakamlar tekrar etmemeli!'); shakeCard(); return; }
             
             const guess = state.digitValues.join('');
             state.attempts++;
@@ -997,6 +1119,14 @@
             updateDigitDisplay();
             if (isMobile() && $('numpadOverlay').classList.contains('show')) {
                 updateNumpadPreview();
+            }
+        }
+        
+        function shakeCard() {
+            const card = document.querySelector('#gameScreen .card');
+            if (card) {
+                card.classList.add('shake-effect');
+                setTimeout(() => card.classList.remove('shake-effect'), 500);
             }
         }
         
@@ -1055,6 +1185,7 @@
             $('submitGuessBtn').disabled=true; $('hintBtn').disabled=true;
             closeNumpad();
             createConfetti();
+            createFireworks();
             setTimeout(()=>{
                 $('winSecret').textContent=state.secret; $('winAttempts').textContent=state.attempts;
                 $('winBest').textContent=state.stats[state.digits].best;
@@ -1075,6 +1206,7 @@
             state.digits = digits; state.maxTries = MODES[digits].maxTries;
             state.secret = generateSecret(digits); state.attempts = 0; state.hintsUsed = 0;
             state.gameOver = false; state.digitValues = new Array(digits).fill(''); state.activeIndex = 0; state.history = [];
+            state.multiplyGame = false;
             console.log('🎯 Gizli sayı:', state.secret);
             $('modeLabel').textContent = MODES[digits].label;
             $('attemptCount').textContent='0'; $('remainingCount').textContent=state.maxTries;
@@ -1090,13 +1222,18 @@
             state.raceDifficulty = difficulty; state.raceGameOver = false;
             state.raceHumanTurn = humanTurn;
             state.raceMediumMistakes = 0;
+            state.multiplyGame = false;
             
             const labels = { easy: 'Kolay', medium: 'Orta', hard: '🔴 Çok Zor' };
             $('raceDiffLabel').textContent = `🏁 İlk 100 • ${labels[difficulty]}`;
+            $('raceGameTitle').textContent = '🏁 İlk 100\'e Ulaş!';
+            $('raceGameDesc').textContent = '1-10 arası sayı söyle. Sırayla toplanacak. 100\'e ilk ulaşan kazanır!';
+            $('raceTurnDesc').textContent = '1-10 arası bir sayı seç';
             $('raceHumanScore').textContent = '0'; $('racePcScore').textContent = '0';
             $('raceTotalDisplay').textContent = '0';
             $('raceProgressHuman').style.width = '0%'; $('raceProgressPc').style.width = '0%';
             $('racePcChoice').style.display = 'none'; $('raceMessage').textContent = '';
+            $('raceProgressPc').style.background = 'var(--gradient-race)';
             
             if (state.raceHumanTurn) {
                 $('raceTurnLabel').textContent = 'Sıra sende!';
@@ -1106,7 +1243,7 @@
                 $('raceTurnLabel').style.color = 'var(--accent-warning)';
             }
             
-            buildRaceButtons();
+            buildRaceButtons(1, 10, false);
             showScreen('raceScreen');
             
             if (!state.raceHumanTurn) {
@@ -1114,18 +1251,61 @@
             }
         }
         
-        function buildRaceButtons() {
+        function startMultiplyMode(difficulty, humanTurn) {
+            state.multiplyValue = 1;
+            state.raceTotal = 1;
+            state.raceHumanScore = 1;
+            state.racePcScore = 1;
+            state.raceDifficulty = difficulty;
+            state.raceGameOver = false;
+            state.raceHumanTurn = humanTurn;
+            state.raceMediumMistakes = 0;
+            state.multiplyGame = true;
+            
+            const labels = { easy: 'Kolay', medium: 'Orta', hard: '🔴 Çok Zor' };
+            $('raceDiffLabel').textContent = `✖️ 1000'e Çarp • ${labels[difficulty]}`;
+            $('raceGameTitle').textContent = '✖️ 1000\'e Çarp!';
+            $('raceGameDesc').textContent = '1\'den başla! 2-5 arası sayı seç, sayıyı çarp. 1000\'e ilk ulaşan kazanır!';
+            $('raceTurnDesc').textContent = '2-5 arası bir çarpan seç';
+            $('raceHumanScore').textContent = '1'; $('racePcScore').textContent = '1';
+            $('raceTotalDisplay').textContent = '1';
+            $('raceProgressHuman').style.width = '0.1%'; $('raceProgressPc').style.width = '0.1%';
+            $('raceProgressPc').style.background = 'var(--gradient-multiply)';
+            $('racePcChoice').style.display = 'none'; $('raceMessage').textContent = '';
+            
+            if (state.raceHumanTurn) {
+                $('raceTurnLabel').textContent = 'Sıra sende!';
+                $('raceTurnLabel').style.color = '#c084fc';
+            } else {
+                $('raceTurnLabel').textContent = 'Bilgisayar düşünüyor...';
+                $('raceTurnLabel').style.color = 'var(--accent-warning)';
+            }
+            
+            buildRaceButtons(2, 5, true);
+            showScreen('raceScreen');
+            
+            if (!state.raceHumanTurn) {
+                setTimeout(() => pcRaceMove(), 1000);
+            }
+        }
+        
+        function buildRaceButtons(min, max, isMultiply) {
             const container = $('raceButtons'); container.innerHTML = '';
-            for (let i=1; i<=10; i++) {
+            const count = max - min + 1;
+            container.style.gridTemplateColumns = `repeat(${count}, 1fr)`;
+            
+            for (let i=min; i<=max; i++) {
                 const btn = document.createElement('button');
                 btn.className = 'race-btn';
-                const newTotal = state.raceTotal + i;
-                const canSelect = !state.raceGameOver && state.raceHumanTurn && newTotal <= 100;
+                const currentValue = isMultiply ? state.multiplyValue : state.raceTotal;
+                const newTotal = isMultiply ? currentValue * i : currentValue + i;
+                const target = isMultiply ? state.multiplyTarget : 100;
+                const canSelect = !state.raceGameOver && state.raceHumanTurn && newTotal <= target;
                 
-                btn.innerHTML = `<span class="race-btn-num">${i}</span><span class="race-btn-result">→${newTotal}</span>`;
+                btn.innerHTML = `<span class="race-btn-num">${isMultiply ? '×' : ''}${i}</span><span class="race-btn-result">→${newTotal}</span>`;
                 btn.addEventListener('click', () => humanRaceMove(i));
                 btn.disabled = !canSelect;
-                if (newTotal > 100 && state.raceHumanTurn && !state.raceGameOver) {
+                if (newTotal > target && state.raceHumanTurn && !state.raceGameOver) {
                     btn.style.opacity = '0.2';
                 }
                 container.appendChild(btn);
@@ -1135,13 +1315,22 @@
         function humanRaceMove(num) {
             if (state.raceGameOver || !state.raceHumanTurn) return;
             
-            state.raceTotal += num;
-            state.raceHumanScore = state.raceTotal;
+            if (state.multiplyGame) {
+                state.multiplyValue *= num;
+                state.raceTotal = state.multiplyValue;
+                state.raceHumanScore = state.multiplyValue;
+            } else {
+                state.raceTotal += num;
+                state.raceHumanScore = state.raceTotal;
+            }
+            
             $('raceHumanScore').textContent = state.raceHumanScore;
             $('raceTotalDisplay').textContent = state.raceTotal;
-            $('raceProgressHuman').style.width = Math.min(state.raceHumanScore, 100) + '%';
             
-            if (state.raceTotal >= 100) {
+            const target = state.multiplyGame ? state.multiplyTarget : 100;
+            $('raceProgressHuman').style.width = Math.min((state.raceHumanScore/target)*100, 100) + '%';
+            
+            if (state.raceTotal >= target) {
                 endRace('human'); return;
             }
             
@@ -1157,74 +1346,118 @@
             if (state.raceGameOver) return;
             
             let pcNum;
-            const remaining = 100 - state.raceTotal;
+            const min = state.multiplyGame ? 2 : 1;
+            const max = state.multiplyGame ? 5 : 10;
+            const target = state.multiplyGame ? state.multiplyTarget : 100;
+            const currentValue = state.multiplyGame ? state.multiplyValue : state.raceTotal;
+            const remaining = target - currentValue;
             
             if (state.raceDifficulty === 'easy') {
-                pcNum = Math.floor(Math.random() * 10) + 1;
-                pcNum = Math.min(pcNum, remaining);
+                pcNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                if (state.multiplyGame) {
+                    while (currentValue * pcNum > target && pcNum > min) pcNum--;
+                } else {
+                    pcNum = Math.min(pcNum, remaining);
+                }
             } else if (state.raceDifficulty === 'medium') {
                 if (state.raceMediumMistakes < 2 && Math.random() < 0.3) {
                     state.raceMediumMistakes++;
-                    pcNum = Math.floor(Math.random() * 10) + 1;
-                    pcNum = Math.min(pcNum, remaining);
+                    pcNum = Math.floor(Math.random() * (max - min + 1)) + min;
                 } else {
-                    const targets = [89,78,67,56,45,34,23,12,1];
-                    let found = false;
-                    for (const t of targets) {
-                        const need = t - state.raceTotal;
-                        if (need >= 1 && need <= 10 && need <= remaining) {
-                            pcNum = need; found = true; break;
+                    if (state.multiplyGame) {
+                        let best = min;
+                        for (let i=min; i<=max; i++) {
+                            if (currentValue * i <= target && currentValue * i > currentValue * best) {
+                                best = i;
+                            }
                         }
+                        pcNum = best;
+                    } else {
+                        const targets = [89,78,67,56,45,34,23,12,1];
+                        let found = false;
+                        for (const t of targets) {
+                            const need = t - state.raceTotal;
+                            if (need >= min && need <= max && need <= remaining) {
+                                pcNum = need; found = true; break;
+                            }
+                        }
+                        if (!found) pcNum = Math.min(Math.floor(Math.random()*(max-min+1))+min, remaining);
                     }
-                    if (!found) pcNum = Math.min(Math.floor(Math.random()*10)+1, remaining);
                 }
             } else if (state.raceDifficulty === 'hard') {
-                const target = state.raceTotal % 11;
-                if (target === 0) {
-                    pcNum = 1;
+                if (state.multiplyGame) {
+                    let best = min;
+                    for (let i=min; i<=max; i++) {
+                        if (currentValue * i <= target && currentValue * i > currentValue * best) {
+                            best = i;
+                        }
+                    }
+                    for (let i=min; i<=max; i++) {
+                        if (currentValue * i >= target) { best = i; break; }
+                    }
+                    pcNum = best;
                 } else {
-                    pcNum = 11 - target;
-                }
-                
-                if (remaining <= 10 && remaining >= 1) {
-                    pcNum = remaining;
-                }
-                
-                if (pcNum < 1 || pcNum > 10 || pcNum > remaining) {
-                    pcNum = Math.max(1, Math.min(10, remaining));
+                    const modTarget = state.raceTotal % 11;
+                    if (modTarget === 0) {
+                        pcNum = 1;
+                    } else {
+                        pcNum = 11 - modTarget;
+                    }
+                    if (remaining <= max && remaining >= min) {
+                        pcNum = remaining;
+                    }
                 }
             }
             
-            pcNum = Math.max(1, Math.min(pcNum, 10, remaining));
+            pcNum = Math.max(min, Math.min(pcNum, max));
+            if (state.multiplyGame) {
+                while (currentValue * pcNum > target && pcNum > min) pcNum--;
+            } else {
+                pcNum = Math.min(pcNum, remaining);
+            }
             
-            state.raceTotal += pcNum;
-            state.racePcScore = state.raceTotal;
+            if (state.multiplyGame) {
+                state.multiplyValue *= pcNum;
+                state.raceTotal = state.multiplyValue;
+                state.racePcScore = state.multiplyValue;
+            } else {
+                state.raceTotal += pcNum;
+                state.racePcScore = state.raceTotal;
+            }
+            
             $('racePcScore').textContent = state.racePcScore;
             $('raceTotalDisplay').textContent = state.raceTotal;
-            $('raceProgressPc').style.width = Math.min(state.racePcScore, 100) + '%';
+            $('raceProgressPc').style.width = Math.min((state.racePcScore/target)*100, 100) + '%';
             
             const pcChoice = $('racePcChoice');
             pcChoice.style.display = 'block';
-            pcChoice.innerHTML = `<strong>🤖 Bilgisayar:</strong> <span style="font-size:28px;font-family:var(--font-mono);font-weight:800;color:var(--accent-warning);">${pcNum}</span> dedi!<br><span style="font-size:12px;color:var(--text-tertiary);">Yeni toplam: ${state.raceTotal}</span>`;
+            const symbol = state.multiplyGame ? '×' : '';
+            pcChoice.innerHTML = `<strong>🤖 Bilgisayar:</strong> <span style="font-size:28px;font-family:var(--font-mono);font-weight:800;color:var(--accent-warning);">${symbol}${pcNum}</span> dedi!<br><span style="font-size:12px;color:var(--text-tertiary);">Yeni değer: ${state.raceTotal}</span>`;
             
-            if (state.raceTotal >= 100) {
+            if (state.raceTotal >= target) {
                 setTimeout(() => endRace('pc'), 600);
                 return;
             }
             
             state.raceHumanTurn = true;
             $('raceTurnLabel').textContent = 'Sıra sende!';
-            $('raceTurnLabel').style.color = 'var(--accent-primary)';
+            $('raceTurnLabel').style.color = state.multiplyGame ? '#c084fc' : 'var(--accent-primary)';
             updateRaceButtons();
         }
         
         function updateRaceButtons() {
+            const min = state.multiplyGame ? 2 : 1;
+            const max = state.multiplyGame ? 5 : 10;
+            const target = state.multiplyGame ? state.multiplyTarget : 100;
+            const currentValue = state.multiplyGame ? state.multiplyValue : state.raceTotal;
+            
             qsa('.race-btn').forEach(btn => {
-                const num = parseInt(btn.querySelector('.race-btn-num').textContent);
-                const newTotal = state.raceTotal + num;
-                btn.disabled = state.raceGameOver || !state.raceHumanTurn || newTotal > 100;
+                const btnText = btn.querySelector('.race-btn-num').textContent;
+                const num = parseInt(btnText.replace('×', ''));
+                const newTotal = state.multiplyGame ? currentValue * num : currentValue + num;
+                btn.disabled = state.raceGameOver || !state.raceHumanTurn || newTotal > target;
                 btn.querySelector('.race-btn-result').textContent = `→${newTotal}`;
-                if (newTotal > 100 && state.raceHumanTurn && !state.raceGameOver) {
+                if (newTotal > target && state.raceHumanTurn && !state.raceGameOver) {
                     btn.style.opacity = '0.2';
                 } else {
                     btn.style.opacity = btn.disabled ? '0.3' : '1';
@@ -1238,14 +1471,15 @@
             
             const msg = $('raceMessage');
             if (winner === 'human') {
-                msg.innerHTML = '<span style="color:var(--accent-success);font-size:18px;">🎉 Sen Kazandın! 100\'e ilk sen ulaştın!</span>';
+                msg.innerHTML = '<span style="color:var(--accent-success);font-size:18px;">🎉 Sen Kazandın!</span>';
                 createConfetti();
+                createFireworks();
             } else {
-                msg.innerHTML = '<span style="color:var(--accent-danger);font-size:18px;">😔 Bilgisayar Kazandı! 100\'e ilk o ulaştı.</span>';
+                msg.innerHTML = '<span style="color:var(--accent-danger);font-size:18px;">😔 Bilgisayar Kazandı!</span>';
             }
             
             $('racePcChoice').style.display = 'block';
-            $('racePcChoice').innerHTML = `<strong>Oyun Bitti!</strong> Toplam: ${state.raceTotal}`;
+            $('racePcChoice').innerHTML = `<strong>Oyun Bitti!</strong> Son değer: ${state.raceTotal}`;
             $('raceTurnLabel').textContent = winner==='human' ? '🏆 Sen Kazandın!' : '🤖 PC Kazandı';
             $('raceTurnLabel').style.color = winner==='human' ? 'var(--accent-success)' : 'var(--accent-danger)';
         }
@@ -1268,6 +1502,33 @@
             }
         }
         
+        function createFireworks() {
+            const colors = ['#6366f1','#8b5cf6','#f59e0b','#10b981','#ef4444','#3b82f6','#ec4899','#fbbf24','#34d399'];
+            for (let burst=0; burst<5; burst++) {
+                setTimeout(() => {
+                    const cx = 20 + Math.random() * 60;
+                    const cy = 20 + Math.random() * 40;
+                    for (let i=0; i<30; i++) {
+                        const piece = document.createElement('div');
+                        piece.className = 'firework';
+                        const angle = (Math.PI * 2 * i) / 30;
+                        const distance = 60 + Math.random() * 100;
+                        const fx = Math.cos(angle) * distance;
+                        const fy = Math.sin(angle) * distance;
+                        piece.style.cssText = `
+                            left:${cx}%;top:${cy}%;
+                            background:${colors[Math.floor(Math.random()*colors.length)]};
+                            width:${4+Math.random()*6}px;height:${4+Math.random()*6}px;
+                            --fx:${fx}px;--fy:${fy}px;
+                            animation-delay:${burst*0.3}s;
+                        `;
+                        document.body.appendChild(piece);
+                        setTimeout(() => piece.remove(), 1500);
+                    }
+                }, burst * 300);
+            }
+        }
+        
         // Event Listeners
         $('modesGrid').addEventListener('click', (e) => {
             const card = e.target.closest('.mode-card');
@@ -1280,6 +1541,18 @@
             if (picker.classList.contains('show')) {
                 picker.classList.remove('show');
             } else {
+                $('multiplyDifficultyPicker').classList.remove('show');
+                picker.classList.add('show');
+                picker.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        $('multiplyModeCard').addEventListener('click', (e) => {
+            const picker = $('multiplyDifficultyPicker');
+            if (picker.classList.contains('show')) {
+                picker.classList.remove('show');
+            } else {
+                $('difficultyPicker').classList.remove('show');
                 picker.classList.add('show');
                 picker.scrollIntoView({ behavior: 'smooth' });
             }
@@ -1289,7 +1562,10 @@
             opt.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const diff = opt.dataset.diff;
+                const mode = opt.dataset.mode;
+                state.multiplyGame = (mode === 'multiply');
                 $('difficultyPicker').classList.remove('show');
+                $('multiplyDifficultyPicker').classList.remove('show');
                 showTurnSelector(diff);
             });
         });
