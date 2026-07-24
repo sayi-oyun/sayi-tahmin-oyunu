@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Sayı Tahmin | Profesyonel v5.0</title>
+    <title>Sayı Tahmin</title>
     <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş!">
     <meta name="author" content="Mehmet Buğrahan Şaşmaz">
     
@@ -101,7 +101,6 @@
         }
         .logo-icon::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 100%); }
         .logo-text h1 { font-size: 20px; font-weight: 800; line-height: 1.2; }
-        .logo-text span { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
         .header-actions { display: flex; gap: var(--space-sm); }
         
         .icon-btn {
@@ -395,7 +394,6 @@
                 <div class="logo-icon">🎯</div>
                 <div class="logo-text">
                     <h1>Sayı Tahmin</h1>
-                    <span>v5.0 • Profesyonel</span>
                 </div>
             </div>
             <div class="header-actions">
@@ -554,9 +552,8 @@
                 </div>
             </div>
 
-            <div class="section-title">Yeni Oyun Modu</div>
-            <div class="mode-card race-card" id="raceModeCard" style="border: 2px solid var(--accent-warning);">
-                <span class="mode-badge badge-race">🏁 YENİ!</span>
+            <div class="mode-card race-card" id="raceModeCard" style="border: 2px solid var(--accent-warning); margin-bottom: var(--space-lg);">
+                <span class="mode-badge badge-race">🏁</span>
                 <div class="mode-digits">100</div>
                 <div class="mode-info">İlk 100'e Ulaşan Kazanır!</div>
                 <div class="mode-stats">
@@ -680,7 +677,7 @@
         </div>
     </div>
 
-    <!-- NUMPAD TOGGLE BUTTON (Sadece mobilde görünür) -->
+    <!-- NUMPAD TOGGLE BUTTON -->
     <button class="numpad-toggle-btn" id="numpadToggleBtn" title="Klavye Aç/Kapat">🔢</button>
 
     <!-- TURN SELECTOR MODAL -->
@@ -812,7 +809,6 @@
             const screen = $(id);
             if (screen) { screen.classList.add('active'); screen.style.animation = 'none'; screen.offsetHeight; screen.style.animation = ''; }
             
-            // Mobilde oyun ekranındaysak klavye butonunu göster
             if (id === 'gameScreen' && isMobile()) {
                 $('numpadToggleBtn').classList.remove('hidden');
             } else {
@@ -947,7 +943,7 @@
         
         document.addEventListener('keydown', (e) => {
             if (!$('gameScreen').classList.contains('active') || state.gameOver) return;
-            if (isMobile()) return; // Mobilde klavye eventlerini engelle
+            if (isMobile()) return;
             const key = e.key;
             if (key>='1' && key<='9') {
                 e.preventDefault();
@@ -1306,7 +1302,6 @@
         $('raceBackBtn').addEventListener('click', () => showScreen('homeScreen'));
         $('raceResetBtn').addEventListener('click', () => showTurnSelector(state.raceDifficulty));
         
-        // Numpad toggle butonu
         $('numpadToggleBtn').addEventListener('click', toggleNumpad);
         
         $('numpadBackdrop').addEventListener('click', closeNumpad);
@@ -1332,7 +1327,7 @@
         updateHomeStats();
         buildNumpad();
         if (isMobile()) $('numpadToggleBtn').classList.add('hidden');
-        console.log('🚀 Sayı Tahmin v5.0 başlatıldı!');
+        console.log('🚀 Sayı Tahmin başlatıldı!');
         console.log('👨‍💻 Mehmet Buğrahan Şaşmaz');
     })();
     </script>
