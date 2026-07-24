@@ -10,7 +10,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Sayı Tahmin | Profesyonel v5.0</title>
-    <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş, arkadaşlarına meydan oku!">
+    <meta name="description" content="Zekanı test et! Gizli sayıyı bul, İlk 100'e ulaş!">
     <meta name="author" content="Mehmet Buğrahan Şaşmaz">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,7 +174,6 @@
         .mode-info { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
         .mode-stats { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-tertiary); }
 
-        /* Turn Selector */
         .turn-selector-overlay {
             display: none; position: fixed; inset: 0; background: var(--overlay);
             backdrop-filter: blur(10px); z-index: 800; align-items: center;
@@ -327,27 +326,31 @@
         }
         @keyframes modalIn { from{opacity:0;transform:scale(0.8)translateY(20px)} to{opacity:1;transform:scale(1)translateY(0)} }
 
-        .challenge-section {
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl); padding: var(--space-lg); margin-top: var(--space-lg);
+        .numpad-toggle-btn {
+            position: fixed; bottom: max(20px, env(safe-area-inset-bottom, 20px)); right: max(16px, env(safe-area-inset-right, 16px));
+            z-index: 400; width: 52px; height: 52px; border-radius: 50%;
+            background: var(--gradient-primary); color: white; border: none;
+            font-size: 22px; cursor: pointer; box-shadow: var(--shadow-xl);
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--transition-bounce);
         }
-        .challenge-input {
-            width: 100%; padding: 12px 16px; background: var(--bg-tertiary);
-            border: 1px solid var(--border-color); border-radius: var(--radius-md);
-            color: var(--text-primary); font-family: var(--font-mono); font-size: 14px;
-            font-weight: 600; outline: none; transition: all var(--transition-fast);
-        }
-        .challenge-input:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
+        .numpad-toggle-btn:hover { transform: scale(1.1); }
+        .numpad-toggle-btn:active { transform: scale(0.9); }
+        .numpad-toggle-btn.hidden { display: none; }
 
         .numpad-overlay {
             display: none; position: fixed; inset: 0; background: var(--overlay);
             backdrop-filter: blur(5px); z-index: 500; align-items: flex-end; justify-content: center;
         }
         .numpad-overlay.show { display: flex; }
+        .numpad-backdrop {
+            position: absolute; inset: 0; z-index: 0; cursor: pointer;
+        }
         .numpad {
             background: var(--bg-secondary); border: 1px solid var(--border-color);
             border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: var(--space-lg);
             width: 100%; max-width: 500px; animation: slideUp 0.3s ease; box-shadow: var(--shadow-xl);
+            position: relative; z-index: 1;
         }
         @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
         .numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); }
@@ -369,7 +372,12 @@
             .race-btn-num { font-size: 16px; }
             .race-btn-result { font-size: 8px; }
         }
-        @media (min-width: 768px) { .app-container { padding: var(--space-xl); } .modes-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 768px) {
+            .app-container { padding: var(--space-xl); }
+            .modes-grid { grid-template-columns: repeat(3, 1fr); }
+            .numpad-toggle-btn { display: none !important; }
+            .numpad-overlay.show { display: none !important; }
+        }
         @media (min-width: 1024px) { .app-container { padding: var(--space-2xl); } }
     </style>
 </head>
@@ -584,27 +592,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="challenge-section">
-                <div class="section-title">⚔️ Arkadaşa Meydan Oku</div>
-                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: var(--space-md);">
-                    Kendi gizli sayını belirle, kodu arkadaşına gönder!
-                </p>
-                <div style="display: flex; gap: var(--space-sm); margin-bottom: var(--space-md);">
-                    <input type="text" class="challenge-input" id="challengeCreateDigits" placeholder="Basamak (2-7)" style="width: 60px; text-align: center;">
-                    <button class="btn btn-primary" id="createChallengeBtn" style="width: auto; padding: 12px 20px;">Kod Oluştur</button>
-                </div>
-                <div id="challengeCreated" style="display: none; margin-bottom: var(--space-md);"></div>
-                
-                <div style="border-top: 1px solid var(--border-color); padding-top: var(--space-md); margin-top: var(--space-md);">
-                    <p style="font-size: 13px; font-weight: 600; margin-bottom: var(--space-sm);">📋 Arkadaşının kodunu yapıştır:</p>
-                    <div style="display: flex; gap: var(--space-sm);">
-                        <input type="text" class="challenge-input" id="challengeCodeInput" placeholder="Kodu buraya yapıştır...">
-                        <button class="btn btn-primary" id="joinChallengeBtn" style="width: auto; padding: 12px 20px;">Katıl</button>
-                    </div>
-                    <div id="challengeError" style="color: var(--accent-danger); font-size: 12px; margin-top: var(--space-sm); min-height: 18px;"></div>
-                </div>
-            </div>
         </div>
 
         <!-- CLASSIC GAME SCREEN -->
@@ -693,6 +680,9 @@
         </div>
     </div>
 
+    <!-- NUMPAD TOGGLE BUTTON (Sadece mobilde görünür) -->
+    <button class="numpad-toggle-btn" id="numpadToggleBtn" title="Klavye Aç/Kapat">🔢</button>
+
     <!-- TURN SELECTOR MODAL -->
     <div class="turn-selector-overlay" id="turnSelectorOverlay">
         <div class="turn-selector-content">
@@ -728,6 +718,7 @@
 
     <!-- NUMPAD -->
     <div class="numpad-overlay" id="numpadOverlay">
+        <div class="numpad-backdrop" id="numpadBackdrop"></div>
         <div class="numpad">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
                 <span style="font-weight: 700;">Rakam Seç</span>
@@ -766,6 +757,8 @@
         
         const $ = (id) => document.getElementById(id);
         const qsa = (selector) => document.querySelectorAll(selector);
+        
+        const isMobile = () => window.innerWidth < 768;
         
         const state = {
             digits: 4, secret: '', attempts: 0, maxTries: 10, hintsUsed: 0, maxHints: 2,
@@ -818,6 +811,13 @@
             qsa('.screen').forEach(s => s.classList.remove('active'));
             const screen = $(id);
             if (screen) { screen.classList.add('active'); screen.style.animation = 'none'; screen.offsetHeight; screen.style.animation = ''; }
+            
+            // Mobilde oyun ekranındaysak klavye butonunu göster
+            if (id === 'gameScreen' && isMobile()) {
+                $('numpadToggleBtn').classList.remove('hidden');
+            } else {
+                $('numpadToggleBtn').classList.add('hidden');
+            }
         }
         
         window.toggleGuide = function(guideId) {
@@ -870,7 +870,7 @@
                 box.addEventListener('click', () => {
                     if (state.gameOver) return;
                     state.activeIndex = i; updateDigitDisplay();
-                    if (window.innerWidth < 768) openNumpad();
+                    if (isMobile()) openNumpad();
                 });
                 container.appendChild(box);
             }
@@ -921,6 +921,13 @@
         
         function openNumpad() { updateNumpadPreview(); $('numpadOverlay').classList.add('show'); }
         function closeNumpad() { $('numpadOverlay').classList.remove('show'); updateDigitDisplay(); }
+        function toggleNumpad() {
+            if ($('numpadOverlay').classList.contains('show')) {
+                closeNumpad();
+            } else {
+                if (!state.gameOver) openNumpad();
+            }
+        }
         
         function numpadInput(val) {
             if (state.gameOver || state.digitValues.includes(val)) return;
@@ -940,6 +947,7 @@
         
         document.addEventListener('keydown', (e) => {
             if (!$('gameScreen').classList.contains('active') || state.gameOver) return;
+            if (isMobile()) return; // Mobilde klavye eventlerini engelle
             const key = e.key;
             if (key>='1' && key<='9') {
                 e.preventDefault();
@@ -991,6 +999,9 @@
             state.digitValues = new Array(state.digits).fill('');
             state.activeIndex = 0;
             updateDigitDisplay();
+            if (isMobile() && $('numpadOverlay').classList.contains('show')) {
+                updateNumpadPreview();
+            }
         }
         
         function showFeedback(plus, minus) {
@@ -1046,6 +1057,7 @@
             if (!state.stats[state.digits].best || state.attempts<state.stats[state.digits].best) state.stats[state.digits].best=state.attempts;
             saveStats(); updateHomeStats();
             $('submitGuessBtn').disabled=true; $('hintBtn').disabled=true;
+            closeNumpad();
             createConfetti();
             setTimeout(()=>{
                 $('winSecret').textContent=state.secret; $('winAttempts').textContent=state.attempts;
@@ -1058,6 +1070,7 @@
         function handleClassicLose() {
             state.gameOver = true;
             $('submitGuessBtn').disabled=true; $('hintBtn').disabled=true;
+            closeNumpad();
             const fb=$('feedbackBox'); fb.className='feedback-box show feedback-negative';
             $('feedbackIcon').textContent='😔'; $('feedbackTitle').textContent='Oyun Bitti'; $('feedbackMsg').textContent=`Gizli sayı: ${state.secret}`;
         }
@@ -1066,6 +1079,7 @@
             state.digits = digits; state.maxTries = MODES[digits].maxTries;
             state.secret = generateSecret(digits); state.attempts = 0; state.hintsUsed = 0;
             state.gameOver = false; state.digitValues = new Array(digits).fill(''); state.activeIndex = 0; state.history = [];
+            console.log('🎯 Gizli sayı:', state.secret);
             $('modeLabel').textContent = MODES[digits].label;
             $('attemptCount').textContent='0'; $('remainingCount').textContent=state.maxTries;
             $('hintCount').textContent=state.maxHints; $('progressFill').style.width='0%';
@@ -1150,11 +1164,9 @@
             const remaining = 100 - state.raceTotal;
             
             if (state.raceDifficulty === 'easy') {
-                // Kolay: Tamamen rastgele
                 pcNum = Math.floor(Math.random() * 10) + 1;
                 pcNum = Math.min(pcNum, remaining);
             } else if (state.raceDifficulty === 'medium') {
-                // Orta: Stratejik ama 2 defa hata yapabilir
                 if (state.raceMediumMistakes < 2 && Math.random() < 0.3) {
                     state.raceMediumMistakes++;
                     pcNum = Math.floor(Math.random() * 10) + 1;
@@ -1171,22 +1183,17 @@
                     if (!found) pcNum = Math.min(Math.floor(Math.random()*10)+1, remaining);
                 }
             } else if (state.raceDifficulty === 'hard') {
-                // ÇOK ZOR: Yenilmez! Her zaman 11'in katına ulaş, asla hata yapma
                 const target = state.raceTotal % 11;
                 if (target === 0) {
-                    // 11'in katındayız, rakibe 1 bırak (en kötü senaryo)
                     pcNum = 1;
                 } else {
-                    // 11'in katına tamamla
                     pcNum = 11 - target;
                 }
                 
-                // Eğer direkt kazanabiliyorsak kazan
                 if (remaining <= 10 && remaining >= 1) {
                     pcNum = remaining;
                 }
                 
-                // Güvenlik kontrolü
                 if (pcNum < 1 || pcNum > 10 || pcNum > remaining) {
                     pcNum = Math.max(1, Math.min(10, remaining));
                 }
@@ -1247,66 +1254,6 @@
             $('raceTurnLabel').style.color = winner==='human' ? 'var(--accent-success)' : 'var(--accent-danger)';
         }
         
-        function createChallenge() {
-            const digitsInput = $('challengeCreateDigits');
-            const digits = parseInt(digitsInput.value);
-            if (!digits || digits < 2 || digits > 7) {
-                alert('Lütfen 2-7 arası bir basamak sayısı girin!');
-                return;
-            }
-            
-            const secret = generateSecret(digits);
-            const code = btoa(`${digits}:${secret}`);
-            
-            const result = $('challengeCreated');
-            result.style.display = 'block';
-            result.innerHTML = `
-                <div style="background:var(--bg-tertiary);padding:var(--space-md);border-radius:var(--radius-md);margin-bottom:var(--space-sm);">
-                    <strong>📋 Meydan Okuma Kodu:</strong>
-                    <div style="font-family:var(--font-mono);font-size:16px;word-break:break-all;margin-top:var(--space-sm);">${code}</div>
-                </div>
-                <button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${code}').then(()=>alert('Kod kopyalandı!'))" style="width:auto;padding:8px 16px;">📋 Kopyala</button>
-            `;
-        }
-        
-        function joinChallenge() {
-            const codeInput = $('challengeCodeInput');
-            const code = codeInput.value.trim();
-            const errorEl = $('challengeError');
-            
-            if (!code) { errorEl.textContent = 'Lütfen bir kod girin!'; return; }
-            
-            try {
-                const decoded = atob(code);
-                const [digitsStr, secret] = decoded.split(':');
-                const digits = parseInt(digitsStr);
-                
-                if (!digits || !secret || digits < 2 || digits > 7 || secret.length !== digits) {
-                    errorEl.textContent = 'Geçersiz kod!'; return;
-                }
-                if (!/^[1-9]+$/.test(secret)) { errorEl.textContent = 'Geçersiz kod!'; return; }
-                if (new Set(secret).size !== digits) { errorEl.textContent = 'Geçersiz kod!'; return; }
-                
-                errorEl.textContent = '';
-                codeInput.value = '';
-                
-                state.digits = digits; state.maxTries = MODES[digits].maxTries;
-                state.secret = secret; state.attempts = 0; state.hintsUsed = 0;
-                state.gameOver = false; state.digitValues = new Array(digits).fill(''); state.activeIndex = 0; state.history = [];
-                
-                $('modeLabel').textContent = `⚔️ Meydan Okuma • ${MODES[digits].label}`;
-                $('attemptCount').textContent='0'; $('remainingCount').textContent=state.maxTries;
-                $('hintCount').textContent=state.maxHints; $('progressFill').style.width='0%';
-                $('feedbackBox').className='feedback-box'; $('errorMessage').textContent='';
-                $('historyCard').style.display='none'; $('historyList').innerHTML='';
-                $('submitGuessBtn').disabled=false; $('hintBtn').disabled=false; $('hintBtn').textContent='💡 İpucu';
-                buildDigitInputs(); showScreen('gameScreen');
-                
-            } catch(e) {
-                errorEl.textContent = 'Geçersiz kod formatı!';
-            }
-        }
-        
         function createConfetti() {
             const colors = ['#6366f1','#8b5cf6','#f59e0b','#10b981','#ef4444','#3b82f6','#ec4899'];
             for (let i=0; i<80; i++) {
@@ -1351,7 +1298,7 @@
             });
         });
         
-        $('backToHomeBtn').addEventListener('click', () => { showScreen('homeScreen'); updateHomeStats(); });
+        $('backToHomeBtn').addEventListener('click', () => { closeNumpad(); showScreen('homeScreen'); updateHomeStats(); });
         $('submitGuessBtn').addEventListener('click', submitGuess);
         $('hintBtn').addEventListener('click', showHint);
         $('resetGameBtn').addEventListener('click', () => startClassicGame(state.digits));
@@ -1359,7 +1306,10 @@
         $('raceBackBtn').addEventListener('click', () => showScreen('homeScreen'));
         $('raceResetBtn').addEventListener('click', () => showTurnSelector(state.raceDifficulty));
         
-        $('numpadOverlay').addEventListener('click', (e) => { if (e.target===$('numpadOverlay')) closeNumpad(); });
+        // Numpad toggle butonu
+        $('numpadToggleBtn').addEventListener('click', toggleNumpad);
+        
+        $('numpadBackdrop').addEventListener('click', closeNumpad);
         $('closeNumpadBtn').addEventListener('click', closeNumpad);
         $('numpadSubmitBtn').addEventListener('click', () => { closeNumpad(); submitGuess(); });
         
@@ -1368,10 +1318,6 @@
         $('winModal').addEventListener('click', (e) => {
             if (e.target===$('winModal')) { $('winModal').classList.remove('show'); showScreen('homeScreen'); updateHomeStats(); }
         });
-        
-        $('createChallengeBtn').addEventListener('click', createChallenge);
-        $('joinChallengeBtn').addEventListener('click', joinChallenge);
-        $('challengeCodeInput').addEventListener('keydown', (e) => { if (e.key==='Enter') joinChallenge(); });
         
         $('turnSelectorOverlay').addEventListener('click', (e) => {
             if (e.target === $('turnSelectorOverlay')) {
@@ -1385,6 +1331,7 @@
         loadStats();
         updateHomeStats();
         buildNumpad();
+        if (isMobile()) $('numpadToggleBtn').classList.add('hidden');
         console.log('🚀 Sayı Tahmin v5.0 başlatıldı!');
         console.log('👨‍💻 Mehmet Buğrahan Şaşmaz');
     })();
